@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <p id="texto"></p>
+    <button type="button" onclick="funcion('español')">
+        Español
+    </button>
+    <button type="button" onclick="funcion('ingles')">
+        Inglés
+    </button>
+    <button type="button" onclick="funcion('ruso')">
+        Ruso
+    </button>
+    <script>
+       function funcion(idioma){
+            var x = document.getElementById("texto");
+            if(idioma=="español"){
+                x.innerHTML = "BIENVENIDO";
+                x.style.color = "red";
+            }else if (idioma == "ingles"){
+                x.innerHTML = "WELCOME";
+                x.style.color = "green";
+            }else if(idioma == "ruso"){
+                x.innerHTML = "PRIVIET";
+                x.style.color = "yellow";
+            }
+        }
+    </script>
+</body>
+
+</html>
