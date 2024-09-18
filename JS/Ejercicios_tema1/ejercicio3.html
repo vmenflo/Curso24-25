@@ -3,21 +3,67 @@
 
 <body>
     <h1 id="titulo">Test Verdadero y Falso</h1>
-    <p id="uno">El mar es ..</p>
-    <button type="button" onclick="verde()">
+    <div>
+         <p id="uno">El mar es ..</p>
+    <button type="button" class="verdadero" onclick="funcion(this, 'uno')">
         Salado</button>
-    <button type="button" onclick="rojo()">
+    <button type="button" class="falso" onclick="funcion(this, 'uno')">
         Dulce</button>
+    </div>
 
+    <div>
+         <p id="dos">El círculo es ..</p>
+    <button type="button" class="verdadero" onclick="funcion(this, 'dos')">
+        Redondo</button>
+    <button type="button" class="falso" onclick="funcion(this, 'dos')">
+        Cuadrado</button>
+    </div>
+
+    <div>
+         <p id="tres">La naranja es ..</p>
+    <button type="button" class="verdadero" onclick="funcion(this, 'tres')">
+        Fruta</button>
+    <button type="button" class="falso" onclick="funcion(this, 'tres')">
+        Bebida</button>
+    </div>
+
+    <div>
+         <p id="cuatro">A es una ..</p>
+    <button type="button" class="verdadero" onclick="funcion(this, 'cuatro')">
+        Letra</button>
+    <button type="button" class="falso" onclick="funcion(this, 'cuatro')">
+        Numero</button>
+    </div>
+
+    <div>
+         <p id="cinco">El salmón es un ..</p>
+    <button type="button" class="falso" onclick="funcion(this, 'cinco')">
+        Mamifero</button>
+    <button type="button" class="verdadero" onclick="funcion(this, 'cinco')">
+        Pescado</button>
+    </div>
+
+    <div>
+         <p id="seis"> 6 + 6 es ..</p>
+    <button type="button" class="falso" onclick="funcion(this, 'seis')">
+        5</button>
+    <button type="button" class="verdadero" onclick="funcion(this, 'seis')">
+        12</button>
+    </div>
+   
     <script>
-        function rojo() {
-            var x = document.getElementById("uno");
-            x.style.color = "red";
+        function funcion(respuesta, identificador) {
+            var pregunta = document.getElementById(identificador)
+            var clase = respuesta.className;
+            if (clase == "verdadero"){
+                var x = document.getElementById(identificador);
+                x.style.color = "green";
+            } else {
+                var x = document.getElementById(identificador);
+                x.style.color = "red";
+            }
         }
-        function verde() {
-            var x = document.getElementById("uno");
-            x.style.color = "green";
-        }
+        
     </script>
 </body>
 
