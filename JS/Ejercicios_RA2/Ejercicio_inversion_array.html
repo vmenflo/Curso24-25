@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>JavaScript Arrays. 2 arrays ordenados.</h2>
+<p>
+    Realiza un programa al que se le introduzca un texto y devuelva el mismo texto pero con las letras invertidas. Por ejemplo la entrada:
+
+    Buenos días hoy es lunes
+    Daría la salida:
+    soneuB saíd yoh se senul
+
+    truco: prueba el siguiente código...
+    let text = "Hello world!";
+    let result = text.substring(1, 4);
+
+    substring() extrae parte de un string.
+</p>
+<p id="texto"></p>
+<script>
+    let text = "Victor";
+    let invertida = [];
+    // Mientras halla un texto que recorra letra por letra la palabra y lo almacene en una array
+    for (let i = 0; i < text.length; i++) {
+        let temp = (text.substring((text.length-1)-i, text.length-i));
+        invertida.push(temp);
+    }
+
+    document.getElementById("texto").innerHTML = invertida;
+
+</script>
+</body>
+</html>
