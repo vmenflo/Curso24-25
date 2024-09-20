@@ -1,21 +1,5 @@
 <?php
-    if(!isset($_POST["enviar"])){
-        header("Location:index.php");
-        exit;
-    }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recogida de datos</title>
-</head>
-<body>
-    <h1>Recogida de datos realizada</h1>
-    <?php
-        if(isset($_POST["enviar"]))
-        {
+            echo "<h1>Recogida de datos</h1>";
             echo "<p>Nombre: ".$_POST["nombre"]."</p>";
             echo "<p>Apellidos: ".$_POST["apellidos"]."</p>";
             echo "<p>Contraseña: ".$_POST["contrasenia"]."</p>";
@@ -31,8 +15,5 @@
                 echo "<p>Quiere subcribirse</p>";
             }else{
                 echo "No quiere subcribirse";
-            }
-        }
-    ?>
-</body>
-</html>
+            }           
+?>
