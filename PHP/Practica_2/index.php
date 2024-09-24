@@ -30,8 +30,8 @@
 <body>
     <?php
 
-    if($_POST["btnEnviar"] && !$error_form){
-        
+    if(isset($_POST["btnEnviar"]) && !$error_form){
+        require "vistas/vista_recogida.php";
     } else {
         require "vistas/vista_formulario.php";
     }
