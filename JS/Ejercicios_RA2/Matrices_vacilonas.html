@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrices Vacilonas</title>
+</head>
+<body>
+    <p id="texto"></p>
+    
+    <script>
+
+        // Creamos una funcion para devolver una matriz según las dimensiones que quieras
+
+        function matriz(filas, columnas){
+            let matriz = [];
+            let filas1 = filas;
+            let columnas1 = columnas;
+             //Creamos la matriz y la inicializamos a 0
+            for(let i=0 ; i< filas1;i++){
+                matriz[i] = [];
+                for (let j = 0; j < columnas1; j++) {
+                    matriz[i][j]=0;
+                }
+                }
+
+             // Rellenar primera fila de 1
+            for (let i = 0; i < matriz.length; i++) {
+                matriz[i][0]=1; 
+            }
+
+            //rellenar primera columna de 1
+            for (j = 0; j < matriz.length; j++) {
+                matriz[0][j]=1; 
+            }
+
+            // Rellenar los elementos interiores de la matriz
+            for (let i = 1; i < matriz.length; i++) {
+                for (let j = 1; j < matriz.length; j++) {
+                    matriz[i][j] = matriz[i][j - 1] + matriz[i - 1][j];
+                }
+            }
+            return matriz; // Devuelve una matriz
+        }
+
+        // Primera matriz 3*3
+        matriz1 = matriz(3,3);
+        // Mostrar matriz
+        for (let i = 0; i < matriz1.length; i++) {
+            console.log(matriz1[i]);
+            }
+
+        // Segunda matriz de 5*5
+        matriz2 = matriz(5,5);
+        // Mostrar matriz
+        for (let i = 0; i < matriz2.length; i++) {
+            console.log(matriz2[i]);
+            }
+    </script>
+</body>
+</html>
