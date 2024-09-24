@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio de Eventos RA2</title>
+</head>
+<body>
+    <p id="accionar" onmouseover="efecto_over()" onmouseout="efecto_out()">PASAR EL RATÓN PARA CAMBIAR COLOR</p>
+    <p id="color">COLOR</p>
+    <div>
+        <label for="nombre" id="eti_nombre">Rellenar nombre</label><input onblur="efecto_blur()" onfocus="efecto_focus()" type="text" name="nombre" id="nombre">
+    </div>
+    <script>
+        function efecto_over(){
+            var x = document.getElementById("color");
+            x.style.color = "red";
+        }
+        function efecto_out(){
+            var x = document.getElementById("color");
+            x.style.color = "black";
+        }
+
+        function efecto_blur(){
+            var x = document.getElementById("eti_nombre");
+            x.style.fontSize="1.5rem";
+        }
+
+        function efecto_focus(){
+            var x = document.getElementById("eti_nombre");
+            x.style.fontSize="1.2rem";
+        }
+
+
+    </script>
+</body>
+</html>
