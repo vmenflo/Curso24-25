@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Ejercicio de parametros.</h2>
+<p>
+    Realiza una función que tome uno, dos o tres parámetros.
+    Si le introduzco solo un parámetro hará el cubo, si le introduzco dos, hará la multiplicación de ambos parámetros y si le introduzco tres la suma de ambos.
+    Pon ejemplos de su uso.
+    calcula(5); calcula(5,5); calcula(5,5,5);
+
+</p>
+<script>
+    function calcula(){
+        let resultado;
+        if(arguments.length == 1){
+           return resultado = Math.pow(arguments[0],3);
+        } else if (arguments.length == 2) {
+            return resultado = arguments[0]*arguments[1];
+        } else if (arguments.length == 3){
+            return resultado = arguments[0]+arguments[1]+arguments[2];
+        } else {
+            return resultado = "Introduzca solo 3 parametros";
+        }
+    }
+
+    console.log(calcula(5));
+    console.log(calcula(5,5));
+    console.log(calcula(5,5,5));
+    console.log(calcula(5,5,5,5));
+
+</script>
+</body>
+</html>
