@@ -4,21 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cronometro</title>
+    <style>
+        #contenedor{
+            border: 3px black solid;
+            text-align: center;
+            width:250px;
+            padding:1rem;
+        }
+    </style>
 </head>
 <body>
-    <p id="cronometro"></p>
-    <div>
-        <input type="button" value="START" id="start">
-        <input type="button" value="PAUSE" id="pause">
-        <input type="button" value="RESET" id="reset">
+    <div id="contenedor">
+        <p id="cronometro"></p>
+        <div>
+            <input type="button" value="START" id="start">
+            <input type="button" value="PAUSE" id="pause">
+            <input type="button" value="RESET" id="reset">
+        </div>
     </div>
+    
     <script>
         var segundos = 0;
         var minutos = 0;
         var crono;
 
-        document.getElementById("cronometro").innerHTML = minutos + ":" + segundos;
-        // Llamadas
+        document.getElementById("cronometro").innerHTML = "00:00";
+    // Llamadas
         document.getElementById("start").addEventListener("click", start);
         document.getElementById("pause").addEventListener("click", pause);
         document.getElementById("reset").addEventListener("click", reset);
@@ -33,15 +44,14 @@
         pause();
         minutos = 0;
         segundos = 0;
-        document.getElementById("cronometro").innerHTML = minutos + ":" + segundos;
-
+        actualizarPantalla();
     }
     // Pausar
     function pause(){
         clearInterval(crono);
-        document.getElementById("cronometro").innerHTML = + minutos + ":" + segundos;
+        actualizarPantalla();
     }
-    // Contar
+    // Contador
     function contar(){
         if(segundos<60){
             segundos++;
@@ -49,7 +59,10 @@
             segundos = 0;
             minutos++;
         }
-
+        actualizarPantalla();
+    }
+    // Función para actualizar la pantalla
+    function actualizarPantalla(){
         let minutosFormateados = minutos < 10 ? "0"+minutos : minutos;
         let segundosFormateados = segundos < 10 ? "0" + segundos : segundos;
         document.getElementById("cronometro").innerHTML = minutosFormateados + ":" + segundosFormateados;
