@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teoria de Arrays</title>
+    <style>
+        table, td, th {border:1px black solid;}
+        table {border-collapse: collapse;}
+    </style>
 </head>
 <body>
     <?php
@@ -90,6 +94,40 @@
     }
     echo "</ol>";
 
+    // Forma de mostrar una array en una tabla
+
+    $notes["Dani"]=7;
+    $notes["Tomas"]=3;
+    $notes["Clara"] = 5.5;
+
+    echo "<h1> Notas de los alumnos de 2DAW en una asignatura DWSE</h1>";
+    echo "<table>";
+    echo "<tr>";
+    echo "<th>Alumno</th><th>Notas</th>";
+    foreach($notes as $nombre => $valor_nota){
+        echo "<tr>";
+        echo "<td>".$nombre."</td>";
+        echo "<td>".$valor_nota."</td>";
+        echo "</tr>";
+    }
+    echo "</tr>";
+    echo "</table>";
+
+    // Como recorrer una array mediante funciones
+    echo "<h1> Recorrer una array mediente funciones y mostrarla</h1>";
+    echo "<table>";
+    echo "<tr>";
+    echo "<th>Alumno</th><th>Notas</th>";
+    while(current($notes)){
+        echo "<tr>";
+        echo "<td>".key($notes)."</td>";
+        echo "<td>".current($notes)."</td>";
+        echo "</tr>";
+        next($notes);
+    }
+    echo "</tr>";
+    echo "</table>";
+    
     ?>
 </body>
 </html>
