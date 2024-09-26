@@ -17,15 +17,14 @@
         $lenguajes_servidor[1]="PHP";
 
         $lenguajes=array_merge($lenguajes_cliente,$lenguajes_servidor);
-        print_r($lenguajes);
 
         echo "<table>";
         echo "<tr>";
         echo "<th>Lenguajes clientes</th><th>Lenguajes servidor</th>";
-        for($i=0; $i<count($lenguajes)/2;$i++){
+        for($i=0; $i< count($lenguajes_cliente);$i++){
             echo "<tr>";
             echo "<td>".$lenguajes[$i]."</td>";
-            echo "<td>".$lenguajes[$i+2]."</td>";
+            echo "<td>".$lenguajes[count($lenguajes)/2 + $i]."</td>";
             echo "</tr>";
         }
         echo "</tr>";
