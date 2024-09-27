@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio 19 de Arrays</title>
+    <title>Ejercicio 19</title>
 </head>
 <body>
     <?php
@@ -48,16 +48,14 @@
                     ]
                 ]
                     ];
-        print_r($amigos);
 
-        echo "<p> Lo mostramos en lista </p>";
         foreach ($amigos as $ciudad => $arr_personas) {
             echo "<p>Amigos en: ".$ciudad."</p>";
             echo "<ol>";
                 foreach ($arr_personas as $persona => $datos) {
                     echo "<li>";
                     foreach ($datos as $key => $value) {
-                        echo "<p>".$value."</p>";
+                        echo "<span> <strong>".$key."</strong>".": ".$value.".</span>";
                     }
                     echo "</li>";
                 }
