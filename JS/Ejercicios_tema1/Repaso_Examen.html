@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repasar para el Examen de JS</title>
+</head>
+<body>
+    <!-- Cambiar el contenido de algún elemento html -->
+    <p id="uno">Dale al botón para cambiar el texto</p>
+    <button type="button" id="b_uno" onclick="cambiar_texto()">Clicka!</button>
+    <!-- Cambiar la imagen -->
+    <p>Puedes cambiar de imagen</p>
+    <img width="150px" id="foto_1" src="https://media.istockphoto.com/id/1385378028/es/vector/dedo-de-espuma-1-n%C3%BAmero-en-el-dedo-de-espuma-mano-de-abanico-mano-en-guante-con-un-n%C3%BAmero-y.jpg?s=612x612&w=0&k=20&c=TmeaoyDPCVCw53NJ7YU8OuVZgKoS5n2xuO0OST5vzWg=" alt="foto">
+    <button onclick="cambiar_img()">Cambiar!</button>
+    <!-- Hacer zoom a la imagen -->
+    <p>Pasa por encima para ampliar</p>
+    <img width="150px" onmouseenter="zoom_foto()" onmouseout="quitar_zoom()" id="foto_2" src="https://media.istockphoto.com/id/1385378028/es/vector/dedo-de-espuma-1-n%C3%BAmero-en-el-dedo-de-espuma-mano-de-abanico-mano-en-guante-con-un-n%C3%BAmero-y.jpg?s=612x612&w=0&k=20&c=TmeaoyDPCVCw53NJ7YU8OuVZgKoS5n2xuO0OST5vzWg=" alt="foto">
+    <script>
+        function cambiar_texto(){
+            var x = document.getElementById("b_uno");
+            if(x==="Clicka!"){
+                document.getElementById("uno").innerHTML="Texto cambiado";
+                document.getElementById("b_uno").innerHTML="Deshacer";
+            } else {
+                document.getElementById("uno").innerHTML="Dale al botón para cambiar el texto";
+                document.getElementById("b_uno").innerHTML="Clicka!";
+            } 
+        }
+
+        function cambiar_img(){
+            var x = document.getElementById("foto_1");
+            if(x.src.match("dedo-de-espuma")){
+                x.src="https://media.istockphoto.com/id/1179573132/es/vector/signo-de-victoria-o-paz-gesto-de-la-mano-del-icono-humano-de-la-l%C3%ADnea-negra-dos-dedos.jpg?s=612x612&w=0&k=20&c=n3Lu0zh02lkq4CVz2CBKK-y0ruNaxQhM0t4bbS2TnPk=";
+            } else {
+                x.src ="https://media.istockphoto.com/id/1385378028/es/vector/dedo-de-espuma-1-n%C3%BAmero-en-el-dedo-de-espuma-mano-de-abanico-mano-en-guante-con-un-n%C3%BAmero-y.jpg?s=612x612&w=0&k=20&c=TmeaoyDPCVCw53NJ7YU8OuVZgKoS5n2xuO0OST5vzWg=";
+            }
+        }
+
+        function zoom_foto(){
+            var x = document.getElementById("foto_2");
+            x.width=x.width*1.5;
+        }
+
+        function quitar_zoom(){
+            var x = document.getElementById("foto_2");
+            x.width=150;
+        }
+    </script>
+</body>
+</html>
