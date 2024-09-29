@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>BOMBASSO</h2>
+<p> Se pide que crees un programa que genere un campo de minas.
+Las minas se colocan de forma aleatoria pero teniendo
+en cuenta que no se deben colocar dos minas juntas.
+realiza el programa para que genere 10, 20 o todas
+las minas que se puedan instalar.
+</p>
+<p id="demo"></p>
+<script>
+var arr = [[" "," "," "," "," "," "," "," "," "," "," "," "," "],
+[" "," "," "," "," "," "," "," "," "," "," "," "," "],
+[" "," "," "," "," "," "," "," "," "," "," "," "," "],
+[" "," "," "," "," "," "," "," "," "," "," "," "," "],
+[" "," "," "," "," "," "," "," "," "," "," "," "," "],
+[" "," "," "," "," "," "," "," "," "," "," "," "," "],
+[" "," "," "," "," "," "," "," "," "," "," "," "," "],
+[" "," "," "," "," "," "," "," "," "," "," "," "," "],
+[" "," "," "," "," "," "," "," "," "," "," "," "," "]
+
+];
+// Genera un int random
+function generateRandomInt(min,max){
+return Math.floor((Math.random() * (max-min)) +min);
+}
+// Variables
+var max_intentos=10000;
+var intentos=0;
+var ale_i;
+var ale_j;
+var libre;
+// Número de bombas
+const VEINTE_BOMBAS = 20;
+const DIEZ_BOMBAS = 10;
+const MAX_BOMBAS = Math.floor((arr.length * arr[0].length) / 2);
+
+var opcion = generateRandomInt(1,4);
+
+switch (opcion) {
+    case 1: // 10
+        console.log("Se ha seleccionado 10 bombas");
+        generar_bombas(arr, DIEZ_BOMBAS);
+        mostrar_matriz(arr);
+        break;
+    case 2: //20
+        console.log("Se ha seleccionado 20 bombas");
+        generar_bombas(arr, VEINTE_BOMBAS);
+        mostrar_matriz(arr);
+        break;
+    case 3: // MAX
+        console.log("Se ha seleccionado max bombas");
+        generar_bombas(arr,MAX_BOMBAS);
+        mostrar_matriz(arr);
+        break;
+    default:
+        break;
+}
+
+//FUNCIONES
+// Función para generar bombas
+function generar_bombas(array, cant){
+    // mientras halla bombas rellena la array
+    numero_bombas=cant;
+    while (numero_bombas > 0 && intentos < max_intentos) {
+                
+                ale_i = generateRandomInt(0, arr.length);
+                ale_j = generateRandomInt(0, arr[ale_i].length);
+                
+                // comprobar si se puede colocar una mina
+                if (arr[ale_i][ale_j] !== "X" && lasVecinas(arr, ale_i, ale_j)) {
+                    arr[ale_i][ale_j] = "X"; // Colocar la mina
+                    numero_bombas--;
+                }
+                intentos++; // sumar intentos
+            }
+}
+
+// función las vecinas para ver que no hay ya una mina cerca
+function lasVecinas(array, fila, columna) {
+    var arr = array;
+    var filas = arr.length;
+    var columnas = arr[0].length;
+
+    for (let i = fila - 1; i <= fila + 1; i++) {
+        for (let j = columna - 1; j <= columna + 1; j++) {
+            // controlar que no se salga de los límites
+            if (i >= 0 && i < filas && j >= 0 && j < columnas) {
+                if (arr[i][j] === "X") {
+                    return false; // Si hay una mina devuelve false
+                }
+            }
+        }
+    }
+    return true; // todo despejado
+}
+
+// Mostrar el campo en la consola
+function mostrar_matriz(arr){
+    for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i].join(" | "));
+}
+}
+
+</script>
+</body>
+</html>
