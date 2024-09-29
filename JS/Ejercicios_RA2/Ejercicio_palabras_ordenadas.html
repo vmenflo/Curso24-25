@@ -9,26 +9,33 @@
     <script>
         // Realiza un programa el cual reciba un texto determinado y muestre una lista de las palabras introducidas de forma alfabética junto 
         // con el número de veces que aparece esa palabra. Se obviará todo lo que no sea una palabra como puntos, comas, etc.
-
-        texto = "hola me llamo Victor, adios texto".replace(/[^a-zA-Z0-9 ]/g, '');
-        var palabra = "";
-        var lista = [];
+        
+        // Lo limpiamos de todo lo que no necesitemos
+        var texto = "hola Victor, adios! Victor".replace(/[^a-zA-Z0-9 ]/g, '').toLocaleLowerCase();
+        console.log(texto);
+        var lista_palabras = [];
         var contador = 0;
+        // rompemos la frase en palabras
+        lista_palabras = texto.split(" ").sort();
 
-        for (let i = 0; i < texto.length; i++) {
-            
-            if (texto[i]== " " || texto[i]== ",") {
-                lista.push(palabra);
-                palabra ="";
-            } 
+        listado_repeticiones = repeticion(lista_palabras);
+        console.log(listado_repeticiones);
 
-            palabra+=texto[i];            
-
+        // función para comprobar cuantas veces se repite las palabras
+        function repeticion(lista){
+            var listado = lista;
+            var lista_repetidos = [];
+            for (let i = 0; i < lista.length; i++) {
+                contador=0;
+                    for (let j = 0; j < listado.length; j++) {
+                        if(lista[i]===listado[j]){
+                            contador++;
+                        }    
+                    }
+                    lista_repetidos[i] = lista[i] + " " + contador;
+            }
+            return lista_repetidos;
         }
-        lista.sort();
-
-        console.log(lista);
-        console.log(contador);
     </script>
 </body>
 </html>
