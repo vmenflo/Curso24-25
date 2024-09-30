@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio sumatorio con recursividad</title>
+</head>
+<body>
+    <p>Escriba una función recursiva que calcule y devuelva la suma de todos los elementos de una
+        matriz, donde la matriz y su tamaño se dan como parámetros.
+        Ejemplo de llamada:</p>
+        <script>
+            var array = [1,2,3];
+            var resultado = sumatorio(array,array.length);
+
+            function sumatorio(array, tamaño){
+                if(tamaño==0){
+                    return 0;
+                }else { 
+                    return (array[tamaño-1] + sumatorio(array,tamaño-1));
+                }
+            }
+            console.log(resultado);
+        </script>
+  
+</body>
+</html>
