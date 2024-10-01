@@ -15,7 +15,7 @@
         // comprobar si es solo numeros
         function todo_numeros($palabra){
             for ($i=0; $i < strlen($palabra); $i++) {
-                if(!ctype_digit($palabra[$i])){
+                if(!is_numeric($palabra[$i])){
                     return false;
                 }
             }
@@ -60,7 +60,7 @@
         <h1>Palíndromos / Capicúas - Formulario</h1>
         <p>Dime una palabra o un número y te diré si es polindromo o un número capicúo</p>
         <p>
-            <label for="texto">Primera palabra: </label><input id="texto" name="texto" type="text" value="<?php if(isset($_POST["primera"])){echo $_POST["primera"];}?>">
+            <label for="texto">Introduzca el texto o número: </label><input id="texto" name="texto" type="text" value="<?php if(isset($_POST["primera"])){echo $_POST["primera"];}?>">
             <?php
              if(isset($_POST["enviar"])&& $error_texto){
                 if($texto==""){
@@ -68,11 +68,11 @@
                 }else if($longitud_texto<3){
                     echo "<span class='rojo'> Debes teclear al menos tres caracteres </span>";
                 } else{
-                    echo "<span class='rojo'> Debes teclear o letras o números </span>";
+                    echo "<span class='rojo'> Debes teclear solo letras o solo números </span>";
                 } 
                 }?>
         </p>
-        <button name="enviar">Comparar</button>
+        <button name="enviar">Comprobar</button>
     </form>
     <?php
         if(isset($_POST["enviar"]) && !$errores_form){
@@ -85,6 +85,24 @@
             break;
             }
         }
+
+        /*
+        Forma de Miguel Angel
+
+        $i=0;
+        $j=longitud -1;
+
+        $pal_cap = true;
+
+        while($i<$j){
+            if($texto[i]!=$texto[$j]){
+                $pal_cap=false;
+                break;
+            }
+            $i++;
+            $J
+        }
+        */
 
         $resultado = "";
         if (todo_letras($texto) && $es_capicua) {
