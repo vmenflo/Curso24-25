@@ -25,30 +25,124 @@
                     [0,0,0,0,0,1,0],
                     [0,0,0,0,0,0,0]
                     ];
-            
+
+            var valor_d_s_i=0;
+            var valor_a=0;
+            var valor_d_s_d=0;
+            var valor_d=0;
+            var valor_d_i_d=0;
+            var valor_abajo=0;
+            var valor_d_i_i=0;
+            var valor_i=0;
+
             for (let i = 0; i < minas.length; i++) {
                 for (let j = 0; j < minas[i].length; j++) {
-                    
+            if(minas[i][j]!=1){      
                 // D.S.I
                 if(i-1 >= 0 && j-1>=0){
-                    if(minas[i-1][j-1]==1){valor=2}
-                    
+                    if(minas[i-1][j-1]==1){
+                        valor_d_s_i=2;
+                    }else {
+                        if(minas[i-1][j-1]!=0){
+                            valor_d_s_i=minas[i-1][j-1]+1;
+                        }
+                    } 
                 }
                 // Campo Arriba
-
+                if(i-1 >= 0){
+                    if(minas[i-1][j]==1){
+                        valor_a=2;
+                    }else {
+                        if(minas[i-1][j]!=0){
+                            valor_a=minas[i-1][j]+1;
+                        }
+                    }
+                }
                 // D. S. D
-
+                if(i -1>= 0 && j+1<minas[i].length){
+                    if(minas[i-1][j+1]==1){
+                        valor_d_s_d=2;
+                    }else {
+                        if(minas[i-1][j+1]!=0){
+                            valor_d_s_d=minas[i-1][j+1]+1;
+                        }
+                    }
+                }
                 // Campo derecha
-
+                if(j+1<minas[i].length){
+                    if(minas[i][j+1]==1){
+                        valor_d=2;
+                    }else {
+                        if(minas[i][j+1]!=0){
+                            valor_d=minas[i][j+1]+1;
+                        }
+                    }
+                }
                 // D. I . D
-
+                if(i+1<minas.length && j+1<minas[i].length){
+                    if(minas[i+1][j+1]==1){
+                        valor_d_i_d=2;
+                    }else {
+                        if(minas[i+1][j+1]!=0){
+                            valor_d_i_d=minas[i+1][j+1]+1;
+                        }
+                    }
+                }
                 // Campo abajo
-
+                if(i+1< minas.length){
+                    if(minas[i+1][j]==1){
+                        valor_abajo=2;
+                    }else {
+                        if(minas[i+1][j]!=0){
+                            valor_abajo=minas[i+1][j]+1;
+                        }
+                    }
+                }
                 // D.I.I
-
+                if(i+1<minas.length &&j-1>=0){
+                    if(minas[i+1][j-1]==1){
+                        valor_d_i_i=2;
+                    }else {
+                        if(minas[i+1][j-1]!=0){
+                            valor_d_i_i=minas[i+1][j-1]+1;
+                        }
+                    }
+                }
+                // Campo izquierda
+                if(j-1>=0){
+                    if(minas[i][j-1]==1){
+                        valor_i=2;
+                    }else {
+                        if(minas[i][j-1]!=0){
+                            valor_i=minas[i][j-1]+1;
+                        }
+                    }
+                }
+                minas[i][j] = Math.min(
+                            valor_a || Infinity,
+                            valor_abajo || Infinity,
+                            valor_d || Infinity,
+                            valor_d_i_d || Infinity,
+                            valor_d_i_i || Infinity,
+                            valor_d_s_d || Infinity,
+                            valor_d_s_i || Infinity,
+                            valor_i || Infinity
+                        );
+                
+            }
+                valor_d_s_i=0;
+                valor_a=0;
+                valor_d_s_d=0;
+                valor_d=0;
+                valor_d_i_d=0;
+                valor_abajo=0;
+                valor_d_i_i=0;
+                valor_i=0;
                     
                 }
             }
+
+            console.log(minas);
 
     </script>
 </body>
