@@ -1,25 +1,39 @@
 <?php
     if(isset($_POST["enviar"])){
-    // comprobar si es solo letras
-        function todo_letras($palabra){
+    // comprobar si es solo números romanos
+        function es_romano($palabra){
             for ($i=0; $i < strlen($palabra); $i++) {
-                $todo_l=true; 
-                if(ord($palabra[$i])<ord("A") || ord($palabra[$i])>ord("z")){
-                    $todo_l=false;
+                $todo_romano=true; 
+                if($palabra[$i]!="M" && $palabra[$i]!="C" && $palabra[$i]!="D" && $palabra[$i]!="L" && $palabra[$i]!="V" && $palabra[$i]!="I" && $palabra[$i]!="X"){
+                    $todo_romano=false;
                     break;
                 }
             }
-            return $todo_l;
+            return $todo_romano;
         }
-
+    // Controlar que no se repita mas de 3 veces el mismo número
+    function es_correcto($numero){
+        $contador=0;
+        for ($i=0; $i <strlen($numero)-1 ; $i++) { 
+            $correcto = true;
+            if($numero[$i]==$numero[$i+1]){
+                $contador++;
+                if($contador==4){
+                    $correcto = false;
+                    break;
+                }
+            }else {
+                $contador=0;
+            }
+        }
+        return $correcto;
+    }
     // registramos los errores
-    
     $texto = trim($_POST["texto"]);
     $texto_m = strtoupper($texto);
     $longitud_texto= strlen($texto_m);
-    $error_texto=($texto_m=="" || !todo_letras($texto_m));
+    $error_texto=($texto_m=="" || !es_romano($texto_m) || !es_correcto($texto_m));
     $errores_form = $error_texto;
-
     }
 ?>
 <!DOCTYPE html>
@@ -58,11 +72,11 @@
              if(isset($_POST["enviar"])&& $error_texto){
                 if($texto==""){
                     echo "<span class='rojo'> Campo vacío </span>";
-                }else if($longitud_texto<3){
-                    echo "<span class='rojo'> Debes teclear al menos tres caracteres </span>";
-                } else if(!todo_letras($texto_m)){
-                    echo "<span class='rojo'> Debes teclear solo letras </span>";
-                } 
+                } else if(!es_romano($texto_m)){
+                    echo "<span class='rojo'> Debes teclear solo números romanos </span>";
+                } else if(!es_correcto($texto_m)){
+                    echo "<span class='rojo'> Solo se acepta hasta 3 letras iguales seguidas </span>";
+                }  
                 }?>
         </p>
         <button name="enviar">Convertir</button>
@@ -91,7 +105,7 @@
         }
 
         $resultado = $sumatorio;
-        echo "<div id='resultado'><h1>Romanos a árabes - Resultados</h1>".$resultado."</div>";
+        echo "<div id='resultado'><h1>Romanos a árabes - Resultados</h1><p>El número romano ".$texto_m." se escribe en cifras arabes ".$resultado."</p></div>";
         }
     ?>
 </body>
