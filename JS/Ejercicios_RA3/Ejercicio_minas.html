@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+
+<body>
+<script>
+let minas = [
+[0,0,0,0,0,0,0],
+[0,1,0,0,0,0,0],
+[0,1,0,0,0,0,0],
+[0,0,0,0,0,1,0],
+[0,0,0,0,0,1,0],
+[0,0,0,0,0,0,0]
+];
+
+// cambiamos los 0 por 98
+for (let i = 0; i < minas.length; i++) {
+    for (let j = 0; j < minas[i].length; j++) {
+        if(minas[i][j]===0){
+        minas[i][j]=98;
+    }         
+    }   
+}
+
+let flag = 1;
+while (flag) {
+flag = 0;
+//recorrer la matriz
+// Si la casilla no es 1 -> Buscar en las adyacentes y sumarle 1 -> actualizo casilla (si ese número es menor que el de la propia casilla)
+// flag=1 si hago un cambio.
+    for (let i = 0; i < minas.length; i++) {
+        for (let j = 0; j < minas[i].length; j++) {
+            if(minas[i][j]!=1){
+            let numeroMenor;
+            let valorActual;
+
+            numeroMenor = verNumeroMenor(minas,i,j);
+            valorActual = minas[i][j];
+            if(valorActual>numeroMenor){
+                minas[i][j]=numeroMenor;
+                flag=1;
+            }
+            }
+        }        
+    }
+
+}
+
+function verNumeroMenor(arr,fila,columna){
+    
+        var valor_d_s_i=80;
+        var valor_a=80;
+        var valor_d_s_d=80;
+        var valor_d=80;
+        var valor_d_i_d=80;
+        var valor_abajo=80;
+        var valor_d_i_i=80;
+        var valor_i=80;
+         
+        // D.S.I
+        if(fila-1 >= 0 && columna-1>=0){
+            valor_d_s_i = arr[fila-1][columna-1] + 1 ; 
+        }
+        // Campo Arriba
+        if(fila-1 >= 0){
+           valor_a= arr[fila-1][columna]+1;
+        }
+        // D. S. D
+        if(fila -1>= 0 && columna+1<minas[fila].length){
+            valor_d_s_d = arr[fila-1][columna+1]
+        }
+        // Campo derecha
+        if(columna+1<arr[fila].length){
+            valor_d = arr[fila][columna+1]+1;
+        }
+        // D. I . D
+        if(fila+1<arr.length && columna+1<arr[fila].length){
+            valor_d_i_d = arr[fila+1][columna+1] + 1;
+        }
+        // Campo inferior
+        if(fila+1< arr.length){
+            valor_i = arr[fila+1][columna]+1;
+        }
+        // D.I.I
+        if(fila+1<arr.length &&columna-1>=0){
+            valor_d_i_i = arr[fila][columna-1]+1;
+        }
+        // Campo izquierda
+        if(columna-1>=0){
+            valor_i = arr[fila][columna-1]+1;
+        }
+        return Math.min(valor_a, valor_abajo, valor_d, valor_d_i_d, valor_d_i_i, valor_d_s_d, valor_d_s_i, valor_i);
+    
+    
+            
+}
+
+console.log(minas);
+</script>
+</body>
+
+</html>
