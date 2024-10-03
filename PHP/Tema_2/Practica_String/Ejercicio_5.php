@@ -11,7 +11,7 @@
     }
     // registramos los errores
     $texto = trim($_POST["texto"]);
-    $error_texto=($texto=="" || $texto >= 4000 || !es_numero($texto));
+    $error_texto=($texto=="" || $texto > 4999 || !es_numero($texto));
     $errores_form = $error_texto;
     }
 ?>
@@ -53,7 +53,7 @@
                     echo "<span class='rojo'> Campo vacío </span>";
                 } else if(!es_numero($texto)){
                     echo "<span class='rojo'> Debes teclear solo números </span>";
-                }else if($texto>=4000){
+                }else if($texto>4999){
                     echo "<span class='rojo'> No puede expresarse números tan grandes en Romano </span>";
                 }    
                 }?>
@@ -97,7 +97,7 @@
             }else if($texto>=100){
                 $texto-=100;
                 $romano.= $array[100];
-            }else if($texto>=100){
+            }else if($texto>=90){
                 $texto-=90;
                 $romano.= $array[90];
             }else if($texto>=50){

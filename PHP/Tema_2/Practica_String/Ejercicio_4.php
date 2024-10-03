@@ -11,6 +11,51 @@
             }
             return $todo_romano;
         }
+    /*
+    Forma de hacerlo Miguel Angel
+    
+    function letras_correctas($texto){
+    $correcto=true;
+    for(){
+        if(!isset(VALORES[$texto[$i]])){
+            $correcto=false;
+            break;
+        }
+    }
+        return $correcto;
+    }
+
+    Orden bueno
+    function orden_bueno($texto){
+        $bueno=true;
+        for(){
+            if(VALORES[$i]< VALORES[$i+1]){
+                $bueno=false;
+                break;s
+            }
+        }
+    }
+    Calcular que se repite_bien
+    function repite_bien($texto){
+        $cont["M"]=4;
+        $cont["D"]=1;
+        $cont["C"]=4;
+        $cont["L"]=1;
+        $cont["X"]=4;
+        $cont["V"]=1;
+        $cont["I"]=4;
+
+        $bueno=true;
+        for(){
+            $cont[$texto[$i]]--;
+            if($cont[$texto[$i]]<0){
+                $bueno=false;
+                break;
+            }
+        }
+        return $bueno;
+    }
+    */
     // Controlar que no se repita mas de 3 veces el mismo número
     function es_correcto($numero){
         $contador=0;
@@ -75,7 +120,7 @@
                 } else if(!es_romano($texto_m)){
                     echo "<span class='rojo'> Debes teclear solo números romanos </span>";
                 } else if(!es_correcto($texto_m)){
-                    echo "<span class='rojo'> Solo se acepta hasta 3 letras iguales seguidas </span>";
+                    echo "<span class='rojo'> Solo se acepta hasta 4 letras iguales seguidas </span>";
                 }  
                 }?>
         </p>

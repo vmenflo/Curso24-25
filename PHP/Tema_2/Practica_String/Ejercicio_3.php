@@ -11,6 +11,18 @@
             }
             return $todo_l;
         }
+        /*
+        Forma en el caso que no me dejará usar srt_replace
+        function quitar_espacios($texto){
+        $cadena="";
+            for(){
+                if($texto[$i]!=" "){
+                    $cadena.=$texto[$i];
+                }
+            }
+            return $cadena;
+        }
+        */
 
         // registramos los errores
         $texto = trim($_POST["texto"]);
@@ -50,10 +62,10 @@
 </head>
 <body>
     <form id="principal" action="Ejercicio_3.php" method="post">
-        <h1>Palíndromos / Capicúas - Formulario</h1>
-        <p>Dime una palabra o un número y te diré si es polindromo o un número capicúo</p>
+        <h1>Frases Palindromas- Formulario</h1>
+        <p>Dime una frase y te diré si es polindroma</p>
         <p>
-            <label for="primera">Primera palabra: </label><input id="texto" name="texto" type="text" value="<?php if(isset($_POST["primera"])){echo $_POST["primera"];}?>">
+            <label for="primera">Frase: </label><input id="texto" name="texto" type="text" value="<?php if(isset($_POST["primera"])){echo $_POST["primera"];}?>">
             <?php
              if(isset($_POST["enviar"])&& $error_texto){
                 if($texto==""){
@@ -85,7 +97,7 @@
             $resultado = "<p>$texto NO es una frase palíndromo</p>";
         } 
 
-        echo "<div id='resultado'><h1>Palíndromos / Capicúas - Resultados</h1>" . $resultado . "</div>";
+        echo "<div id='resultado'><h1>Frases palindromas- Resultados</h1>" . $resultado . "</div>";
         }
     ?>
 </body>
