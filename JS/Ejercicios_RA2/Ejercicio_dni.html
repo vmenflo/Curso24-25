@@ -7,24 +7,42 @@
 </head>
 <body>
     <h1>Calcular letra DNI</h1>
-    <label for="dni">Introduce el DNI para verificarlo </label><input type="text" name="dni" id="dni">
+    <label for="dni" id="texto">Introduce el DNI para verificarlo </label>
+    <input onblur="comparar()" type="text" name="dni" id="dni">
     <script>
-        var letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
-        let letra = "";
+        var letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'];
+        
         // función para calcular la letra
-        function calcular_letra(){
-            let resto ="";
-            let letra = "";
-            let numero =arguments[0];
-            if(arguments[0]>0 && arguments[0]<99999999){
-                resto = numero%23;
-                letra = arguments[1][resto];
-                return letra;
-            }else{
-                return "El número proporcionado no es válido"
+        function calcular_letra(numero) {
+            if (numero > 0 && numero <= 99999999) {
+                let resto = numero % 23;
+                return letras[resto];
+            } else {
+                return "error";
             }
         }
 
+        // función para comparar ambos DNIs
+        function comparar() {
+            // Obtener el valor del input
+            let dni_introducido = document.getElementById("dni").value;
+            let dni_sin_letra = dni_introducido.substring(0, 8);  // Solo los 8 primeros caracteres
+            let letra_introducida = dni_introducido.substring(8, 9);  // La letra es el último carácter
+
+            // Convertir el número a entero
+            let dni_simple = parseInt(dni_sin_letra);
+
+            // Calcular la letra esperada
+            let letra_calculada = calcular_letra(dni_simple);
+
+            if (letra_introducida === letra_calculada) {
+                document.getElementById("texto").innerHTML = "El número y la letra del DNI indicado son válidos";
+            } else if (letra_calculada === "error") {
+                document.getElementById("texto").innerHTML = "Error en el formato";
+            } else {
+                document.getElementById("texto").innerHTML = "DNI inválido";
+            }
+        }
     </script>
 </body>
 </html>
