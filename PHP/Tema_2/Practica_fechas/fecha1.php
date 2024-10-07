@@ -1,20 +1,23 @@
 <?php
     if(isset($_POST["enviar"])){
-
-    // Comprobar que tiene el formato correcto
-    function f_correcto($fecha){
-        if(strlen($fecha)===10){
-            if(substr($fecha,2,1)=="/" && substr($fecha,5,1)=="/"){
-                return true;
-            }
-        }
-        return false;
+    // buenos_ separadores
+    function buenos_separadores($texto){
+        return substr($texto,2,1)=="/" && substr($texto,5,1)=="/";
     }
+    //buenos_numeros
+    function buenos_numeros($texto){
+        return is_numeric(substr($texto,0,2)) && is_numeric(substr($texto,3,2) && is_numeric(substr($texto,6,4)));
+    }
+    // fecha_valida
+    function fecha_valida($texto){
+        return checkdate(substr($texto,3,2),substr($texto,0,2), substr($texto,6,4));
+    }
+
     // registramos los errores
     $fecha1 = trim($_POST["fecha1"]);
     $fecha2 = trim($_POST["fecha2"]);
-    $error_fecha1=($fecha1=="" || !f_correcto($fecha1));
-    $error_fecha2=($fecha2=="" || !f_correcto($fecha2));
+    $error_fecha1=($fecha1=="" || !buenos_separadores($fecha1) || !buenos_numeros($fecha1) || !fecha_valida($fecha1));
+    $error_fecha2=($fecha2=="" || !buenos_separadores($fecha2) || !buenos_numeros($fecha2) || !fecha_valida($fecha2));
     $errores_form = $error_fecha1 || $error_fecha2;
     }
 ?>
@@ -53,7 +56,9 @@
              if(isset($_POST["enviar"])&& $error_fecha1){
                 if($fecha1==""){
                     echo "<span class='rojo'> Campo vacío </span>";
-                } else if(!f_correcto($fecha1)){
+                } else if(!fecha_valida($fecha1)){
+                    echo "<span class='rojo'> El formato introducido no es valido, recuerda DD/MM/YYYY </span>";
+                } else if(!buenos_separadores($fecha1)){
                     echo "<span class='rojo'> El formato introducido no es valido, recuerda DD/MM/YYYY </span>";
                 }  
                 }?>
@@ -64,18 +69,29 @@
              if(isset($_POST["enviar"])&& $error_fecha2){
                 if($fecha2==""){
                     echo "<span class='rojo'> Campo vacío </span>";
-                } else if(!f_correcto($fecha2)){
+                } else if(!fecha_valida($fecha2)){
                     echo "<span class='rojo'> El formato introducido no es valido, recuerda DD/MM/YYYY </span>";
-                } 
+                } else if(!buenos_separadores($fecha2)){
+                    echo "<span class='rojo'> El formato introducido no es valido, recuerda DD/MM/YYYY </span>";
+                }  
                 }?>
         </p>
         <button name="enviar">Calcular</button>
     </form>
     <?php
-        if(isset($_POST["enviar"]) && !$errores_form){
-            
-        echo "<div id='resultado'><h1>Fechas - Respuesta</h1><p> La diferencia en días entre las dos fechas introducidas es de  "." </p></div>";
-        }
+
+    // Verificar la diferencia entre ambas fechas
+
+    if(isset($_POST["enviar"]) && !$errores_form){
+        $arr_fecha1 = explode("/", $_POST["fecha1"]);
+        $arr_fecha2 = explode("/", $_POST["fecha2"]);
+        $calcular_fecha_1=mktime(0,0,0,$arr_fecha1[1],$arr_fecha1[0],$arr_fecha1[2]);
+        $calcular_fecha_2=mktime(0,0,0,$arr_fecha2[1],$arr_fecha2[0],$arr_fecha2[2]);
+    
+        $diferencia = abs($calcular_fecha_1-$calcular_fecha_2);
+        $resultado = $diferencia/86400;
+    echo "<div id='resultado'><h1>Fechas - Respuesta</h1><p> La diferencia en días entre las dos fechas introducidas es de  ".$resultado." días. </p></div>";
+    }
     ?>
 </body>
 </html>
