@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+        }
+        #contenedor {
+            border: 1px solid black;
+            width: 400px; 
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px; 
+        }
+        #pantalla {
+            border: 1px solid black;
+            height: 40px;
+            flex-basis: 40px;
+            font-size: 24px;
+            display: flex;
+            align-items: center; 
+            justify-content: flex-end;
+            padding: 5px; 
+        }
+        .bt {
+            border: 1px solid black;
+            height: 50px; 
+            flex: 1; 
+            margin: 2px; 
+            background-color: #f9f9f9; 
+            font-size: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 5px; 
+        }
+        .bt:hover {
+            background-color: #e0e0e0; 
+        }
+        .fila {
+            display: flex; 
+        }
+    </style>
+</head>
+<body>
+    <div id="contenedor">
+        <div id="pantalla"><p></p></div>
+        <div class="fila">
+            <div id="uno" onclick="recogerValor(this)" class="bt">1</div>
+            <div id="dos" onclick="recogerValor(this)" class="bt">2</div>
+            <div id="tres" onclick="recogerValor(this)" class="bt">3</div>
+            <div id="sumar" onclick="recogerValor(this)" class="bt">+</div>
+        </div>
+        <div class="fila">
+            <div id="cuatro" onclick="recogerValor(this)" class="bt">4</div>
+            <div id="cinco" onclick="recogerValor(this)" class="bt">5</div>
+            <div id="seis" onclick="recogerValor(this)" class="bt">6</div>
+            <div id="restar" onclick="recogerValor(this)" class="bt">-</div>
+        </div>
+        <div class="fila">
+            <div id="siete" onclick="recogerValor(this)" class="bt">7</div>
+            <div id="ocho" onclick="recogerValor(this)" class="bt">8</div>
+            <div id="nueve" onclick="recogerValor(this)" class="bt">9</div>
+            <div id="multi" onclick="recogerValor(this)" class="bt">*</div>
+        </div>
+        <div class="fila">
+            <div id="limpiar" onclick="limpiar()" class="bt">C</div>
+            <div id="cero" onclick="recogerValor(this)" class="bt">0</div>
+            <div id="igual" onclick="accion()" class="bt">=</div>
+            <div id="dividir" onclick="recogerValor(this)" class="bt">/</div>
+        </div>
+    </div>
+    <script>
+        let valores="";
+
+        function recogerValor(boton){
+            valores += boton.textContent;
+            mostrar();
+        }
+        function mostrar(){
+            document.getElementById("pantalla").textContent=valores;
+        }
+
+        function limpiar(){
+            document.getElementById("pantalla").textContent="";
+        }
+        
+        function accion(){
+           let resultado = eval(valores);
+           mostrarResultado(resultado);
+           valores="";
+        }
+
+        function mostrarResultado(resultado){
+            document.getElementById("pantalla").textContent=resultado;
+        }
+    </script>
+</body>
+</html>
