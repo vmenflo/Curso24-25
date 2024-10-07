@@ -6,7 +6,7 @@
     }
     //buenos_numeros
     function buenos_numeros($texto){
-        return is_numeric(substr($texto,0,2)) && is_numeric(substr($texto,3,2) && is_numeric(substr($texto,6,4)));
+        return is_numeric(substr($texto,0,2)) && is_numeric(substr($texto,3,2)) && is_numeric(substr($texto,6,4));
     }
     // fecha_valida
     function fecha_valida($texto){
@@ -58,8 +58,10 @@
                     echo "<span class='rojo'> Campo vacío </span>";
                 } else if(!fecha_valida($fecha1)){
                     echo "<span class='rojo'> El formato introducido no es valido, recuerda DD/MM/YYYY </span>";
-                } else if(!buenos_separadores($fecha1)){
+                } else if(!buenos_separadores($fecha1) && !buenos_numeros($fecha1)){
                     echo "<span class='rojo'> El formato introducido no es valido, recuerda DD/MM/YYYY </span>";
+                } else if(!fecha_valida($fecha1)){
+                    echo "<span class='rojo'> Esa fecha no existe </span>";
                 }  
                 }?>
         </p>
@@ -71,9 +73,11 @@
                     echo "<span class='rojo'> Campo vacío </span>";
                 } else if(!fecha_valida($fecha2)){
                     echo "<span class='rojo'> El formato introducido no es valido, recuerda DD/MM/YYYY </span>";
-                } else if(!buenos_separadores($fecha2)){
+                } else if(!buenos_separadores($fecha2) && !buenos_numeros($fecha2)){
                     echo "<span class='rojo'> El formato introducido no es valido, recuerda DD/MM/YYYY </span>";
-                }  
+                } else if(!fecha_valida($fecha2)){
+                    echo "<span class='rojo'> Esa fecha no existe </span>";
+                }   
                 }?>
         </p>
         <button name="enviar">Calcular</button>
