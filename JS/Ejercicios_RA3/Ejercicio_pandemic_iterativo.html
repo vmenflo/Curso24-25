@@ -26,69 +26,26 @@ mostrarMatriz(biocenosis2,"txt");
 
 
 function pandemic(x,y){
-    let flag = 1;
-    while (flag) {
-    
-    flag = 0;
-
-    // Guardar el valor en una variable para compararla
-    let valor = biocenosis2[x][y];
-    let x;
-    let Y;
-    // Resetear posición actual
-    biocenosis2[x][y] = "";
-
-    //Buscamos en las vecinas
-     // D.S.I
-     if(x-1>=0 && y-1>=0){
-        if(biocenosis2[x-1][y-1]===valor){
-            pandemic(x-1,y-1);
-        }
-    }
-    // biocenosisiba
-    if(x-1>=0){
-        if(biocenosis2[x-1][y]===valor){
-            pandemic(x-1,y);
-        }
-    }
-    // D S D
-    if(x-1>=0 && y+1<biocenosis2[x].length){
-        if(biocenosis2[x-1][y+1]===valor){
-            pandemic(x-1,y+1);
-        }
-    }
-    // Derecha
-    if( y+1<biocenosis2[x].length){
-        if(biocenosis2[x][y+1]===valor){
-            pandemic(x,y+1);
-        }
-    }
-    // D.I.D
-    if( x+1<biocenosis2.length && y+1<biocenosis2[x+1].length){
-        if(biocenosis2[x+1][y+1]===valor){
-            pandemic(x+1,y+1);
-        }
-    }
-    // Abajo
-    if( x+1<biocenosis2.length){
-        if(biocenosis2[x+1][y]===valor){
-            pandemic(x+1,y);
-        }
-    }
-    // D.S.I
-    if( x+1<biocenosis2.length && y-1>=0){
-        if(biocenosis2[x+1][y-1]===valor){
-            pandemic(x+1,y-1);
-        }
-    }
-    // Izquierda
-    if(y-1>=0){
-        if(biocenosis2[x][y-1]===valor){
-            pandemic(x,y-1);
-        }
-    }
+let flag = 1;
+let valor = biocenosis2[x][y];
+while (flag) {
+flag = 0;
+//recorrer la matriz
+// Si la casilla no es 1 -> Buscar en las adyacentes y sumarle 1 -> actualizo casilla (si ese número es menor que el de la propia casilla)
+// flag=1 si hago un cambio.
+    for (let i = 0; i < biocenosis2.length; i++) {
+        for (let j = 0; j < biocenosis2[i].length; j++) {
+            // Si es igual al valor, compruebame las adyacentes y coge la menor
+            if(biocenosis2[x][j]==valor){
+                biocenosis2[x][y]="";
+                flag = 1;
+            }
+        }        
     }
 }
+}
+
+
 // Función para mostrar una matriz con span
 function mostrarMatriz(matriz, id) {
     let contenido = ""; // Creamos una variable para almacenar el contenido
