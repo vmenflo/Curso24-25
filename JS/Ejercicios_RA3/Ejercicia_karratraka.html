@@ -8,7 +8,21 @@
 <body>
     <p id="resultado"></p>
     <script>
-      
+        // Parametro ajustable
+        const TAM = 20;
+        // Array donde almacenaremos los números
+        let array=[1,1];
+        array = generar_secuencia(array,TAM);
+        // Lo mostramos
+        console.log(array);
+
+        // Función generar números de la secuencia Karratraka
+        function generar_secuencia(arr, tamaño){
+            for (let i = 2; i < tamaño; i++) {
+                arr.push(arr[i-1]+arr[i-2]+1);
+            }
+            return arr;
+        }
     </script>
 </body>
 </html>
