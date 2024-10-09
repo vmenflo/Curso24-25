@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PANDEMIC</title>
+  <title>PANDEMIC Iterativo</title>
 </head>
 <body>
 
@@ -26,15 +26,15 @@ mostrarMatriz(biocenosis2,"txt");
 
 
 function pandemic(x,y){
-
-    // Si la celda ya está vacía, se va
-    if (biocenosis2[x][y] === "") {
-        return;
-    }
+    let flag = 1;
+    while (flag) {
     
+    flag = 0;
+
     // Guardar el valor en una variable para compararla
     let valor = biocenosis2[x][y];
-
+    let x;
+    let Y;
     // Resetear posición actual
     biocenosis2[x][y] = "";
 
@@ -86,6 +86,7 @@ function pandemic(x,y){
         if(biocenosis2[x][y-1]===valor){
             pandemic(x,y-1);
         }
+    }
     }
 }
 // Función para mostrar una matriz con span
