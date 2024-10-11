@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luis Candelas</title>
+</head>
+
+<body>
+    <script>
+
+        let mapa = [
+                    ['*', '', '', '', '', ''],
+                    ['*', '', '', '', '', ''],
+                    ['*', '', '', '', '', ''],
+                    ['*', '', '', '', '', ''],
+                    ['*', '*', '*', '*', '*', '*']];
+
+    
+    console.log(salida(mapa,0,0));
+     
+    function salida(array, f, c) {
+    // Si la casilla actual no es válida se va
+    if (array[f][c] === "") {
+        return "No somos libres";
+    }
+
+    // Si estamos en la última casilla, hemos encontrado la salida
+    if (f === array.length - 1 && c === array[f].length - 1) {
+        return "Somos libres";
+    }
+
+    // Marca la casilla actual como visitada
+    array[f][c] = "";
+
+    let resultado;
+
+    // Arriba
+    if (f - 1 >= 0 && array[f - 1][c] === "*") {
+        resultado = salida(array, f - 1, c);
+        if (resultado === "Somos libres") {
+            return resultado;
+        }
+    }
+
+    // Abajo
+    if (f + 1 < array.length && array[f + 1][c] === "*") {
+        resultado = salida(array, f + 1, c);
+        if (resultado === "Somos libres") {
+            return resultado;
+        }
+    }
+
+    // Derecha
+    if (c + 1 < array[f].length && array[f][c + 1] === "*") {
+        resultado = salida(array, f, c + 1);
+        if (resultado === "Somos libres") {
+            return resultado;
+        }
+    }
+
+    // Izquierda
+    if (c - 1 >= 0 && array[f][c - 1] === "*") {
+        resultado = salida(array, f, c - 1);
+        if (resultado === "Somos libres") {
+            return resultado;
+        }
+    }
+
+    // Si ninguna dirección lleva a la salida, retornamos "No somos libres"
+    return "No somos libres";
+}
+
+
+    
+        
+
+
+    </script>
+
+</body>
+
+</html>

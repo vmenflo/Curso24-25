@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luis Candelas</title>
+</head>
+
+<body>
+    <script>
+
+        let mapa = [
+                    ['*', '', '', '', '', ''],
+                    ['*', '', '', '', '', ''],
+                    ['*', '', '', '', '', ''],
+                    ['*', '', '', '', '', ''],
+                    ['*', '*', '', '*', '*', '*']];
+
+    
+    salida(mapa,0,0);
+     
+    function salida(array,f,c){
+        // Array de coordenada en la que estoy
+        let coordenadas=[[f,c]];
+        let libre=false;
+        let flag = 1;
+        while(flag===1){
+        // Verifica si hay coordenadas para procesar
+        if (coordenadas.length === 0) {
+            break;  // Si no hay más coordenadas, rompe el bucle
+        }
+        let [f,c] = coordenadas.pop();
+        // Búsqueda de la salida
+        // Arriba
+        if(f-1>=0){
+            if(array[f-1][c]==="*"){
+                if(f-1 === array.length-1 && c===array[f].length-1){
+                    libre=true;
+                    break;
+                }
+                array[f-1][c]="";
+                flag=1;
+                coordenadas.push([f-1,c]);
+            }
+        }
+        // Abajo
+        if(f+1<array.length){
+            if(array[f+1][c]==="*"){
+                if(f+1 === array.length-1 && c===array[f].length-1){
+                    libre=true;
+                    break;
+                }
+                array[f+1][c]="";
+                flag=1;
+                coordenadas.push([f+1,c]);
+            }
+        }
+        // Derecha
+        if(c+1 <array[f].length){
+            if(array[f][c+1]==="*"){
+                if(f === array.length -1 && c+1===array[f].length -1){
+                    libre=true;
+                    break;
+                }
+                array[f][c+1]="";
+                flag=1;
+                coordenadas.push([f,c+1]);
+            }
+        }
+        // Izquierda
+        if(c-1>=0){
+            if(array[f][c-1]==="*"){
+                if(f=== array.length-1 && c-1===array[f].length-1){
+                    libre=true;
+                    break;
+                }
+                array[f][c-1]="";
+                flag=1;
+                coordenadas.push([f,c-1]);
+            }
+        }
+    }
+
+        if(libre){
+            console.log("Somos libres");
+        }else{
+            console.log("No somos libres");
+        }
+    }
+        
+
+
+    </script>
+
+</body>
+
+</html>
