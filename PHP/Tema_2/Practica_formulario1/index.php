@@ -1,39 +1,16 @@
         <?php
             if(isset($_POST["enviar"])){
-                // Comprobar error del dni que este bien escrito y que sea válido
-                function formato_dni($dni){
-                    $tamaño = count($dni);
-                    $es_numero = true;
-                    for ($i=0; $i < $tamaño; $i++) { 
-                        if(!is_numeric($dni[$i])){
-                            $es_numero=false;
-                        }
-                    }
+                require_once "funciones.php";
 
-                    $letra = substr(strtoupper($dni),-1);
-                    if($letra=="A-Z"){
-                        $es_letra=true;
-                    }else{
-                        $es_letra=false;
-                    }
-
-                    if(count($dni)==9 && $es_letra && $es_numero){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                    
-
-                    
-                }
                 // Comprobamos errores del formulario
                 $error_nombre=($_POST["nombre"]=="");
-                $error_nombre=($_POST["apellidos"]=="");
-                $error_nombre=($_POST["contrasenia"]=="");
-                // $error_nombre=($_POST["sexo"]=="");
-                $error_nombre=($_POST["comentarios"]=="");
-                $error_nombre=($_POST["dni"]=="" || !formato_dni($_POST["dni"]));
-                $errores_form = $error_nombre||$error_apellidos||$error_contrasenia||$error_dni||$error_sexo||$error_comentarios;             
+                $error_apellidos=($_POST["apellidos"]=="");
+                $error_contrasenia=($_POST["contrasenia"]=="");
+                $error_sexo=!isset($_POST["sexo"]);
+                $error_comentarios=($_POST["comentarios"]=="");
+                $error_dni=($_POST["dni"]=="" || !formato_dni($_POST["dni"]) || !es_valido($_POST["dni"]));
+                $error_foto = $_FILES["foto"]["name"]!= "" && ($_FILES["foto"]["error"] || !tiene_extension($_FILES["foto"]["name"]) || !getimagesize($_FILES["foto"]["tmp_name"]) || $_FILES["foto"]["size"] > 500*1024);
+                $errores_form = $error_nombre||$error_apellidos||$error_contrasenia||$error_dni||$error_sexo||$error_comentarios || $error_foto;             
             }
         ?>
         <!DOCTYPE html>
@@ -42,6 +19,9 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Práctica 1B</title>
+            <style>
+                .rojo{color:red;}
+            </style>
         </head>
         <body>
             <!-- Si entro y no esta el campo enviar, sigue leyendo el html SINO entonces muestra los resultados-->
