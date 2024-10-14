@@ -59,22 +59,24 @@ if(isset($_POST["btnEnviar"])){
     </form>
     <?php
     // Vamos a almacenar está información
-    if(isset($_POST["btnEnviar"]) && !$error_foto && $_FILES["foto"]["name"]!=""){
-        $numero_unico=md5(uniqid(uniqid(),true));
-        $ext = tiene_extension($_FILES["foto"]["name"]);
-        $nombre_imagen = "img_".$numero_unico.".".$ext;
-        echo "<h1> Información de la imagen subida</h1>";
-        // movemos el archivo del temporal name a nuestra carpeta images
-        // El @ evita que no salga el warning para asi controlarlos nosotros
-        @$var = move_uploaded_file($_FILES["foto"]["tmp_name"], "images/".$nombre_imagen);
+    if(isset($_POST["btnEnviar"]) && !$error_foto ){
+        if($_FILES["foto"]["name"]!=""){
+            $numero_unico=md5(uniqid(uniqid(),true));
+            $ext = tiene_extension($_FILES["foto"]["name"]);
+            $nombre_imagen = "img_".$numero_unico.".".$ext;
+            echo "<h1> Información de la imagen subida</h1>";
+            // movemos el archivo del temporal name a nuestra carpeta images
+            // El @ evita que no salga el warning para asi controlarlos nosotros
+            @$var = move_uploaded_file($_FILES["foto"]["tmp_name"], "images/".$nombre_imagen);
 
-        if(!$var){
-            echo "<p> No se ha podido mover la imagen a la carpeta destino en el servidor </p>";
-        }else {
-            echo "<p><strong>Nombre Original: </strong>".$_FILES["foto"]["name"]."</p>";
-            echo "<p><strong>Tipo: </strong>".$_FILES["foto"]["type"]."</p>";
-            echo "<p><strong>Archivo subido temporalmente en: </strong>".$_FILES["foto"]["tmp_name"]."</p>";
-            echo "<p><img src='images/".$nombre_imagen."' alt='imagen subida' title='Imagen'></p>";
+            if(!$var){
+                echo "<p> No se ha podido mover la imagen a la carpeta destino en el servidor </p>";
+            }else {
+                echo "<p><strong>Nombre Original: </strong>".$_FILES["foto"]["name"]."</p>";
+                echo "<p><strong>Tipo: </strong>".$_FILES["foto"]["type"]."</p>";
+                echo "<p><strong>Archivo subido temporalmente en: </strong>".$_FILES["foto"]["tmp_name"]."</p>";
+                echo "<p><img src='images/".$nombre_imagen."' alt='imagen subida' title='Imagen'></p>";
+            }
         }
     }
 
