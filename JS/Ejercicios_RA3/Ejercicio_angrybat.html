@@ -7,5 +7,64 @@
 </head>
 <body>
     <h1>AngryBATS</h1>
+    <p id="texto"></p>
+    <script>
+        let bat = [
+                ["P","P","G","H","H","R"],
+                ["P","P","G","H","H","G"],
+                ["P","G","M","H","H","G"],
+                ["G","R","M","H","G","G"],
+                ["R","R","H","H","G","P"]
+                ];
+
+        console.log(bat);
+        // Copia de la matriz original
+        let bat2 = JSON.parse(JSON.stringify(bat));
+        angrybats(2,2);
+        mostrarMatriz(bat2,"texto");
+
+        // Función 
+        function angrybats(fila, columna) {
+        let valor = "*";
+        let bat = "M";
+        let bat_in = "m";
+        let humanos = "H";
+        if(bat2[fila][columna]=== bat){
+            bat2[fila][columna]=bat_in;
+
+            // bucle para verificar toda la matriz
+            let flag = 1;
+            while (flag === 1) {
+                flag = 0;
+
+                for (let i = 0; i < bat2.length; i++) {
+                    for (let j = 0; j < bat2[i].length; j++) {
+                        if(bat2[i][j]==bat || bat2[i][j]==humanos){
+                            //Las vecinas
+                        }
+                    }      
+                }
+                
+            }
+        }
+
+       
+        
+        
+    }
+
+        function mostrarMatriz(matriz, id) {
+        let contenido = ""; // Creamos una variable para almacenar el contenido
+
+        for (let i = 0; i < matriz.length; i++) {
+            for (let j = 0; j < matriz[i].length; j++) {
+                contenido += "<span>" + matriz[i][j] + " | " + " </span>";
+            }
+            contenido += "<br/>"; // Cambiar de fila
+        }
+
+        document.getElementById(id).innerHTML += contenido;
+        }
+    </script>
 </body>
 </html>
