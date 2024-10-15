@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngryBats</title>
+</head>
+<body>
+    <h1>AngryBATS</h1>
+    <p id="texto"></p>
+    <script>
+        let bat = [
+                ["P","P","G","H","H","R"],
+                ["P","P","G","H","H","G"],
+                ["P","G","M","H","H","G"],
+                ["G","R","M","H","G","G"],
+                ["R","R","H","H","G","P"]
+                ];
+
+        console.log(bat);
+        // Copia de la matriz original
+        let bat2 = JSON.parse(JSON.stringify(bat));
+        angrybats(2,2);
+        console.log(bat2);
+        mostrarMatriz(bat2,"texto");
+
+        // Función 
+        function angrybats(i, j) {
+    let bat = "M";
+    let bat_in = "m"; // murciélago que ya fue procesado
+    let humanos = "H";
+    let valor = "*"; // valor para humanos transformados
+
+    if (bat2[i][j] != bat) {
+        return;
+    } 
+    if(bat2[i][j]===bat){
+        bat2[i][j] = bat_in;
+    }
+    if(bat2[i][j]===humanos){
+        bat2[i][j] = valor;
+    }
+        
+        
+        // Arriba
+        if (i - 1 >= 0 && (bat2[i-1][j]===bat || bat2[i-1][j]===humanos)) { 
+            if(bat2[i-1][j]===bat){
+                bat2[i-1][j] = bat_in;
+                }
+            if(bat2[i-1][j]===humanos){
+                bat2[i-1][j] = valor;
+                }
+                angrybats(i - 1, j);
+        }
+
+        // Abajo
+        if (i + 1 < bat2.length  && (bat2[i+1][j]===bat || bat2[i+1][j]===humanos)) { 
+            if(bat2[i+1][j]===bat){
+                bat2[i+1][j] = bat_in;
+                }
+            if(bat2[i+1][j]===humanos){
+                bat2[i+1][j] = valor;
+                }   
+            angrybats(i + 1, j);
+            
+        }
+
+        // Izquierda
+        if (j - 1 >= 0 && (bat2[i][j-1]===bat || bat2[i][j-1]===humanos)) { 
+            if(bat2[i][j-1]===bat){
+                bat2[i][j-1] = bat_in;
+                }
+            if(bat2[i][j-1]===humanos){
+                bat2[i][j-1] = valor;
+                }
+            angrybats(i, j - 1);
+        }
+
+        // Derecha
+        if (j + 1 < bat2[i].length && (bat2[i][j+1]===bat || bat2[i][j+1]===humanos)) { 
+            if(bat2[i][j+1]===bat){
+                bat2[i][j+1] = bat_in;
+                }
+            if(bat2[i][j+1]===humanos){
+                bat2[i][j+1] = valor;
+                }
+            angrybats(i, j + 1);
+        }
+    
+}
+
+
+        function mostrarMatriz(matriz, id) {
+        let contenido = ""; // Creamos una variable para almacenar el contenido
+
+        for (let i = 0; i < matriz.length; i++) {
+            for (let j = 0; j < matriz[i].length; j++) {
+                contenido += "<span>" + matriz[i][j] + " | " + " </span>";
+            }
+            contenido += "<br/>"; // Cambiar de fila
+        }
+
+        document.getElementById(id).innerHTML += contenido;
+        }
+    </script>
+</body>
+</html>

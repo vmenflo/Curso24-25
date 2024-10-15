@@ -21,6 +21,7 @@
         // Copia de la matriz original
         let bat2 = JSON.parse(JSON.stringify(bat));
         angrybats(2,2);
+        console.log(bat2);
         mostrarMatriz(bat2,"texto");
 
         // Función 
@@ -41,6 +42,48 @@
                     for (let j = 0; j < bat2[i].length; j++) {
                         if(bat2[i][j]==bat || bat2[i][j]==humanos){
                             //Las vecinas
+                            // Arriba
+                            if(i-1>0 && bat2[i-1][j]===valor ||i-1>0 && bat2[i-1][j]===bat_in){
+                                if(bat2[i][j]===bat){
+                                    bat2[i][j]=bat_in;
+                                    flag=1;
+                                }else if(bat2[i][j]===humanos){
+                                    bat2[i][j]=valor;
+                                    flag=1;
+                                }
+                            }
+                            // Abajo
+                            if(i+1<bat2.length && bat2[i+1][j]===valor ||i+1<bat2.length && bat2[i+1][j]===bat_in){
+                                if(bat2[i][j]===bat){
+                                    bat2[i][j]=bat_in;
+                                    flag=1;
+                                }else if(bat2[i][j]===humanos){
+                                    bat2[i][j]=valor;
+                                    flag=1;
+                                }
+                            }
+
+                            //Izquierda
+                            if(j-1>0 && bat2[i][j-1]===valor ||j-1>0 && bat2[i][j-1]===bat_in){
+                                if(bat2[i][j]===bat){
+                                    bat2[i][j]=bat_in;
+                                    flag=1;
+                                }else if(bat2[i][j]===humanos){
+                                    bat2[i][j]=valor;
+                                    flag=1;
+                                }
+                            }
+
+                            // Derecha
+                            if(j+1<bat2[i].length && bat2[i][j+1]===valor ||j+1<bat2[i].length && bat2[i][j+1]===bat_in){
+                                if(bat2[i][j]===bat){
+                                    bat2[i][j]=bat_in;
+                                    flag=1;
+                                }else if(bat2[i][j]===humanos){
+                                    bat2[i][j]=valor;
+                                    flag=1;
+                                }
+                            }
                         }
                     }      
                 }
