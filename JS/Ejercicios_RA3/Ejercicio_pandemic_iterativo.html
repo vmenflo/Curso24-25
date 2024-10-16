@@ -1,80 +1,94 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>PANDEMIC Iterativo</title>
+    <title>PANDEMIC Iterativo</title>
 </head>
+
 <body>
 
-  <p id="txt"></p>
+    <p id="txt"></p>
+    <hr>
+    <p id="txt2"></p>
 
-  <script>
-let biocenosis = [
-  ['P', 'P', 'G', 'H', 'H', 'R'],
-  ['P', 'P', 'G', 'H', 'H', 'G'],
-  ['P', 'G', 'R', 'H', 'H', 'G'],
-  ['G', 'R', 'R', 'H', 'G', 'G'],
-  ['R', 'R', 'H', 'H', 'G', 'P']
-];
+    <script>
+        let biocenosis = [
+            ['P', 'P', 'G', 'H', 'H', 'R'],
+            ['P', 'P', 'G', 'H', 'H', 'G'],
+            ['P', 'G', 'R', 'H', 'H', 'G'],
+            ['G', 'R', 'R', 'H', 'G', 'G'],
+            ['R', 'R', 'H', 'H', 'G', 'P']
+        ];
 
-// Copia de la matriz original
-let biocenosis2 = JSON.parse(JSON.stringify(biocenosis));
-console.log(biocenosis);
-// Llamada a la función pandemic
-// pandemic(0,0);
-pandemic(4, 2);
-console.log(biocenosis2); // Mostrar matriz actualizada
-mostrarMatriz(biocenosis, "txt");
-mostrarMatriz(biocenosis2, "txt");
+        // Copia de la matriz original
+        let biocenosis2 = JSON.parse(JSON.stringify(biocenosis));
+        console.log(biocenosis);
+        // Llamada a la función pandemic
+        // pandemic(0,0);
+        pandemic(4, 2);
+        console.log(biocenosis2); // Mostrar matriz actualizada
+        mostrarMatriz(biocenosis, "txt");
+        mostrarMatriz(biocenosis2, "txt2");
 
-function pandemic(x, y) {
-    let valor = biocenosis2[x][y]; // Valor base
-    let flag = true;
-    let coordenada = [[x, y]];  // Array de coordenadas que usaremos para movernos
+        function pandemic(x, y) {
+            let valor = biocenosis2[x][y]; // Valor base
 
-    biocenosis2[x][y] = ""; // Eliminamos el valor actual
+            biocenosis2[x][y] = "*";
 
-    // Mientras haya coordenadas en la pila que se mueva
-    while (coordenada.length > 0) {
-        let [x, y] = coordenada.pop(); // Y en la que se encuentra la saca del array para no volver
+            let flag = 1;
+            while (flag) {
+                flag = 0;
 
-        // ARRIBA
-        if (x - 1 >= 0 && biocenosis2[x - 1][y] === valor) {
-            biocenosis2[x - 1][y] = ""; 
-            coordenada.push([x - 1, y]); // añadimos la coordenada para movernos
+                for (let i = 0; i < biocenosis2.length; i++) {
+                    for (let j = 0; j < biocenosis2[i].length; j++) {
+                        if (biocenosis2[i][j] === "*") {
+                            // Arriba
+                            if (i - 1 >= 0 && biocenosis2[i - 1][j] === valor) {
+                                biocenosis2[i-1][j] = "*";
+                                flag = 1;
+                            }
+                            // Derecha
+                            if (j + 1 < biocenosis2[i].length && biocenosis2[i][j + 1] === valor) {
+                                biocenosis2[i][j+1] = "*";
+                                flag = 1;
+                            }
+                            // Abajo
+                            if (i + 1 < biocenosis2.length && biocenosis2[i + 1][j] === valor) {
+                                biocenosis2[i+1][j] = "*";
+                                flag = 1;
+                            }
+                            // Izquierda
+                            if (j - 1 >= 0 && biocenosis2[i][j - 1] === valor) {
+                                biocenosis2[i][j-1] = "*";
+                                flag = 1;
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
         }
-        // DERECHA
-        if (y + 1 < biocenosis2[x].length && biocenosis2[x][y + 1] === valor) {
-            biocenosis2[x][y + 1] = ""; 
-            coordenada.push([x, y + 1]); 
-        }
-        // ABAJO
-        if (x + 1 < biocenosis2.length && biocenosis2[x + 1][y] === valor) {
-            biocenosis2[x + 1][y] = ""; 
-            coordenada.push([x + 1, y]); 
-        }
-        // IZQUIERDA
-        if (y - 1 >= 0 && biocenosis2[x][y - 1] === valor) {
-            biocenosis2[x][y - 1] = ""; 
-            coordenada.push([x, y - 1]); 
-        }
-    }
-}
 
-// Función para mostrar la matriz con span
-function mostrarMatriz(matriz, id) {
-    let contenido = ""; // Creamos una variable para almacenar el contenido
 
-    for (let i = 0; i < matriz.length; i++) {
-        for (let j = 0; j < matriz[i].length; j++) {
-            contenido += "<span>" + matriz[i][j] + " | " + " </span>";
+
+        // Función para mostrar la matriz con span
+        function mostrarMatriz(matriz, id) {
+            let contenido = ""; // Creamos una variable para almacenar el contenido
+
+            for (let i = 0; i < matriz.length; i++) {
+                for (let j = 0; j < matriz[i].length; j++) {
+                    contenido += "<span>" + matriz[i][j] + " | " + " </span>";
+                }
+                contenido += "<br/>"; // Cambiar de fila
+            }
+
+            document.getElementById(id).innerHTML += contenido;
         }
-        contenido += "<br/>"; // Cambiar de fila
-    }
 
-    document.getElementById(id).innerHTML += contenido;
-}
-
-  </script>
+    </script>
 
 </body>
+
 </html>
