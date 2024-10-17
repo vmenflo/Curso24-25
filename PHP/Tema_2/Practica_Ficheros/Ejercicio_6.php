@@ -56,6 +56,7 @@
                     // Usamos la primera línea para los títulos
                     $linea = fgets($file);
                     $contenido = explode("\t", $linea);
+                    $tamaño = count($contenido);
                     for ($i=0; $i <count($contenido) ; $i++) { 
                         echo "<th>".$contenido[$i]."</td>";
                     }
@@ -66,8 +67,13 @@
                         $linea = fgets($file);
                         if($indice == $contador){
                             $contenido = explode("\t", $linea);
-                            for ($i=0; $i <count($contenido) ; $i++) { 
-                                echo "<td>".$contenido[$i]."</td>";
+                            for ($i=0; $i <$tamaño ; $i++) { 
+                                if(isset($contenido[$i])){
+                                    echo "<td>".$contenido[$i]."</td>";
+                                }else{
+                                    echo "<td></td>";
+                                }
+                                
                             }
                         }
                         $contador++;
