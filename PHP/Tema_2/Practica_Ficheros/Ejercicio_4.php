@@ -26,7 +26,7 @@
     <h1>Ejercicio 4</h1>
     <form action="Ejercicio_4.php" method="post" enctype="multipart/form-data">
         <label for="fichero">Por favor, suba un archivo .txt y un tamaño inferior a 2.5MB: </label>
-        <input type="file" name="fichero" id="fichero">
+        <input type="file" name="fichero" id="fichero" accept=".txt">
         <?php
         // Controlar fallos
         if(isset($_POST["enviar"]) && $error_fichero){
@@ -59,11 +59,11 @@
                     continue;
                 }
                 $linea_limpia = str_replace([",", ".", ";"]," ", trim($linea));
-                $arr_palabras = explode(" ", $linea_limpia);
+                $arr_palabras = explode(" ", trim($linea_limpia));
                 $palabras+=count($arr_palabras);
             }
             fclose($file);
-            echo "<p> El documento es:".$_FILES["fichero"]["name"]." tiene ".$palabras." palabras. </p>";
+            echo "<p> El documento es: ".$_FILES["fichero"]["name"]." tiene ".$palabras." palabras. </p>";
         }
     ?>
 </body>

@@ -28,6 +28,7 @@
         echo "<table>";
         $linea = fgets($file);
         $arr_datos = explode("\t", $linea);
+        $tamaño = count($arr_datos);
         echo "<tr>";
             for ($i=0; $i <count($arr_datos) ; $i++) { 
                 echo "<th>".$arr_datos[$i]."</th>";
@@ -37,8 +38,12 @@
             $linea = fgets($file);
             $arr_datos = explode("\t", $linea);
             echo "<tr>";
-                for ($i=0; $i <count($arr_datos) ; $i++) { 
-                    echo "<td>".$arr_datos[$i]."</td>";
+                for ($i=0; $i <$tamaño ; $i++) { 
+                    if(isset($arr_datos[$i])){
+                        echo "<td>".$arr_datos[$i]."</td>";
+                    }else{
+                        echo "<td></td>";
+                    }
                 }
             echo "</tr>";
         }
