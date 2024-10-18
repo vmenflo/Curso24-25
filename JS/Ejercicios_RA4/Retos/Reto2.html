@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>retos JavaScript</title>
+  </head>
+  <body>
+    <h1>retos JavaScript</h1>
+    <p id="re1"></p>
+    <p id="re2"></p>
+    <p id="re3"></p>
+    <p id="re4"></p>
+    <p id="re5"></p>
+    <p id="re6"></p>
+    <p id="re7"></p>
+    <script>
+var cars = ["Saab", "Volvo", "BMW",["Honda", "Toyota",["Lexus", "Mercedes", "Lada"], "Hyunday"]];
+var carrakos = ["Chevrolet", "Tesla", "BMW",["Honda", "Infiniti",["Lexus", "Mercedes", "Kia"], "Hyunday"],["Mazda", "Mercedes", "Jeep",["KTM", "Nissan", "Isuzu"]]];
+//Alguien sabe hacer una lista única de coches con los dos arrays (sin repeticiones)?
+let lista = [];
+        cars.flat(2).map((e) => lista.push(e)) && carrakos.flat(2).map((e) => {
+            if(!lista.includes(e)){
+                lista.push(e);
+            }
+        });
+document.getElementById("re1").innerHTML=lista;
+//Alguien sabría decirme los coches de carrakos que no estén en cars?
+let noRepetidos=[];
+carrakos.flat(2).map((e) => {
+    if(!cars.flat(2).includes(e)){
+        noRepetidos.push(e);
+    }});
+document.getElementById("re2").innerHTML = noRepetidos;
+//-Nombre y apellidos de los buddies que usan un Honda
+var buddies = [{firstName:"Chuck", lastName:"Norris", car:"Honda"},{firstName:"Yakie", lastName:"Chang", car:"BMV"},{firstName:"Bruce", lastName:"Lee", car:"Honda"},{firstName:"Steven", lastName:"Seagal", car:"Lada"}];
+let usanHonda = buddies.filter((e) => e.car==="Honda").map((e)=> e.firstName +" usa "+ e.car);
+document.getElementById("re3").innerHTML = usanHonda;
+//-Marcas utilizadas por los buddies
+let usadasBuddies = [];
+buddies.map((e)=> {
+    if(!usadasBuddies.includes(e.car)){
+        usadasBuddies.push(e.car);
+    }
+});
+document.getElementById("re4").innerHTML = usadasBuddies;
+//-Marcas no utilizadas por los buddies.
+let noUtilizadas = lista.reduce((acumulador,e)=>{
+    if(!buddies.some((v)=> v.car===e)){
+        acumulador.push(e);
+    }
+    return acumulador;
+}, []);
+document.getElementById("re5").innerHTML = noUtilizadas;
+//-Cuantas marcas han sido utilizadas
+let contadorUtilizadas = lista.reduce((acc,e)=> {
+    if(buddies.some((v)=> e===v.car)&& !acc.includes(e)){
+        acc.push(e);
+    }
+    return acc;
+}, []).length;
+document.getElementById("re6").innerHTML = contadorUtilizadas;
+//-Cuantas marcas no han sido utilizadas
+let contadorNoUtilizadas = lista.reduce((acc,e)=> {
+    if(buddies.every((v)=> e!==v.car)){
+        acc.push(e);
+    }
+    return acc;
+}, []).length;
+document.getElementById("re7").innerHTML = contadorNoUtilizadas;
+
+    </script>
+  </body>
+</html>

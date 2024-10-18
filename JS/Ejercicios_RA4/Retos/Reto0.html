@@ -17,14 +17,16 @@
         let numeros = [{ cp: 28924, ciudad: 'ESTEPONA' }, { cp: 29601, ciudad: 'MARBELLA' }];
 
         function dale() {
-            let city = document.getElementById("ciudad").value;
-           /* numeros.find((datos)=>{
-                if(datos.includes(city.toUpperCase())){
+           let city = document.getElementById("ciudad").value;
+           /*numeros.map((datos)=>{
+                if(datos.ciudad.includes(city.toUpperCase())){
                     document.getElementById("resultado").innerHTML="El código postal es: "+datos.cp;
                 }
             })*/
-            let aux=numeros.find((e)=>(e.cp===city.toUpperCase));
-            aux!=undefined?console.log(aux):console.log("aaaaaaaaaahhhhhhhhhhhhhh");
+            // Otra opcion
+            let codigo = numeros.find((dato)=>dato.ciudad===city.toUpperCase());
+            codigo!=undefined?document.getElementById("resultado").innerHTML="El CP es: "+codigo.cp:document.getElementById("resultado").innerHTML="No existe esa ciudad";
+
         }
     </script>
 </body>
