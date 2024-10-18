@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 0</title>
+</head>
+
+<body>
+    <h1>Ejercicio 0</h1>
+    <p id="resultado"></p>
+    <input type="text" id="ciudad">
+    <button onclick="dale()">Ejecuta</button>
+
+    <script>
+        let numeros = [{ cp: 28924, ciudad: 'ESTEPONA' }, { cp: 29601, ciudad: 'MARBELLA' }];
+
+        function dale() {
+            let city = document.getElementById("ciudad").value;
+           /* numeros.find((datos)=>{
+                if(datos.includes(city.toUpperCase())){
+                    document.getElementById("resultado").innerHTML="El código postal es: "+datos.cp;
+                }
+            })*/
+            let aux=numeros.find((e)=>(e.cp===city.toUpperCase));
+            aux!=undefined?console.log(aux):console.log("aaaaaaaaaahhhhhhhhhhhhhh");
+        }
+    </script>
+</body>
+
+</html>
