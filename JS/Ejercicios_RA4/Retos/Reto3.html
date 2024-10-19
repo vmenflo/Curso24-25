@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio III</title>
+</head>
+
+<body>
+    <p id="resultado"></p>
+    <script>
+        var alumnos = {
+            "alumnos": [{
+                "nombre": "Fulanito",
+                "notas": {
+                    "DWEC": 8,
+                    "DWESE": 0.71,
+                    "ED": 7.04,
+                    "SSOO": 3.37,
+                    "BBDD": 0.22,
+                    "PROG": 1.09,
+                    "EINEM": 6.17
+                }
+            },
+            {
+                "nombre": "Menganito",
+                "notas": {
+                    "DWEC": 7,
+                    "DWESE": 0.71,
+                    "ED": 7.04,
+                    "SSOO": 3.37,
+                    "BBDD": 0.22,
+                    "PROG": 1.09,
+                    "EINEM": 6.17
+                }
+            }
+                ,
+            {
+                "nombre": "Cetanito",
+                "notas": {
+                    "DWEC": 6,
+                    "DWESE": 0.71,
+                    "ED": 7.04,
+                    "SSOO": 3.37,
+                    "BBDD": 0.22,
+                    "PROG": 1.09,
+                    "EINEM": 6.17
+                }
+            }
+            ]
+        };
+        // Se pide la suma y la media de las notas de DWEC en tres líneas.
+        let suma = alumnos.alumnos.reduce((acc,a)=>acc+a.notas.DWEC,0);
+        let media = suma/alumnos.alumnos.length;
+        document.getElementById("resultado").innerHTML = "La suma de DWEC es "+suma+" y la media de todos los alumos es "+media;
+    </script>
+</body>
+
+</html>
