@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio incendio</title>
+</head>
+
+<body>
+    <h1>Incendies</h1>
+
+    <script>
+        let bosque = [
+            [0, 1, 0, 2, 0],
+            [1, 1, 0, 1, 0],
+            [0, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ];
+
+        let bosque2 = JSON.parse(JSON.stringify(bosque));
+        quemar(bosque2);
+        function quemar(array) {
+            let flag=1;
+            while(flag){
+                flag=0;
+                for (let i = 0; i < array.length; i++) {
+                for (let j = 0; j < array[i].length; j++) {
+                    if((array[i][j]===1) && ((i - 1 >= 0 && array[i - 1][j] === 2) || (j - 1 >= 0 && array[i][j - 1] === 2) || (i + 1 < array.length && array[i + 1][j] === 2) || (j + 1 < array[i].length && array[i][j + 1] === 2))){
+                        array[i][j]=2;
+                        flag=1;
+                    }
+                }
+            }
+            }
+            console.log(array);
+        }
+    </script>
+</body>
+
+</html>

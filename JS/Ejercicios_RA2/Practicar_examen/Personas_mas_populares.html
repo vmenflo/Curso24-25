@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge II</title>
+</head>
+
+<body>
+    <h1>¿Quiénes son las 3 personas más populares?</h1>
+    <p id="array"></p>
+    <p id="popular">La persona más popular es </p>
+    <script>
+        let array = ['Maria', 'Lucas', 'Eduardo', 'Cristina', 'Maria', 'Cristina', 'Paco', 'Cristina'];
+        let arr_2 = JSON.parse(JSON.stringify(array));
+        function popular(array) {
+        let populares = [];
+        for (let i = 0; i < arr_2.length; i++) {
+            populares.push([arr_2[i],ranking_populares(arr_2[i],arr_2)]);
+        }
+        document.getElementById("popular").innerHTML = "El mas popular es: "+populares[0];
+        }
+
+        function ranking_populares(nombre,array){
+            for (let i = 0; i < array.length; i++) {
+                if(array.length===0){
+                    return 0;
+                }
+                if(array[i]===nombre){
+                    array[i]="SN";
+                    return 1+ranking_populares(nombre,array);
+                }else{
+                    return ranking_populares(nombre, array);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

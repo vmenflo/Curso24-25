@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="resultado"></p>
+    <script>
+        let arr = arrayAleatorio(100,0,20);
+        document.getElementById("resultado").innerHTML=arr;
+    // Función que devuleve un numero aleatorio entre el rango dado
+    function aleatorio(max,min){
+        return Math.floor(Math.random()*(max-min+1)+min);
+    }
+
+    function arrayAleatorio(max,min,tamaño){
+        let arr =[];
+        for (let i = 0; i < tamaño; i++) {
+            arr.push(aleatorio(max,min)); 
+        }
+        return arr;
+    }
+    </script> 
+</body>
+</html>

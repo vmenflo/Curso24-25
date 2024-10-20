@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 5</title>
+</head>
+
+<body>
+    <p>Introduce las palabras que quieras voltear: </p>
+    <input type="text" name="palabras" id="palabras">
+    <button type="submit" id="voltear" onclick="array_espejo()">Voltear!</button>
+    <p id="resultado"></p>
+
+    <script>
+
+        function array_espejo() {
+            let campo = document.getElementById("palabras").value;
+            // tratamos el texto para limpiarlo
+            let frase_tratada = campo.replace(",", "").replace(".", "").replace(";", "").trim();
+            let arr_palabras = frase_tratada.split(" ");
+            let arr_volteado = voltear(arr_palabras);
+
+            document.getElementById("resultado").innerHTML = arr_volteado;
+        }
+
+        //Función para voltear
+        function voltear(array) {
+            let arr_volteado = [];
+            //bucle que recorre el array y voltea las palabras
+            for (let i = 0; i < array.length; i++) {
+                let palabra = array[i];
+                let palabra_volteada = "";
+                //bucle para recorrer letra a letra y voltear
+                for (let j = palabra.length - 1; j >= 0; j--) {
+                    palabra_volteada += palabra[j];
+
+                }
+                arr_volteado.push(palabra_volteada);
+            }
+            return arr_volteado;
+        }
+
+    </script>
+</body>
+
+</html>

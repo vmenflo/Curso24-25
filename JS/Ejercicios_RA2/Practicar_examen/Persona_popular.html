@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge I</title>
+</head>
+<body>
+    <h1>¿Quién es la persona más popular?</h1>
+    <p id="array"></p>
+    <p id="popular">La persona más popular es </p>
+    <script>
+        let array = ['Maria', 'Lucas', 'Eduardo', 'Cristina', 'Maria', 'Cristina', 'Paco', 'Cristina'];
+        popular(array);
+        function popular (array) {
+            let nombres = nombresSinRepetir(array); //Obtenemos los nombres
+            let cantidad = 0;
+            let popular =[];
+            for (let i = 0; i < nombres.length; i++) { // Por cada nombre 
+                for (let j = 0; j < array.length; j++) { // Buscamos cuántas veces se repite
+                    if(nombres[i]===array[j]){
+                        cantidad++;
+                    }
+                }
+                popular.push([nombres[i],cantidad]);
+                cantidad = 0;
+            }
+            let famoso=popular[0];
+            for (let i = 0; i < popular.length; i++) {
+                if(popular[i][1]>famoso[1]){
+                    famoso=popular[i];
+                }
+            }
+            document.getElementById("popular").innerHTML="El más popular es: "+famoso[0]+" se repite "+famoso[1]+" veces.";
+        }
+        function nombresSinRepetir(arr){
+            let nombres = [];
+            for (let i = 0; i < arr.length; i++) {
+                if(!nombres.includes(arr[i])){
+                    nombres.push(arr[i]);
+                }
+            }
+            return nombres;
+        }
+    </script>
+</body>
+</html>
