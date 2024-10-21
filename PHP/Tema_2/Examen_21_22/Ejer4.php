@@ -65,7 +65,7 @@ function extension($texto){
         }else{
         ?>
         <h2>Horarios de profesores</h2>
-        <form action="ejer4.php" method="post" enctype="multipart/form-data">
+        <form action="Ejer4.php" method="post" enctype="multipart/form-data">
             <label for="profesor">Horario del profesor: </label>
             <select name="profesor" id="profesor">
                 <?php
