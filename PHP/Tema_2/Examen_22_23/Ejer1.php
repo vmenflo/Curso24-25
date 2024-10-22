@@ -14,26 +14,37 @@
                 $ruta = "claves_cesar.txt";
                 @$file= fopen($ruta,"r");
                 if(!$file){
-                    echo "<p> Fichero creado con éxito</p>";
+                    echo "<p> Resupuesta </p>";
                     @$file=fopen($ruta,"w");
                     //primera linea
                     $primera_linea ="Letra/Desplamiento;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26";
                     fputs($file, $primera_linea.PHP_EOL);
+                    $valor=0;
+                    $final=26;
                     for ($i=0; $i < 27; $i++) { 
                         $linea ="";
-                        for ($j=0; $j < 26 ; $j++) { 
+
+                        for ($j=$valor; $j < $final ; $j++) { 
+                           if($j>=26){
+                                $linea.=chr(($j-26)+65).";";
+                            }else{
                             $linea.=chr($j+65).";";
+                            }
                         }
                         fputs($file, $linea.PHP_EOL);
+                        $valor++;
+                        $final++;
                     }
 
                     $contenido = file_get_contents($ruta);
-                    echo "<textarea>".$contenido."</textarea>";
+                    echo "<textarea rows='30' cols='100'>".$contenido."</textarea>";
+                    echo "<p> Fichero creado con éxito</p>";
                     fclose($file);
                 }else{
-                    echo "<p> Fichero leído con éxito </p>";
+                    echo "<p> Resupuesta </p>";
                     $contenido = file_get_contents($ruta);
-                    echo "<textarea>".$contenido."</textarea>";
+                    echo "<textarea rows='30' cols='100'>".$contenido."</textarea>";
+                    echo "<p> Fichero leído con éxito </p>";
                     fclose($file);
                 }
             }
