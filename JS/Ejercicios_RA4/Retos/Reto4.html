@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p id="result"></p>
+<script>
+var valumnos = {
+"alumnos": [{
+"nombre": "Fulanito",
+"notas": {
+"DWEC": 8,
+"DWESE": 0.71,
+"ED": 7.04,
+"SSOO": 3.37,
+"BBDD": 0.22,
+"PROG": 1.09,
+"EINEM": 6.17
+}
+},
+{
+"nombre": "Menganito",
+"notas": {
+"DWEC": 7,
+"DWESE": 0.71,
+"ED": 7.04,
+"SSOO": 3.37,
+"BBDD": 0.22,
+"PROG": 1.09,
+"EINEM": 6.17
+}
+}
+,
+{
+"nombre": "Cetanito",
+"notas": {
+"DWEC": 6,
+"DWESE": 0.71,
+"ED": 7.04,
+"SSOO": 3.37,
+"BBDD": 0.22,
+"PROG": 1.09,
+"EINEM": 6.17
+}
+}
+]
+};
+
+let notas =0;
+let contador=0;
+valumnos.alumnos.map((e)=> { 
+    Object.values(e.notas).map((n)=> {
+        notas+=n;
+        contador++;
+    });
+    });
+console.log("La media global es: " + notas/contador);
+</script>
+</body>
+</html>
