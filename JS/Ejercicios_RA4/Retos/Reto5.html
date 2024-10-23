@@ -8,6 +8,7 @@
 
 <body>
     <h1>retos JavaScript</h1>
+    <p id="re"></p>
     <script>
 
 
@@ -21,8 +22,18 @@
         let lista_no_tropicales = frutas.filter(f => !tropicales.find(g => g === f));
         console.log(lista_no_tropicales);
         //Nombre de las frutas con un stock mayor de 21
-        let listado_stock = tropicStock.filter((e)=> e.stock>21).map(f => f.fruta);
-        console.log(listado_stock);
+        let base = document.getElementById("re"); // Crear la base
+        let ulFruta = document.createElement("ul"); // crear la ul
+
+        tropicStock.filter((e) => e.stock > 21).map(f => {
+            let liFruta = document.createElement("li"); // creo  li
+            let contenido = "La fruta : " + f.fruta + " tiene un stock de " + f.stock;
+            liFruta.innerHTML = contenido; // relleno la li con el contenido
+
+            ulFruta.appendChild(liFruta); // metemos el li en la ul
+        });
+
+        base.appendChild(ulFruta); // añadimos mi ul a la base
 
     </script>
 
