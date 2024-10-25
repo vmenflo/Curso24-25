@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luis Candelas Recursivo</title>
+</head>
+<body>
+    <script>
+        let mapa = [
+                    ['*', '', '', '', '', ''],
+                    ['*', '', '', '', '', ''],
+                    ['*', '', '', '', '', ''],
+                    ['*', '', '', '', '', ''],
+                    ['*', '*', '*', '*', '*', '*']];
+        
+        function candelas(fila,columna,matriz){
+           /* // Estoy dentro
+            if(fila<0 || fila>matriz.length || columna < 0 || columna > matriz[fila].length){
+                return false;
+            }*/
+
+            if(matriz[fila][columna]==="" || matriz[fila][columna]==="V"){
+                return false;
+            }
+
+            if(matriz[fila][columna]==="V" && fila === matriz.length && columna===matriz[fila].length){
+                return true;
+            }
+            matriz[fila][columna]="V";
+
+            // comprobaciones
+            if(fila+1>=0){
+                return candelas(fila+1,columna,matriz);
+            }
+        }
+    </script>
+</body>
+</html>
