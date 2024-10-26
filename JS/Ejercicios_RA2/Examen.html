@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2>JavaScript Arrays</h2>
+    <p> Tenemos tres arrays arr1 arr2 y arr3 y queremos insertarlos de forma
+        ordenada en un cuarto array arr4.
+        Importante: hay que insertarlo de forma ordenada.
+        Solo puedes utilizar el método de arrays push() y length().
+        No puedes modificar los arrays arr1 arr2 o arr3.
+        Muestra el resultado en el campo demo.
+        No puedes crear más variables que las que se te ofrecen.
+    </p>
+    <p id="demo"></p>
+    <script>
+        const arr1 = [1, 2, 3, 7, 9,88];
+        const arr2 = [81];
+        const arr3 = [7];
+        var arr4 = []
+        let i = 0;
+        let j = 0;
+        let k = 0;
+        /*AQUÍ VA TU CÓDIGO*/
+        // Empezamos a rellenar mientras halla array
+        while (i < arr1.length && j < arr2.length && k < arr3.length) {
+            if (arr1[i] <= arr2[j] && arr1[i] <= arr3[k]) { // si arr1 es la menor rellena
+                arr4.push(arr1[i]);
+                i++;
+            } else {
+                if (arr2[j] <= arr3[k] && arr2[j] <= arr1[i]) { // Si arr2 es menor rellena
+                    arr4.push(arr2[j]);
+                    j++;
+                } else {
+                    arr4.push(arr3[k]); // si la arr3 es menor rellena
+                    k++;
+                }
+            }
+        }
+        // Quedan dos listas restantes
+        if (k === arr3.length) { // hay que examinar 1 y 2
+            while (i < arr1.length && j < arr2.length) { // Recorremos 1 y 2 hasta terminar
+                if (arr1[i] <= arr2[j]) {
+                    arr4.push(arr1[i]);
+                    i++;
+                } else {
+                    arr4.push(arr2[j]);
+                    j++;
+                }
+            }
+        } else {
+            if (i === arr1.length) { // Queda 2 y 3
+                while (j < arr2.length && k < arr3.length) { // Recorremos
+                    if (arr2[j] <= arr3[k]) { // si arr2 es menor que arr3, metemos arr2
+                        arr4.push(arr2[j]);
+                        j++;
+                    } else {
+                        arr4.push(arr3[k]);
+                        k++;
+                    }
+                }
+            } else { // Queda 1 y 3
+                while (i < arr1.length && k < arr3.length) {
+                    if (arr1[i] <= arr3[k]) { // Si es menor arr1, lo añadimos
+                        arr4.push(arr1[i]);
+                        i++;
+                    } else { // quiere decir que arr3 es menor
+                        arr4.push(arr3[k]);
+                        k++;
+                    }
+                }
+            }
+        }
+        // Solo nos queda una array por terminar
+        if (i < arr1.length) { //Si queda arr1 por terminar
+            while (i < arr1.length) {
+                arr4.push(arr1[i]);
+                i++;
+            }
+        } else { // sino entonces solo queda 2 y 3
+            if (j < arr2.length) { // si queda 2
+                while (j < arr2.length) {
+                    arr4.push(arr2[j]);
+                    j++;
+                }
+            } else { // sino si queda 3
+                while (k < arr3.length) {
+                    arr4.push(arr3[k]);
+                    k++;
+                }
+            }
+        }
+        document.getElementById("demo").innerHTML = arr4;
+    </script>
+</body>
+
+</html>

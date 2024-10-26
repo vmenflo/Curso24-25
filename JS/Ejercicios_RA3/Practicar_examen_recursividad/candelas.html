@@ -14,25 +14,27 @@
                     ['*', '', '', '', '', ''],
                     ['*', '*', '*', '*', '*', '*']];
         
+        console.log(candelas(0,0,mapa));
+        
+        console.log(mapa);
         function candelas(fila,columna,matriz){
-           /* // Estoy dentro
-            if(fila<0 || fila>matriz.length || columna < 0 || columna > matriz[fila].length){
+           // Estoy dentro
+            if(fila<0 || fila>=matriz.length || columna < 0 || columna >= matriz[fila].length){
                 return false;
-            }*/
+            }
 
             if(matriz[fila][columna]==="" || matriz[fila][columna]==="V"){
                 return false;
             }
 
-            if(matriz[fila][columna]==="V" && fila === matriz.length && columna===matriz[fila].length){
+            if(fila === (matriz.length-1) && columna===(matriz[fila].length-1)){
                 return true;
             }
+            
             matriz[fila][columna]="V";
 
-            // comprobaciones
-            if(fila+1>=0){
-                return candelas(fila+1,columna,matriz);
-            }
+            // COMPROBACIONES
+            return (candelas(fila+1, columna, matriz) || candelas(fila-1, columna, matriz) || candelas(fila, columna+1, matriz) || candelas(fila, columna-1, matriz));
         }
     </script>
 </body>
