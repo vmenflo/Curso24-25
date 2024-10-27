@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio Guerra entre Rusos y Alemanes</title>
+</head>
+
+<body>
+    <h1>Guerra Ruso Alemanes</h1>
+    <script>
+        let guerra = [
+            ["A", "A", "", "", "R", "", "", ""],
+            ["A", "", "", "", "R", "", "", ""],
+            ["", "", "", "", "R", "", "", ""],
+            ["", "", "", "", "R", "", "", ""],
+            ["", "", "", "", "R", "", "", "A"],
+            ["", "", "", "", "R", "", "", "A"],
+            ["", "", "", "", "R", "", "", "A"]
+        ];
+
+        batalla(guerra, "A");
+        console.log(guerra);
+
+        function batalla(matriz, valor) {
+            let coordenada = primer_aleman(matriz, valor);
+            let x = coordenada[0];
+            let y = coordenada[1];
+
+            combate(x, y, matriz);
+            let resultado = ganador(matriz,valor);
+            if(resultado){
+                console.log("Ganan los ALEMANES");
+            }else{
+                console.log("Ganan los RUSOS");
+            }
+
+        }
+
+        function combate(i, j, matriz) {
+            // controlar si ya has estado, eres ruso o estas fuera de los limites
+            if (i < 0 || i >= matriz.length || j < 0 || j >= matriz[i].length || matriz[i][j] === "W" || matriz[i][j] === "R") {
+                return;
+            }
+            matriz[i][j] = "W";
+            return (combate(i + 1, j, matriz) || combate(i - 1, j, matriz) || combate(i, j - 1, matriz) || combate(i, j + 1, matriz));
+        }
+
+        function primer_aleman(matriz, valor) {
+            // La recorremos y si encuentra un aleman pasa la coordenada
+            let coordenadas = [];
+            for (let i = 0; i < matriz.length; i++) {
+                for (let j = 0; j < matriz[i].length; j++) {
+                    if (matriz[i][j] === valor) {
+                        coordenadas[0] = i;
+                        coordenadas[1] = j;
+                        return coordenadas;
+                    }
+                }
+            }
+        }
+
+        function ganador(matriz, valor) {
+            let resultado = false;
+            for (let i = 0; i < matriz.length; i++) {
+                for (let j = 0; j < matriz[i].length; j++) {
+                    if (matriz[i][j] === valor) {
+                        resultado = true;
+                        break;
+                    }
+                }
+            }
+            return resultado;
+        }
+    </script>
+</body>
+
+</html>
