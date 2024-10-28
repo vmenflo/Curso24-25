@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio Nodos</title>
+</head>
+<body>
+    <button onclick="generarUl()">Dale</button>
+    <ul id="lista">
+
+    </ul>
+    <script>
+        let frutas = ["Piña","Fresa","Mango","Coco"];
+        let ulFrutas = document.getElementById("lista");
+        function generarUl(){
+            frutas.map((f)=> {
+                let li = document.createElement("li");
+                li.innerHTML=f;
+                ulFrutas.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
