@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio</title>
+</head>
+<body>
+<script>
+    let estudiantes = [
+    { nombre: "Ana", calificaciones: { matematicas: 65, fisica: 70, literatura: 85 } },
+    { nombre: "Luis", calificaciones: { matematicas: 45, fisica: 80, literatura: 75 } },
+    { nombre: "Marta", calificaciones: { matematicas: 90, fisica: 95, literatura: 88 } },
+];
+
+function estudiantesAprobados(arr) {
+    return arr.filter((e)=> {
+        let materias = Object.values(e.calificaciones);
+        return materias.every((notas)=> notas>60);
+    }).map((h)=> h.nombre);
+}
+
+console.log(estudiantesAprobados(estudiantes));
+// Resultado esperado: ["Ana", "Marta"]
+
+</script>
+</body>
+</html>
