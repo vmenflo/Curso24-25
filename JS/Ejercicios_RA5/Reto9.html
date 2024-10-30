@@ -1,0 +1,48 @@
+<html>
+
+</html>
+
+<head>
+    <title>retos JavaScript</title>
+</head>
+
+<body>
+    <h1>retos JavaScript</h1>
+    <ul id="carrakos"> </ul>
+
+    <script>
+
+        let carrakos = ["Chevrolet", "Tesla", "BMW", ["Honda", "Infiniti", ["Lexus", "Mercedes", "Kia"], "Hyunday"], ["Mazda", "Mercedes", "Jeep", ["KTM", "Nissan", "Isuzu"]]];
+        let xungos = [{ nombre: "Bruce Lee", carros: ["Chevrolet", "Tesla", "BMW"] }, { nombre: "YakiChan", carros: ["Lexus", "Mercedes", "Kia"] }]
+
+        let ulPrincipal = document.getElementById("carrakos");
+
+
+        function crearUlAnidada(arr, ulRecursiva) {
+            arr.map((e) => {
+
+                if (Array.isArray(e)) {
+                    let nuevaUl = document.createElement("ul");
+                    crearUlAnidada(e, nuevaUl);
+                    ulRecursiva.appendChild(nuevaUl);
+                } else {
+                    let li = document.createElement("li");
+                    let auxiliar = xungos.find((f) => f.carros.find((g) => g === e));
+                    if (auxiliar != undefined) {
+                        li.innerHTML = e + " de " + auxiliar.nombre;
+                        ulRecursiva.appendChild(li);
+                    } else {
+                        li.innerHTML = e;
+                        ulRecursiva.appendChild(li);
+                    }
+
+                }
+            });
+        }
+
+        crearUlAnidada(carrakos, ulPrincipal);
+
+    </script>
+</body>
+
+</html>
