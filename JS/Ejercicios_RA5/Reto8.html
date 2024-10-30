@@ -11,24 +11,25 @@
 var carrakos = ["Chevrolet", "Tesla", "BMW",["Honda", "Infiniti",["Lexus", "Mercedes", "Kia"], "Hyunday"],["Mazda", "Mercedes", "Jeep",["KTM", "Nissan", "Isuzu"]]];
 
 let ulPrincipal = document.getElementById("carrakos");
-ulPrincipal.appendChild(crearUlAnidada(carrakos));
 
 
-function crearUlAnidada(arr){
-    let ul = document.createElement("ul");
-    
+function crearUlAnidada(arr, ulRecursiva){
     arr.map((e)=>{
-        let li = document.createElement("li");
         if(Array.isArray(e)){
-            li.appendChild(crearUlAnidada(e));
+            let nuevaUl = document.createElement("ul");
+            crearUlAnidada(e,nuevaUl);
+            ulRecursiva.appendChild(nuevaUl);
         }else{
+            let li = document.createElement("li");
             li.innerHTML=e;
+            ulRecursiva.appendChild(li);
         }
-        ul.appendChild(li);
-    });
 
-    return ul;
+    });
 }
+
+crearUlAnidada(carrakos,ulPrincipal);
+
 </script>
 </body>
 </html>
