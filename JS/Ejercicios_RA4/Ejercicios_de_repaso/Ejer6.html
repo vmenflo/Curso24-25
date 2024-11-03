@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insercción de Elementos</title>
+</head>
+<body>
+    <p>Dado dos arrays de números, encuentra aquellos que están presentes en ambos arrays.
+    </p>
+    <p id="re"></p>
+
+    <p>Combina estos dos arrays en un array de objetos {nombre, edad}. Luego, filtra las 
+        personas mayores de 18 y encuentra la primera persona mayor de 30.
+    </p>
+    <p id="re2"></p>
+
+    <p>Dado un array de productos y otro de categorías permitidas, filtra los productos cuya categoría 
+    esté en el array de categorías permitidas y transforma cada producto para que incluya solo nombre y precio.</p>
+
+    <p>Dado un array de productos con nombre, categoría y precio, agrupa los productos por categoría y calcula el precio total de cada categoría.</p>
+
+    <script>
+        const array1 = [1, 2, 3, 4, 5, 6];
+        const array2 = [4, 5, 6, 7, 8, 9];
+        let solucion = array1.filter((e)=> array2.find((t)=> e===t));
+        document.getElementById("re").innerHTML=solucion;
+
+        /*-----------------------------------------------*/
+        const nombres = ["Carlos", "Ana", "María", "Luis"];
+        const edades = [25, 17, 19, 34];
+        let listaPersonasEdad = nombres.map((e, index)=>{
+            return {nombre: e, edad: edades[index]};
+        })
+        
+        let mayor18con30 = listaPersonasEdad.filter((e)=> e.edad>18).find((t)=> t.edad>=30);
+        document.getElementById("re2").innerHTML=mayor18con30.nombre;
+
+        /*---------------------------------------------*/
+
+        const productos = [
+                            { nombre: "Camiseta", precio: 30, categoria: "Ropa" },
+                            { nombre: "Laptop", precio: 1200, categoria: "Electrónica" },
+                            { nombre: "Zapatos", precio: 50, categoria: "Calzado" },
+                            { nombre: "Audífonos", precio: 100, categoria: "Electrónica" },
+                            { nombre: "Chaqueta", precio: 80, categoria: "Ropa" }
+                            ];
+        
+        const categoriasPermitidas = ["Electrónica", "Ropa"];
+
+        let listaCategorias = productos.filter((p)=> categoriasPermitidas.find((t)=> t===p.categoria)).map((v)=> {return {nombre: v.nombre, precio: v.precio}});
+        //console.log(listaCategorias);
+
+        /*------------------------------------------------*/
+        const productos2 = [
+                            { nombre: "Camiseta", precio: 25, categoria: "Ropa" },
+                            { nombre: "Laptop", precio: 1200, categoria: "Electrónica" },
+                            { nombre: "Zapatos", precio: 50, categoria: "Calzado" },
+                            { nombre: "Audífonos", precio: 80, categoria: "Electrónica" },
+                            { nombre: "Chaqueta", precio: 35, categoria: "Ropa" }
+                            ];
+        
+        let listaElectronica = productos2.filter((e)=> e.categoria==="Electrónica").reduce((contador, t) =>{
+            contador += t.precio;
+            return contador;
+        },0);
+        console.log(listaElectronica);
+        let listaCalzado = productos2.filter((e)=> e.categoria==="Calzado").reduce((contador, t) =>{
+            contador += t.precio;
+            return contador;
+        },0);;
+        console.log(listaCalzado);
+        let listaRopa = productos2.filter((e)=> e.categoria==="Ropa").reduce((contador, t) =>{
+            contador += t.precio;
+            return contador;
+        },0);;
+        console.log(listaRopa);
+
+
+
+    </script>
+</body>
+</html>

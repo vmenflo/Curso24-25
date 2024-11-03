@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>retos JavaScript</title>
+  </head>
+  <body>
+    <h1>retos JavaScript</h1>
+    <p id="re1"></p>
+    <p id="re2"></p>
+    <p id="re3"></p>
+    <p id="re4"></p>
+    <p id="re5"></p>
+    <p id="re6"></p>
+    <p id="re7"></p>
+    <script>
+        var cars = ["Saab", "Volvo", "BMW",["Honda", "Toyota",["Lexus", "Mercedes", "Lada"], "Hyunday"]];
+        var carrakos = ["Chevrolet", "Tesla", "BMW",["Honda", "Infiniti",["Lexus", "Mercedes", "Kia"], "Hyunday"],["Mazda", "Mercedes", "Jeep",["KTM", "Nissan", "Isuzu"]]];
+        //Alguien sabe hacer una lista única de coches con los dos arrays (sin repeticiones)?
+        let listaNoRepetidos = [];
+        cars.flat(Infinity).concat(carrakos.flat(Infinity)).map((c)=> {
+            if(!listaNoRepetidos.includes(c)){
+                listaNoRepetidos.push(c);
+            }
+        })
+        document.getElementById("re1").innerHTML=listaNoRepetidos;
+        //Alguien sabría decirme los coches de carrakos que no estén en cars?
+        let listaNoEstan = [];
+        carrakos.flat(Infinity).filter((k)=> {
+            if(!cars.flat(Infinity).includes(k) && !listaNoEstan.includes(k)){
+                listaNoEstan.push(k);
+            }
+        });
+        document.getElementById("re2").innerHTML=listaNoEstan;
+        //-Nombre y apellidos de los buddies que usan un Honda
+        var buddies = [{firstName:"Chuck", lastName:"Norris", car:"Honda"},{firstName:"Yakie", lastName:"Chang", car:"BMW"},{firstName:"Bruce", lastName:"Lee", car:"Honda"},{firstName:"Steven", lastName:"Seagal", car:"Lada"}];
+        let usanHonda = buddies.filter((e)=> e.car==="Honda").map((b)=> b.firstName+" "+b.lastName+" usa Honda");
+        document.getElementById("re3").innerHTML=usanHonda;
+        //-Marcas utilizadas por los buddies
+        let marcasBuddies = [];
+        buddies.map((e)=> {
+            if(!marcasBuddies.includes(e.car)){
+                marcasBuddies.push(e.car);
+            }
+        });
+        document.getElementById("re4").innerHTML=marcasBuddies;
+        //-Marcas no utilizadas por los buddies.
+        let noUtilizadasBuddies = listaNoRepetidos.filter((e)=> !buddies.some((m)=> e===m.car));
+        document.getElementById("re5").innerHTML=noUtilizadasBuddies;
+        //-Cuantas marcas han sido utilizadas
+        let numeroUtilizadas = listaNoRepetidos.filter((e)=> buddies.some((m)=> m.car === e)).length;
+        document.getElementById("re6").innerHTML=numeroUtilizadas;
+        //-Cuantas marcas no han sido utilizadas
+        let numeroNoUtilizadas = listaNoRepetidos.filter((e)=> !buddies.some((m)=> m.car === e)).length;
+        document.getElementById("re7").innerHTML=numeroNoUtilizadas;
+    </script>
+  </body>
+</html>
