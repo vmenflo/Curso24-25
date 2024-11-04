@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>REYES GODOS. BUSCAMAN</title>
+</head>
+<body>
+    <p id="comunicado"></p>
+<script>
+var vikings = '{"vikingos":[{"reino":"Noruega","reyes":["Hakon","Harald","Ivar","Olaf","Bjorn","Ragnar"]},{"reino":"Dinamarca","reyes":["Frodo","Hamming","Angantyr","Horik"]}]}';
+// skriv inn koden din her. Vær forsiktig med at json-en jukser. Det er ikke en matrise, men et objekt.
+let vikingos = JSON.parse(vikings);
+
+let esRey = (rey) => {
+    let encontrado = false;
+    vikingos.vikingos.map((e)=> {
+        let rey_tmp = e.reyes.find((r)=> r==rey);
+        if(rey_tmp!=undefined){
+            document.getElementById("comunicado").innerHTML+= rey+" fue un Rey del reino de "+e.reino;
+            encontrado=true;
+        }
+    });
+    if(!encontrado){
+        document.getElementById("comunicado").innerHTML+= "<br>"+rey+" NO fue un Rey";
+    }
+}
+
+/*Probar función*/
+esRey("Ivar");
+esRey("Victor");
+
+</script>
+
+</body>
+</html>
