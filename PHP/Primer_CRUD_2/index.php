@@ -24,6 +24,16 @@ try {
 }
 
 if (isset($_POST["btnContAgregar"])) {
+
+
+    try{
+        $consulta1 = "count(*) from usuarios where nombre='" . $_POST["usuario"] . "'";
+        $usuario_repetido = mysqli_query($conexion, $consulta);
+    }catch(Exception $e){
+        mysqli_close($conexion);
+        die(error_page("Primer CRUD", "<p>No se ha podido realizar la consulta: " . $e->getMessage() . "</p>"));
+    }
+
     //Compruebo errores
     $error_nombre = $_POST["nombre"] == "";
     $error_clave = $_POST["clave"] == "";
