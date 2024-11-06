@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge VI</title>
+</head>
+
+<body>
+    <p>Me sabrías decir de este array cuales son los reyes de generación PAR:
+        const REYES =
+        ["Chindatore",["Chindasvinto","Rencesvinto","Lautaro"],["Lauro","Sisebuto",["Fracisbuto","Vigafredo",["Leovigildo","Recaredo"]]],"Amalarico
+        II"];
+
+        Se supone que si un elemento es un subarray es la siguiente generación. Por ejemplo [A,[B]]
+        A es de primera generación
+        B es de segunda generación
+
+        En este caso mostraría B
+    </p>
+    <script>
+        const REYES = ["Chindatore", ["Chindasvinto", "Rencesvinto", "Lautaro"], ["Lauro", "Sisebuto", ["Fracisbuto", "Vigafredo", ["Leovigildo", "Recaredo"]]], "Amalarico II"];
+        /*
+        function buscar(arr, contador) {
+            arr.map(u => {
+                if (Array.isArray(u)) {
+                    buscar(u, contador + 1);
+                } else {
+                    console.log(u + " es de la generacion " + contador);
+                }
+            })
+        }*/
+        //buscar(REYES,1);
+
+        function buscarPar(arr, contador) {
+            arr.map(u => {
+                if (Array.isArray(u)) {
+                    buscarPar(u, contador + 1);
+                } else {
+                    if (contador % 2 == 0) {
+                        console.log(u + " es de la generacion PAR");
+                    }
+                }
+            })
+        }
+        buscarPar(REYES, 1);
+
+        /*
+        function buscarPar(arr, esPar){
+            arr.map(u=> {
+                if(Array.isArray(u)){
+                    buscarPar(u,!esPar);
+                }else{
+                    if(esPar){
+                        console.log(u+" es de la generacion PAR");
+                    }
+                }
+            })
+            }
+            buscarPar(REYES,false);
+        */
+
+    </script>
+</body>
+
+</html>
