@@ -25,26 +25,45 @@ try {
 
 if (isset($_POST["btnContAgregar"])) {
 
-
-    try{
-        $consulta1 = "count(*) from usuarios where nombre='" . $_POST["usuario"] . "'";
-        $usuario_repetido = mysqli_query($conexion, $consulta);
-    }catch(Exception $e){
-        mysqli_close($conexion);
-        die(error_page("Primer CRUD", "<p>No se ha podido realizar la consulta: " . $e->getMessage() . "</p>"));
-    }
-
     //Compruebo errores
     $error_nombre = $_POST["nombre"] == "";
     $error_clave = $_POST["clave"] == "";
     $error_usuario = $_POST["usuario"] == "";
-    $error_email = $_POST["email"] == "" && !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+    if (!$error_usuario) {
+        try {
+            $consulta = "select usuario from usuarios where usuario='" . $_POST["usuario"] . "'";
+            $usuario_repetido = mysqli_query($conexion, $consulta);
+            $error_usuario = mysqli_num_rows($usuario_repetido) > 0;
+        } catch (Exception $e) {
+            mysqli_close($conexion);
+            die(error_page("Primer CRUD", "<p>No se ha podido realizar la consulta: " . $e->getMessage() . "</p>"));
+        }
+    }
+    $error_email = $_POST["email"] == "" || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+    if (!$error_email) {
+        try {
+            $consulta = "select email from usuarios where email='" . $_POST["email"] . "'";
+            $email_repetido = mysqli_query($conexion, $consulta);
+            $error_email = mysqli_num_rows($email_repetido) > 0;
+        } catch (Exception $e) {
+            mysqli_close($conexion);
+            die(error_page("Primer CRUD", "<p>No se ha podido realizar la consulta: " . $e->getMessage() . "</p>"));
+        }
+    }
     $error_form = $error_nombre || $error_usuario || $error_clave || $error_email;
     //Si no los hay inserto en la tabla e informo de la acción
-
-
+    if (!$error_form) {
+        //Insert BD y mensaje de accion
+        try {
+            $consulta = "insert into usuarios (nombre,usuario,clave,email) values('".$_POST["nombre"]."','".$_POST["usuario"]."','".md5($_POST["clave"])."','".$_POST["email"]."')";
+            $resultado_agregar = mysqli_query($conexion, $consulta);
+            $mensaje_accion = "Usuario insertado con éxito";
+        } catch (Exception $e) {
+            mysqli_close($conexion);
+            die(error_page("Primer CRUD", "<p>No se ha podido realizar la consulta: " . $e->getMessage() . "</p>"));
+        }
+    }
 }
-
 
 
 if (isset($_POST["btnDetalles"]) || isset($_POST["btnBorrar"])) {
@@ -123,6 +142,10 @@ mysqli_close($conexion);
             font-size: 1.25rem;
             color: blue
         }
+
+        .error {
+            color: red;
+        }
     </style>
 </head>
 
@@ -141,10 +164,8 @@ mysqli_close($conexion);
     if (isset($_POST["btnDetalles"]))
         require "vistas/vista_detalles.php";
 
-    if (isset($_POST["btnAgregar"]) || (isset($_POST["btnContAgregar"]) && $error_form)){
+    if (isset($_POST["btnAgregar"]) || (isset($_POST["btnContAgregar"]) && $error_form)) {
         require "vistas/vista_agregar.php";
-    }else{
-        
     }
 
     ?>
