@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto V</title>
+</head>
+
+<body>
+    <h1>Reto V</h1>
+    <script>
+        let frase = "Hola, me llamo; Victor.";
+
+        function invertir(frase) {
+            // Limpiamos
+            let fraseLimpia = frase.replace(",", "").replace(".", "").replace(";", "");
+            let fraseInvertida = fraseLimpia.split(" ").map(palabra => {
+                let palabraInvertida = "";
+                for (let j = palabra.length - 1; j >= 0; j--) {
+                    palabraInvertida += palabra[j];
+                }
+                return palabraInvertida;
+            }).join(" ");
+            return fraseInvertida;
+        }
+        console.log(invertir(frase));
+
+    </script>
+
+</body>
+
+</html>

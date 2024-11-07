@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto II</title>
+</head>
+
+<body>
+    <script>
+        let nombres = ["Simon", "Maria", "Maria", "Victor", "Victor", "Victor"];
+        // Nombre
+        let nombreUno = "";
+        let nombreDos = "";
+        let nombreTres = "";
+        // Veces que estan
+        let cantidadUno = 0;
+        let cantidadDos = 0;
+        let cantidadTres = 0;
+
+        function trendy(arr) {
+    arr.map(u => {
+        let cantidad = arr.filter(t => t == u).length;
+
+        if (cantidad > cantidadUno) {
+            // Desplazo los valores hacia abajo
+            nombreTres = nombreDos;
+            cantidadTres = cantidadDos;
+            nombreDos = nombreUno;
+            cantidadDos = cantidadUno;
+
+            nombreUno = u;
+            cantidadUno = cantidad;
+        } else if (cantidad > cantidadDos && u !== nombreUno) {
+            nombreTres = nombreDos;
+            cantidadTres = cantidadDos;
+
+            nombreDos = u;
+            cantidadDos = cantidad;
+        } else if (cantidad > cantidadTres && u !== nombreUno && u !== nombreDos) {
+            nombreTres = u;
+            cantidadTres = cantidad;
+        }
+    });
+}
+        trendy(nombres);
+        console.log(nombreUno + " es la persona mas popular, sale " + cantidadUno);
+        console.log(nombreDos + " es la segunda persona mas popular, sale " + cantidadDos);
+        console.log(nombreTres + " es la tercera persona mas popular, sale " + cantidadTres);
+    </script>
+</body>
+
+</html>

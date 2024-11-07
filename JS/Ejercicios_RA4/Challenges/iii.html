@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retos III</title>
+</head>
+<body>
+    <script>
+        // Math.floor(Math.random() * (max - min + 1)) + min;
+        function array100(tamaño, max){
+            let lista = [];
+            while(lista.length<tamaño){ // Continua hasta llegar al tamaño indicado
+                let numeroRandom = (Math.floor(Math.random() * (max - 0 + 1)) + 0);
+                let rep = lista.filter(u=> u==numeroRandom).length
+                if(rep==0){ // Si no se repite, metelo
+                    lista.push(numeroRandom);
+                }       
+            }
+            return lista;
+        }
+        let lista = array100(100,1000);
+        console.log("Este array tiene: "+ lista.length);
+        console.log(lista);
+    </script>
+</body>
+</html>
