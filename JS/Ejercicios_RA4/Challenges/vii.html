@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto VII</title>
+</head>
+<body>
+    <h1>Reto VII</h1>
+    <script>
+        const REYES = ["Chindatore",["Chindasvinto","Rencesvinto","Lautaro"],["Lauro","Sisebuto",["Fracisbuto","Vigafredo",["Leovigildo","Recaredo"]]],"Amalarico II"];
+        function contarGeneracion(arr,generacion){
+            let max = generacion;
+            arr.map(u=> {
+                if(Array.isArray(u)){
+                    let aux= contarGeneracion(u,generacion+1);
+                    if(aux>max){
+                        max=aux;
+                    }
+                }
+            })
+            return max;
+        }
+        console.log(contarGeneracion(REYES,1));
+    </script>
+</body>
+</html>
