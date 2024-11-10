@@ -38,6 +38,42 @@ try {
     die(error_page("Primer CRUD", "<p>No se ha podido realizar la consulta: " . $e->getMessage() . "</p>"));
 }
 
+//Obtengo los detalles del usuario tanto al pulsar detalles cómo en el borrar cómo en Editar
+if(isset($_POST["btnDetalles"]) || isset($_POST["btnBorrar"]) || isset($_POST["btnEditar"]))
+{
+    if(isset($_POST["btnDetalles"]))
+        $id_usuario=$_POST["btnDetalles"];
+    elseif(isset($_POST["btnBorrar"]))
+        $id_usuario=$_POST["btnBorrar"];
+    else
+        $id_usuario=$_POST["btnEditar"];
+
+    try
+    {
+        $consulta="select * from usuarios where id_usuario='".$id_usuario."'";
+        $detalle_usuario=mysqli_query($conexion,$consulta);
+    }
+    catch(Exception $e)
+    {
+        mysqli_close($conexion);
+        die(error_page("Primer CRUD","<p>No se ha podido realizar la consulta: ".$e->getMessage()."</p>"));
+    }
+}
+
+//Accion borrado
+if(isset($_POST["btnContBorrar"])){
+    try {
+        $consulta = "delete from usuarios where id_usuario=".$_POST["btnContBorrar"]."";
+        $datos_usuarios = mysqli_query($conexion, $consulta);
+        $_SESSION["mensaje_accion"]="Usuario borrado con éxito";
+        header("Location:index.php");
+        exit;
+    } catch (Exception $e) {
+        mysqli_close($conexion);
+        die(error_page("Primer CRUD", "<p>No se ha podido realizar la consulta: " . $e->getMessage() . "</p>"));
+    }
+}
+
 // Cerramos la BD
 mysqli_close($conexion);
 ?>
@@ -59,6 +95,7 @@ mysqli_close($conexion);
         table {
             border-collapse: collapse;
             text-align: center;
+            width:80%;
         }
 
         .btn_img {
@@ -77,26 +114,26 @@ mysqli_close($conexion);
 
 <body>
     <h1>Práctica 8</h1>
-    <p>Listado de los usuarios</p>
+    <h2>Listado de los usuarios</h2>
 
     <?php
-    // Tabla del listado de usuarios
-    echo "<table>";
-    echo "<tr>";
-    echo "<th>#</th>";
-    echo "<th>Foto</th>";
-    echo "<th>Nombre</th>";
-    echo "<th><form action='index.php' method='post' > <button type='submit' class='btn_img' name='ntonAgregar'>Usuario+</button></form></th>";
-    echo "</tr>";
-    while ($tupla = mysqli_fetch_assoc($datos_usuarios)) {
-        echo "<tr>";
-        echo "<td>" . $tupla["id_usuario"] . "</td>";
-        echo "<td><img src='Img/" . $tupla["foto"] . "'></td>";
-        echo "<td><form action='index.php' method='post'><button class='btn_img' name='btnDetalles' value='' type='submit'>" . $tupla["nombre"] . "</button></form></td>";
-        echo "<td><form action='index.php' method='post'><button class='btn_img' name='btnBorrar' value='' type='submit'>Borrar</button> - <button class='btn_img' name='btnEditar' value='' type='submit'>Editar</button> </form></td>";
-        echo "</tr>";
+    //Mensaje de éxito
+    if(isset($_SESSION["mensaje_accion"]))
+    {
+        echo "<p class='mensaje'>".$_SESSION["mensaje_accion"]."</p>";
+        //unset($_SESSION["mensaje_accion"]);
+        //session_unset();
+        session_destroy();
     }
-    echo "</table>";
+
+    // Vista general
+    require "vistas/vista_tabla.php";
+
+    // Vista borrado
+    if(isset($_POST["btnBorrar"])){
+        require "vistas/vista_borrar.php";
+    }
+
     ?>
 </body>
 
