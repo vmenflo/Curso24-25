@@ -5,7 +5,7 @@
     echo "<th>#</th>";
     echo "<th>Foto</th>";
     echo "<th>Nombre</th>";
-    echo "<th><form action='index.php' method='post' > <button type='submit' class='btn_img' name='ntonAgregar'>Usuario+</button></form></th>";
+    echo "<th><form action='index.php' method='post' > <button type='submit' class='btn_img' name='btnAgregar'>Usuario+</button></form></th>";
     echo "</tr>";
     while ($tupla = mysqli_fetch_assoc($datos_usuarios)) {
         echo "<tr>";
