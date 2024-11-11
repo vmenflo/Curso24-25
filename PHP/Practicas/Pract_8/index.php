@@ -44,90 +44,80 @@ if(isset($_POST["btnDetalles"]) || isset($_POST["btnBorrar"]) || isset($_POST["b
 }
 
 // Acción de Editar
-if(isset($_POST["btnContEditar"])){
+if (isset($_POST["btnContEditar"])) {
     //Compruebo errores
-    $error_nombre=$_POST["nombre"]=="";
-    $error_usuario=$_POST["usuario"]=="";
-    if(!$error_usuario)
-    {
-        $error_usuario=repetido($conexion,"usuarios","usuario",$_POST["usuario"]);
-        if(is_string($error_usuario))
-        {
+    $error_nombre = $_POST["nombre"] == "";
+    $error_usuario = $_POST["usuario"] == "";
+    if (!$error_usuario) {
+        $error_usuario = repetido($conexion, "usuarios", "usuario", $_POST["usuario"]);
+        if (is_string($error_usuario)) {
             mysqli_close($conexion);
-            die(error_page("Primer CRUD","<p>".$error_usuario."</p>"));
+            die(error_page("Primer CRUD", "<p>" . $error_usuario . "</p>"));
         }
-        
+
     }
-    $error_clave=$_POST["clave"]=="";
+    $error_clave = $_POST["clave"] == "";
     $numeroDNI = substr($_POST["dni"], 0, -1); // Extraer los números 
-    $letraDNI = substr($_POST["dni"], -1);     // Extraer la letra 
-    $error_dni = $_POST["dni"]=="" || LetraNIF($numeroDNI) != substr($letraDNI,-1);
+    $letraDNI = strtoupper(substr($_POST["dni"], -1));     // Extraer la letra 
+    $error_dni = $_POST["dni"] == "" || LetraNIF($numeroDNI) != substr($letraDNI, -1);
     $error_sexo = !isset($_POST["sexo"]);
-    $error_foto = $_FILES["foto"]["name"]!= "" && ($_FILES["foto"]["error"] || !tiene_extension($_FILES["foto"]["name"]) || !getimagesize($_FILES["foto"]["tmp_name"]) || $_FILES["foto"]["size"] > 500*1024);
+    $error_foto = $_FILES["foto"]["name"] != "" && ($_FILES["foto"]["error"] || !tiene_extension($_FILES["foto"]["name"]) || !getimagesize($_FILES["foto"]["tmp_name"]) || $_FILES["foto"]["size"] > 500 * 1024);
 
     $error_form_editar = $error_nombre || $error_usuario || $error_clave || $error_dni || $error_sexo || $error_foto;
 
     //Si no hay errores inserto en la tabla e informo de la acción
-    if (!$error_form_editar) {
+    if (!$error_formulario_editar) {
         try {
-            // Inicializar consulta según si hay o no nueva foto
-            if ($_FILES["foto"]["name"] != "") { // Si se ha subido una nueva foto
-                $file_name = $_FILES["foto"]["name"];
-                @$var = move_uploaded_file($_FILES["foto"]["tmp_name"], "Img/" . $file_name);
-                if (!$var) {
-                    echo "<p> No se ha podido mover la imagen a la carpeta destino en el servidor </p>";
-                }
-                // Consulta con actualización de la foto
-                if ($_POST["clave"] == "") {
-                    $consulta = "UPDATE usuarios SET 
-                        nombre='" . $_POST["nombre"] . "',
-                        usuario='" . $_POST["usuario"] . "',
-                        dni='" . $_POST["dni"] . "',
-                        sexo='" . $_POST["sexo"] . "',
-                        foto='" . $file_name . "'
-                        WHERE id_usuario='" . $_POST["btnContEditar"] . "'";
+            // Actualizar datos del usuario sin la foto inicialmente
+            if ($_POST["clave"] == "") {
+                $consulta = "UPDATE usuarios SET 
+                    nombre='" . $_POST["nombre"] . "',
+                    usuario='" . $_POST["usuario"] . "',
+                    dni='" . $_POST["dni"] . "',
+                    sexo='" . $_POST["sexo"] . "'
+                    WHERE id_usuario='" . $_POST["id_usuario"] . "'";
+            } else {
+                $consulta = "UPDATE usuarios SET 
+                    nombre='" . $_POST["nombre"] . "',
+                    usuario='" . $_POST["usuario"] . "',
+                    clave='" . md5($_POST["clave"]) . "',
+                    dni='" . $_POST["dni"] . "',
+                    sexo='" . $_POST["sexo"] . "'
+                    WHERE id_usuario='" . $_POST["id_usuario"] . "'";
+            }
+            mysqli_query($conexion, $consulta);
+
+            // Procesar la imagen si se ha subido una nueva
+            if ($_FILES["foto"]["name"] != "") {
+                // Obtener la extensión del archivo
+                $extension = tiene_extension($_FILES["foto"]["name"]);
+
+                // Generar un nombre único para la imagen usando el id_usuario
+                $nombre_foto = "img_" . $_POST["id_usuario"] . "." . $extension;
+
+                // Mover la imagen al directorio Img/
+                if (move_uploaded_file($_FILES["foto"]["tmp_name"], "Img/" . $nombre_foto)) {
+                    // Actualizar el campo foto en la base de datos
+                    $consulta = "UPDATE usuarios SET foto='" . $nombre_foto . "' WHERE id_usuario='" . $_POST["id_usuario"] . "'";
+                    mysqli_query($conexion, $consulta);
+
+                    // Eliminar la imagen antigua si no es 'no_imagen.jpg'
+                    if ($_POST["foto_bd"] != 'no_imagen.jpg') {
+                        unlink("Img/" . $_POST["foto_bd"]);
+                    }
                 } else {
-                    $consulta = "UPDATE usuarios SET 
-                        nombre='" . $_POST["nombre"] . "',
-                        usuario='" . $_POST["usuario"] . "',
-                        clave='" . md5($_POST["clave"]) . "',
-                        dni='" . $_POST["dni"] . "',
-                        sexo='" . $_POST["sexo"] . "',
-                        foto='" . $file_name . "'
-                        WHERE id_usuario='" . $_POST["btnContEditar"] . "'";
-                }
-            } else { // Si no se ha subido una nueva foto
-                if ($_POST["clave"] == "") {
-                    $consulta = "UPDATE usuarios SET 
-                        nombre='" . $_POST["nombre"] . "',
-                        usuario='" . $_POST["usuario"] . "',
-                        dni='" . $_POST["dni"] . "',
-                        sexo='" . $_POST["sexo"] . "'
-                        WHERE id_usuario='" . $_POST["btnContEditar"] . "'";
-                } else {
-                    $consulta = "UPDATE usuarios SET 
-                        nombre='" . $_POST["nombre"] . "',
-                        usuario='" . $_POST["usuario"] . "',
-                        clave='" . md5($_POST["clave"]) . "',
-                        dni='" . $_POST["dni"] . "',
-                        sexo='" . $_POST["sexo"] . "'
-                        WHERE id_usuario='" . $_POST["btnContEditar"] . "'";
+                    echo "<p>No se pudo mover la imagen al directorio destino.</p>";
                 }
             }
-    
-            // Ejecuta la consulta y muestra mensaje de éxito
-            mysqli_query($conexion, $consulta);
+
             $_SESSION["mensaje_accion"] = "Usuario editado con éxito";
-            header("Location: index.php");
+            header("Location:index.php");
             exit;
         } catch (Exception $e) {
             mysqli_close($conexion);
             die(error_page("Primer CRUD", "<p>No se ha podido realizar la consulta: " . $e->getMessage() . "</p>"));
         }
     }
-    
-    
-    
 }
 // Accion borrado
 if(isset($_POST["btnContBorrar"])){
@@ -198,6 +188,10 @@ mysqli_close($conexion);
     // Agregar nuevo usuario
     if(isset($_POST["btnAgregar"]) || (isset($_POST["btnContAgregar"]) && $error_form_agregar)){
         require "vistas/vista_agregar.php";
+    }
+
+    if(isset($_POST["btnDetalles"])){
+        require "vistas/vista_detalle.php";
     }
 
     // editar un usuario
