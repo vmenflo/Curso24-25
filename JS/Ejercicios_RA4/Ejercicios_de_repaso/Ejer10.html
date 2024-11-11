@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejer 10</title>
+</head>
+
+<body>
+    <h2>Ejercicio 10</h2>
+    <script>
+        const GODOS =
+            ["Ataulfo", "Teudiselo", "Sisenando", "Sigérico", "Valia", "Valia", "Valia", "Valia", "Valia", "Valia", "Teudiselo", "Sisenando", "Teodórico", "Turismundo", "Éurico", "Alárico", "Gesalérico", "Amalárico", "Teudis", "Teudiselo", "Sisenando", "Quintila", "Ágila", "Atanagildo", "Liuva", "Leovigildo", "Recaredo",
+                "Vitérico", "Sisebuto", "Suintila", "Sisenando", "Quintila", "Chindasvinto",
+                "Recesvinto", "Vamba", "Ervigio", "Égica", "Vitiza", "Rodrigo"]
+
+        var uno = ""
+        var numuno = 0;
+        var dos = ""
+        var numdos = 0;
+        var tres = ""
+        var numtres = 0;
+
+        function coloca(nombre,cuantos) {
+            if(cuantos > numuno){
+                if(nombre!=uno){
+                    numdos=numuno;
+                    dos=uno;
+                    numtres=numdos;
+                    tres=dos;
+                }
+                uno=nombre;
+                numuno=cuantos;
+                return 0
+            }
+            if(cuantos > numdos && nombre!= uno){
+                if(nombre!=dos){
+                    numtres=numdos;
+                    tres=dos;
+                }
+                numdos=cuantos;
+                dos=nombre;
+                return 0;
+            }
+            if(cuantos>numtres && nombre!=dos && nombre!=uno){
+                tres = nombre;
+                numtres=cuantos;
+                return 0;
+            }
+        }
+        GODOS.map(u=> {
+            let cuantos = GODOS.filter(t=> t==u).length;
+            coloca(u,cuantos);
+        })
+        
+        console.log("El primero es: " + uno + " sale " + numuno + " veces.");
+        console.log("El segundo es: " + dos + " sale " + numdos + " veces.");
+        console.log("El primero es: " + tres + " sale " + numtres + " veces.");
+
+    </script>
+</body>
+
+</html>

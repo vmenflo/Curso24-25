@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 12</title>
+</head>
+<body>
+    <script>
+        const REYES = ["Chindatore", ["Chindasvinto", "Rencesvinto", "Lautaro"], ["Lauro", "Sisebuto", ["Fracisbuto", "Vigafredo", ["Leovigildo", "Recaredo"]]], "Amalarico II"];
+        var monguers = [];
+        let monguersKnown = ["Chindasvinto", "Amalarico II"];
+
+        function findmonguer(arr,par){
+            let arr2=[];
+            arr.map(u=>{
+                if(Array.isArray(u)){
+                    arr2.push(...findmonguer(u,!par));
+                }else{
+                    if(par){
+                        arr2.push(u);
+                    }
+                }
+            });
+            return arr2;
+        }
+
+        monguers = findmonguer(REYES,false);
+        console.log(monguers);
+    </script>
+</body>
+</html>
