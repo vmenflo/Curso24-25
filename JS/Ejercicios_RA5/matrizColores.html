@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrices Colores</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="contenedor">
+
+    </div>
+    <script>
+        const arrayColores = [
+                            ['azul', 'rojo', 'verde', 'amarillo', 'azul', 'rojo', 'verde', 'amarillo', 'azul'],
+                            ['amarillo', 'verde', 'rojo', 'verde', 'amarillo', 'azul', 'rojo', 'amarillo', 'azul'],
+                            ['verde', 'amarillo', 'rojo', 'azul', 'amarillo', 'verde', 'azul', 'verde', 'rojo'],
+                            ['amarillo', 'rojo', 'verde', 'verde', 'rojo', 'amarillo', 'azul', 'rojo', 'verde'],
+                            ['rojo', 'verde', 'amarillo', 'amarillo', 'verde', 'rojo', 'azul', 'rojo', 'verde'],
+                            ['verde', 'rojo', 'amarillo', 'rojo', 'amarillo', 'verde', 'azul', 'verde', 'amarillo'],
+                            ['amarillo', 'azul', 'verde', 'rojo', 'rojo', 'amarillo', 'verde', 'azul', 'rojo'],
+                            ['rojo', 'verde', 'azul', 'amarillo', 'verde', 'rojo', 'amarillo', 'verde', 'azul'],
+                            ['verde', 'amarillo', 'rojo', 'azul', 'amarillo', 'azul', 'rojo', 'verde', 'amarillo']
+                            ];
+
+
+        function crearMatriz(arr) {
+            // El padre
+            let contenedor = document.getElementById("contenedor");
+            // Por cada fila crea un nuevo dic
+            arr.map(fila => {
+                let nuevoDiv = document.createElement("div");
+                nuevoDiv.classList.add("row"); 
+                // Con otro map recorremos cada fila crear los botones
+                fila.map(color => {
+                    let botonDiv = document.createElement("div");
+                    botonDiv.classList.add("col"); 
+
+                    let boton = document.createElement("button"); // Lo creamos
+                    let colorido = "";
+                    if(color=="verde"){
+                        colorido ="btn-success";
+                    }else if(color=="amarillo"){
+                        colorido ="btn-warning";
+                    }else if(color=="azul"){
+                        colorido ="btn-info";
+                    }else if(color=="rojo"){
+                        colorido ="btn-danger";
+                    }
+                    
+                    boton.classList.add("btn", colorido);  // Añadimos las clases y el color
+                    boton.textContent=color; // añadimos el texto
+                    // Añadimos el botón al div de la columna
+                    botonDiv.appendChild(boton);
+
+                    // Añadimos el div de la columna a la fila
+                    nuevoDiv.appendChild(botonDiv);
+                });
+
+                // Añadimos la fila al contenedor principal
+                contenedor.appendChild(nuevoDiv);
+            });
+        }
+        crearMatriz(arrayColores);
+       
+    </script>
+</body>
+</html>
