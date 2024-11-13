@@ -1,4 +1,5 @@
 <?php
+echo "<h2>Listado de los Usuarios</h2>";
 echo "<table>";
 echo "<tr>";
 echo "<th>#</th>";
