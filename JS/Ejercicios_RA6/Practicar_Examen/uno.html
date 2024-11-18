@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CUENTAMAN</title>
+</head>
+
+<body>
+    <p>Tenemos las dos listas que ves aquí debajo</p>
+    <ol id="lista1">
+        <li>Perico</li>
+        <li>Juanico</li>
+        <ul>
+            <li>Jose</li>
+            <ul>
+                <li>Roman</li>
+                <li>Marco</li>
+                <li>Rodrigo</li>
+            </ul>
+            <li>Jose</li>
+            <li>Lorenzo</li>
+            <ul>
+                <li>Dimas</li>
+                <li>Gestas</li>
+                <li>Malakatos</li>
+                <li>Jose</li>
+                <li>Dimas</li>
+                <li>Gestas</li>
+            </ul>
+        </ul>
+        <li>Sofoclis</li>
+    </ol>
+    <ol id="lista2">
+        <li>Periquin</li>
+        <li>Sofoclis</li>
+        <li>Jose</li>
+        <ul>
+            <li>Dimas</li>
+
+            <li>Gestas</li>
+        </ul>
+    </ol>
+    <p>Se pide que modifiques la lista con id="lista2" para que tenga este
+        aspecto:<br>
+    <ol>
+        <li>Periquin 0</li>
+        <li>Sofoclis 1</li>
+        <li>Jose 3</li>
+        <ul>
+            <li>Dimas 2</li>
+            <li>Gestas 2</li>
+        </ul>
+    </ol>
+    </p>
+    <p>
+        Si te das cuenta lo que hemos hecho ha sido contar cuantas veces aparece
+        en la primera lista cada elemento de la segunda<br>
+        <br>
+        Requisitos:<br>
+        -Tu programa tendrá que ser legible y tener el menor número de líneas.<br>
+        -Tu programa solo debe utilizar funciones flecha (arrow).<br>
+        -Para el programa JOSE y Jose son la misma persona.<br><br>
+        Otros requisitos (importante):
+        -Se penalizará la utilización de arrays<br>
+        -Se penalizará la utilización de variables globales<br>
+        -Tu programa deberá estar refactorizado para una ejecución eficiente en el
+        cliente. Una función con más de 20 líneas se considera no refactorizada.<br>
+        <br>
+        Ten en cuenta los requisitos en la realización de tu código. Los nodos
+        bajo lista1 y lista2 solo serán de tipo LI y UL (tenlo en cuenta al realizar
+        tu código).<br>
+        <br>
+        Puedes utilizar solamente el libro de texto para consulta pero NO está
+        permitido que utilices Internet ni otro código que hayas escrito con
+        anterioridad. El libro no puede tener añadido nada aparte de lo impreso.<br>
+        La máquina en la que haces el examen tiene que estar limpia de código
+        fuente relacionado con la asignatura. <br>
+    </p>
+
+    <script>
+        /*CREA UNA FUNCIÓN QUE DADO UN NODO CUENTE CUÁNTAS PERSONAS CON UN NOMBRE HAY
+        POR DEBAJO DE ÉL (INCLUIDO)*/
+
+        /*CREA OTRA FUNCIÓN QUE RECORRE LA SEGUNDA LISTA Y LLAME A LA FUNCIÓN
+        ANTERIOR PARA QUE BUSQUE
+        A ESA PERSONA EN LA PRIMERA LISTA Y LE AGREGUE LAS VECES QUE APARECE EN LA
+        PRIMERA*/
+
+        //LLAMA A ESTA SEGUNDA FUNCIÓN
+
+
+        //Primera función:
+       let cuentaMan = (obj, nombre)=> {
+        let contador = 0;
+        for (let i = 0; i < obj.children.length; i++) {
+            child = obj.children[i];
+            if(child.children.length>0){
+                contador+=cuentaMan(child, nombre);
+            }else if (child.tagName=="LI"){
+                if(child.textContent.toUpperCase()==nombre.toUpperCase()){
+                    contador++;
+                }
+            }
+        }
+        return contador;
+       }
+       let listadoUno = document.getElementById("lista1");
+
+       let modificarLista = (obj)=>{
+        for (let i = 0; i < obj.children.length; i++) {
+            let child = obj.children[i];
+            if(child.children.length>0){
+                modificarLista(child);
+            }else if(obj.children[i].tagName=="LI"){
+                let nombre = obj.children[i].textContent;
+                let contador = cuentaMan(document.getElementById("lista1"), nombre);
+                child.innerHTML = `${nombre} : ${contador}`;
+            }
+        }
+       }
+       let listadoDos = document.getElementById("lista2");
+       modificarLista(listadoDos);
+    </script>
+</body>
+
+</html>

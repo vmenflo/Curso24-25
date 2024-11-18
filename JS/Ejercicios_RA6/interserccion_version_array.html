@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>INTERSECTION LIST</title>
+</head>
+
+<body>
+    PRIMERA LISTA:
+    <ul id="lista1">
+        <li>manzana</li>
+        <li>pera</li>
+        <ul>
+            <li>conferencia</li>
+            <ul>
+                <li>conferenciaverde</li>
+                <li>conferenciaamarilla</li>
+                <li>conferenciaroja</li>
+            </ul>
+            <li>peradeagua</li>
+            <li>peritadulce</li>
+            <ul>
+                <li>Dimas</li>
+                <li>Gestas</li>
+                <li>Malakatos</li>
+                <li>Jose</li>
+            </ul>
+        </ul>
+        <li>limon</li>
+        <li>limon</li>
+        <li>LIMON</li>
+    </ul>
+    Segunda lista:
+    <ul id="lista2">
+        <li>manzana</li>
+        <li>manzana</li>
+        <li>manzana</li>
+        <li>manzana</li>
+        <li>pera</li>
+        <li>limon</li>
+    </ul>
+
+    <script>
+        // función para pasar de objeto a lista
+        function pasarALista(obj) {
+        let arrAux = [];
+        let arrSinRepetir = [];
+        for (let i = 0; i < obj.children.length; i++) {
+            let child = obj.children[i];
+
+            // Si el elemento tiene hijos, llamamos recursivamente
+            if (child.children.length > 0) {
+                arrAux = arrAux.concat(pasarALista(child));
+            } else if (child.tagName === "LI" && !arrSinRepetir.includes(child.textContent.toUpperCase())) {
+                // Si es un <li>, añadimos su contenido a la lista
+                arrSinRepetir.push(child.textContent.toUpperCase());
+                arrAux.push(child.textContent.toUpperCase());
+            }
+        }
+        return arrAux;
+    }
+  
+    let lista1 = pasarALista(document.getElementById("lista1"));
+    let lista2 = pasarALista(document.getElementById("lista2"));
+    
+    //Función para interseccionar las listas
+    function interseccionar(lista1,lista2){
+        lista1.map(u=> lista2.map(t=> {
+            if(t==u){
+                console.log(u);
+            }
+        }))
+    }
+    interseccionar(lista1,lista2);
+    </script>
+</body>
+</html>

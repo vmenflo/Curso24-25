@@ -39,10 +39,33 @@
         <li>pera</li>
         <li>limon</li>
     </ul>
+    <div id="resultado">
 
+    </div>
 
     <script>
-
+        function interseccion(obj,obj2){
+            let arrAux = [];
+            let ul = document.createElement("ul");
+            for (let i=0; i<obj.children.length;i++){
+                interseccion(obj.children[i], obj2);
+                for(let j=0; j<obj2.children.length;j++){
+                    if(obj2.children[j].tagName=="LI" && obj.children[i].textContent.toUpperCase() == obj2.children[j].textContent.toUpperCase() && !arrAux.find(u=> u==obj.children[i].textContent.toUpperCase())){
+                        let li = document.createElement("li");
+                        li.innerHTML=obj.children[i].textContent.toUpperCase();
+                        ul.appendChild(li);
+                        arrAux.push(obj.children[i].textContent.toUpperCase());
+                        break;
+                    }
+                }
+            }
+            return ul;
+        }
+        let resultado = document.getElementById("resultado");
+        const lista1 = document.getElementById("lista1");
+        const lista2 = document.getElementById("lista2");
+        let ulFinal = interseccion(lista1,lista2);
+        resultado.appendChild(ulFinal);
     </script>
 
 </body>
