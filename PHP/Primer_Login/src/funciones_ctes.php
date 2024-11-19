@@ -4,7 +4,9 @@ const USUARIO_BD="jose";
 const CLAVE_BD="josefa";
 const NOMBRE_BD="bd_cv";
 
-const INACTIVIDAD=1; //MINUTOS
+const INACTIVIDAD=5; ///MINUTOS
+
+
 
 function error_page($title,$body)
 {
@@ -18,6 +20,3 @@ function error_page($title,$body)
     <body>'.$body.'</body></html>';
 
 }
-
-
-?>

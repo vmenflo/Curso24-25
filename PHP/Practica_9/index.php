@@ -2,6 +2,9 @@
 session_start();
 require "src/funciones_ctes.php";
 
+
+
+
 if(isset($_POST["btnCerrarSession"]))
 {
     session_destroy();
@@ -16,9 +19,13 @@ if(isset($_SESSION["usuario"]))
     require "src/seguridad.php";
 
     // Muestro vista después de Login
-    require "vistas/vista_logueado.php";
+    if($datos_usuario_log["tipo"]=="admin"){
+        require "vistas/vista_tabla_principal.php";
+    }else{
+        require "vistas/vista_logueado.php";
+    }
 
-    mysqli_close($conexion);
+    // mysqli_close($conexion);
 }
 else
 {
