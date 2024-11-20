@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        <h3>Login</h3>
+        Usuario: <input type="text" id="usuario">
+        Clave: <input type="password" id="clave">
+        <button type="button" onclick="comprobar()">Login</button>
+    </form>
+    <p>Respuesta: <span id="txtSugerencia"></span></p>
+    <script>
+        function comprobar() {
+                var xmlhttp = new XMLHttpRequest();
+                let usuario = document.getElementById("usuario").value
+                let clave = document.getElementById("clave").value
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("txtSugerencia").innerHTML = this.responseText;
+                    }
+                };
+                xmlhttp.open("GET", "http://localhost/Proyectos%20/Curso24-25/JS/Ejercicios_RA6/Probar_Ajax/getSugerencia.php?param1="+usuario+"&param2="+ clave, true);
+                xmlhttp.send();
+            }
+        
+    </script>
+</body>
+
+</html>
