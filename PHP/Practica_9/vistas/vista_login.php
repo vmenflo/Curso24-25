@@ -59,14 +59,14 @@ if(isset($_POST["btnLogin"]))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Primer Login</title>
+    <title>Práctica 9</title>
     <style>
         .error{color:red}
         .mensaje{color:blue;font-size:1.25rem}
     </style>
 </head>
 <body>
-    <h1>Primer Login</h1>
+    <h1>Práctica 9</h1>
     <form action="index.php" method="post">
         <p>
             <label for="usuario">Usuario: </label>
