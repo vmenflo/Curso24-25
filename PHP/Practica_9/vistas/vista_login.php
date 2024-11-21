@@ -35,9 +35,12 @@ if(isset($_POST["btnLogin"]))
                 header("Location:index.php");
                 exit;
 
-            }
-            else
+            }else{
+                mysqli_close($conexion);
                 $error_usuario=true;
+            }
+
+                
 
         }
         catch(Exception $e)
@@ -88,7 +91,7 @@ if(isset($_POST["btnLogin"]))
             }
             ?>
         </p>
-        <p><button name="btnLogin" type="submit">Login</button></p>
+        <p><button name="btnLogin" type="submit">Login</button> <button name="btnRegistro" type="submit">Registrarse</button></p>
     </form>
     <?php
     if(isset($_SESSION["mensaje_seguridad"]))
