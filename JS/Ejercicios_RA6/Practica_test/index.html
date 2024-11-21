@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto Test</title>
+    <script src="./preguntas.js"></script>
+    <script src="./script.js"></script>
+    <style>
+        #cabecera{
+            background-color: #ffee93;
+            padding:2rem;
+            font-size: 2rem;
+        }
+        .contenedor{
+            border:black 1 px solid;
+        }
+
+        .cont-pregunta{
+            border:black 2px #ffee93;
+            border-radius: 15pt;
+            margin:0.5rem;
+            padding:1rem;
+            background-color: #fcf5c7;
+        }
+
+        .pregunta{
+            color:black;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .cont-opciones{
+            border-top:1px solid black;
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        .opcion{
+            padding:1rem;
+            cursor: pointer;
+            flex-grow: 1; 
+            text-align: center;
+        }
+        .opcion:hover {
+            background-color: #eae6ca; 
+        }
+        #resultado{
+            font-size: 2rem;
+            background-color: #fcf5c7;
+            text-transform: bold;
+            text-align: center;
+            padding:1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="cabecera">
+        <h2>Averigua tu fototipo</h2>
+    </div>
+
+    <div id="contenedor"></div>
+    <p id="resultado"></p>
+</body>
+</html>
