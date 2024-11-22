@@ -3,7 +3,10 @@
     {
         $error_nombre=$_POST["nombre"]=="";
         $error_usuario=$_POST["usuario"]=="";
-        ////////////////
+        
+        if(!$error_usuario)
+        {
+            ////////////////
         try
         {
             @$conexion=mysqli_connect(SERVIDOR_BD,USUARIO_BD,CLAVE_BD,NOMBRE_BD);
@@ -14,8 +17,6 @@
             die(error_page("Práctica 8","<p>No se ha podido conectar a la BD: ".$e->getMessage()."</p>"));
         }
         //////////////////
-        if(!$error_usuario)
-        {
             $error_usuario=repetido($conexion,"usuarios","usuario",$_POST["usuario"]);
             if(is_string($error_usuario))
             {
@@ -28,6 +29,19 @@
         $error_dni=$_POST["dni"]=="" || !dni_bien_escrito($_POST["dni"]) || ! dni_valido($_POST["dni"]) ;
         if(!$error_dni)
         {
+            if(!isset($conexion)){
+                ////////////////
+            try
+            {
+                @$conexion=mysqli_connect(SERVIDOR_BD,USUARIO_BD,CLAVE_BD,NOMBRE_BD);
+                mysqli_set_charset($conexion,"utf8");
+            }
+            catch(Exception $e)
+            {
+                die(error_page("Práctica 8","<p>No se ha podido conectar a la BD: ".$e->getMessage()."</p>"));
+            }
+            //////////////////
+            }
             $error_dni=repetido($conexion,"usuarios","dni",strtoupper($_POST["dni"]));
             if(is_string($error_dni))
             {
@@ -85,11 +99,10 @@
                     $_SESSION["mensaje_accion"]="Usuario insertado con éxito, pero con la imagen por defecto.";
                 }
             }
-    
+            mysqli_close($conexion);
             header("Location:index.php");
             exit();
         }
-        mysqli_close($conexion);
     }
 ?>
 <!DOCTYPE html>
