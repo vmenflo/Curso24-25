@@ -1,5 +1,5 @@
 <?php
-session_name("Practica_examen");
+session_name("Practica 10");
     session_start();
     require "src/funciones_ctes.php";
     
@@ -21,7 +21,7 @@ session_name("Practica_examen");
         </style>
 </head>
 <body>
-    <h2>Práctica de cara al Examen</h2>
+    <h2>Práctica 10</h2>
     <?php
         if (isset($_POST["btnSalir"])) {
             session_destroy();

@@ -9,7 +9,7 @@ catch(Exception $e)
 {
     session_destroy();
     mysqli_close($conexion);
-    die(error_page("Examen2 PHP","<p>No se ha podido realizar la consulta: ".$e->getMessage()."</p>"));
+    die(error_page("Práctica 10","<p>No se ha podido realizar la consulta: ".$e->getMessage()."</p>"));
 }
 
 
