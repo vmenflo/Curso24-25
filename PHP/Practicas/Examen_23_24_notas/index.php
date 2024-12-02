@@ -5,7 +5,7 @@
     try{
         @$conexion=mysqli_connect(SERVIDOR_BD,USUARIO_BD,CLAVE_BD,NOMBRE_BD);
         mysqli_set_charset($conexion,"utf8");
-    }catch(Exceptions $e){
+    }catch(Exception $e){
         session_destroy();
     die(error_page("Examen notas","<p>No se ha podido conectar a la BD: ".$e->getMessage()."</p>"));
     }
@@ -15,7 +15,7 @@
         $consulta="select * from alumnos";
         $result_select=mysqli_query($conexion,$consulta);
         
-    }catch(Exceptions $e){
+    }catch(Exception $e){
         session_destroy();
         mysqli_close($conexion);
     die(error_page("Examen notas","<p>No se ha podido realizar la consulta: ".$e->getMessage()."</p>"));
@@ -28,7 +28,7 @@
             $result_detalle_alumno=mysqli_query($conexion,$consulta);
             $_SESSION["alumno"]=$_POST["alumno"];
 
-        }catch(Exceptions $e){
+        }catch(Exception $e){
             session_destroy();
             mysqli_close($conexion);
         die(error_page("Examen notas","<p>No se ha podido realizar la consulta: ".$e->getMessage()."</p>"));
