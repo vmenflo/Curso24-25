@@ -1,4 +1,5 @@
 <?php
+session_name("Primer_login_24_25");
 session_start();
 require "src/funciones_ctes.php";
 
@@ -16,7 +17,10 @@ if(isset($_SESSION["usuario"]))
     require "src/seguridad.php";
 
     // Muestro vista después de Login
-    require "vistas/vista_logueado.php";
+    if($datos_usuario_log["tipo"]=="normal")
+        require "vistas/vista_normal.php";
+    else
+        require "vistas/vista_admin.php";
 
     mysqli_close($conexion);
 }

@@ -35,10 +35,13 @@ if(isset($_POST["btnLogin"]))
                 header("Location:index.php");
                 exit;
 
-            }else{
+            }
+            else
+            {
                 mysqli_close($conexion);
                 $error_usuario=true;
             }
+
         }
         catch(Exception $e)
         {
