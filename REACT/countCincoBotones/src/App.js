@@ -5,12 +5,27 @@ import { Button } from 'reactstrap';
 
 class App extends Component {
   constructor(props) {
-
     super(props);
     this.state = {
-      contador:Array(5).fill(0),
-      colores:Array(5).fill("secondary"),
+      contador: Array(5).fill(0),
+      colores: Array(5).fill("secondary"),
     };
+  }
+
+  accionClick(num) {
+    const copia = [...this.state.colores];
+    const contadorCopia = [...this.state.contador];    
+
+    if (contadorCopia[num] === 0) {
+      copia[num] = "danger";
+    }
+    contadorCopia[num]++;
+    this.setState({
+      colores: copia,
+      contador: contadorCopia,
+    });
+
+
   }
 
   render() {
@@ -18,11 +33,11 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <div>
-            <Button color={this.state.colores[0]} onClick={()=>Botoncillo(0,this)}>{this.state.contador[0]}</Button>
-            <Button color={this.state.colores[1]} onClick={()=>Botoncillo(1,this)}>{this.state.contador[1]}</Button>
-            <Button color={this.state.colores[2]} onClick={()=>Botoncillo(2,this)}>{this.state.contador[2]}</Button>
-            <Button color={this.state.colores[3]} onClick={()=>Botoncillo(3,this)}>{this.state.contador[3]}</Button>
-            <Button color={this.state.colores[4]} onClick={()=>Botoncillo(4,this)}>{this.state.contador[4]}</Button>
+            <Botoncillo color={this.state.colores[0]} onClick={() => this.accionClick(0)} contador={this.state.contador[0]}/>
+            <Botoncillo color={this.state.colores[1]} onClick={() => this.accionClick(1)} contador={this.state.contador[1]}/>
+            <Botoncillo color={this.state.colores[2]} onClick={() => this.accionClick(2)} contador={this.state.contador[2]}/>
+            <Botoncillo color={this.state.colores[3]} onClick={() => this.accionClick(3)} contador={this.state.contador[3]}/>
+            <Botoncillo color={this.state.colores[4]} onClick={() => this.accionClick(4)} contador={this.state.contador[4]}/>
           </div>
         </header>
       </div>
@@ -30,21 +45,12 @@ class App extends Component {
   }
 }
 
-function Botoncillo(num, componente) {
-  const copia = [...componente.state.colores]
-  const contadorCopia = [...componente.state.contador]
-
-  if(contadorCopia[num]===0){
-    copia[num]="danger"
-    contadorCopia[num]++
-    componente.setState({colores:copia})
-    componente.setState({contador:contadorCopia})
-  }else{
-    contadorCopia[num]++
-    componente.setState({contador:contadorCopia})
-  }
-  
-  
+function Botoncillo(props) {
+  return (
+    <Button color={props.color} onClick={props.onClick}>
+      {props.contador}
+    </Button>
+  );
 }
 
 export default App;
