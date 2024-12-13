@@ -66,6 +66,24 @@
             echo "</ol>";
             
         }
+        // como insertar
+
+        $nombre="pepe";
+        $usuario="pipito";
+        $clave=md5("123");
+        $email="sa@gmail.com";
+
+        try{
+            $consulta = "insert into usuarios (nombre,usuario,clave,email) values (?,?,?,?)";
+            $sentencia=$conexion->prepare($consulta);
+            $sentencia->execute([$nombre,$usuario,$clave,$email]); // Siempre un array con tantas parametros necesite la consulta
+        }catch(PDOException $e){
+            $sentencia=null;
+            $conexion=null;
+            die("<p>No se ha podido conectar a la BD: ".$e->getMessage()."</p>");
+        } 
+        echo "<p> Usuario insertado con exito. Último ID: ".$conexion->lastInsertId()."</p>";
+
         // Cerramos sentencia
         $sentencia=null;
         // Cerramos la conexión
