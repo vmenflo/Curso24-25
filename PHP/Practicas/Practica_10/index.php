@@ -1,5 +1,5 @@
 <?php
-session_name("Practica 10");
+session_name("Practica10");
     session_start();
     require "src/funciones_ctes.php";
     
