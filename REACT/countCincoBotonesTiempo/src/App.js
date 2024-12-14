@@ -12,32 +12,51 @@ class App extends Component {
     };
   }
 
-  decremento(num){
-    let aux = this.state.contador
-    if(aux[num]>0){
-      aux[num]--;
-      this.setState({contador:aux});
+  decremento(num) {
+    const contadorCopia = [...this.state.contador];
+    const coloresCopia = [...this.state.colores];
+
+    if (contadorCopia[num] > 0) {
+      contadorCopia[num]--;
     }
+
+
+    if (contadorCopia[num] === 0) {
+      coloresCopia[num] = "secondary";
+    }
+
+    const max = Math.max(...contadorCopia);
+    const posicion = contadorCopia.indexOf(max);
+    coloresCopia.fill("secondary"); 
+    if (max > 0){
+      coloresCopia[posicion] = "danger";
+     } 
+
+    this.setState({
+      contador: contadorCopia,
+      colores: coloresCopia,
+    });
   }
 
   accionClick(num) {
-    const copia = [...this.state.colores];
-    const contadorCopia = [...this.state.contador];    
-    
-    if (contadorCopia[num] === 0) {
-      copia[num] = "danger";
-    }
+    const contadorCopia = [...this.state.contador];
+    const coloresCopia = [...this.state.colores];
+
     contadorCopia[num]++;
+    const max = Math.max(...contadorCopia);
+    const posicion = contadorCopia.indexOf(max);
+    coloresCopia.fill("secondary"); 
+    coloresCopia[posicion] = "danger";
+
     this.setState({
-      colores: copia,
       contador: contadorCopia,
+      colores: coloresCopia,
     });
 
     setTimeout(() => {
-      this.decremento(num)
+      this.decremento(num);
     }, 1000);
   }
-
 
   render() {
     return (
