@@ -21,7 +21,7 @@ function repetido($conexion, $tabla, $columna, $valor)
         $consulta="select ? from ? where ? =?";
         $sentencia=$conexion->prepare($consulta);
         $sentencia->execute([$columna,$tabla,$columna,$valor]);
-        $respuesta= mysqli_num_rows($result_consulta)>0;
+        //$respuesta= mysqli_num_rows($result_consulta)>0;
         $sentencia=null;
     }
     catch(Exception $e){
