@@ -22,7 +22,7 @@ if(isset($_SESSION["usuario"]))
         require "vistas/vista_normal.php";
     else
     {
-        $conexcion=null;
+        $conexion=null;
         header("Location:admin/index.php");
         exit;
     }
