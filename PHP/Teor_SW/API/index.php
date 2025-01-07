@@ -24,6 +24,20 @@ $app->post('/saludo',function($request){
 
 });
 
+$app->delete('/borrar/{id}',function($request){
+    $nombre=$request->getAttribute("id");
+    $respuesta["mensaje"]="El id=".$nombre." se ha borrado con éxito.";
+    echo json_encode($respuesta);
+});
+
+$app->put('/insertar',function($request){
+
+    $id=$request->getParam("id");
+    $respuesta["mensaje"]="El id= ".$id." ha sido insertado con éxito.";
+    echo json_encode($respuesta);
+
+});
+
 $app->run();
 
 ?>
