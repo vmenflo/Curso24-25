@@ -30,10 +30,11 @@ $app->delete('/borrar/{id}',function($request){
     echo json_encode($respuesta);
 });
 
-$app->put('/insertar',function($request){
-
-    $id=$request->getParam("id");
-    $respuesta["mensaje"]="El id= ".$id." ha sido insertado con éxito.";
+$app->put('/actualizar_saludo/{id}',function($request){
+    // tratamos el que pasamos por arriba
+    $id=$request->getAttribute("id");
+    $nombre_nuevo=$request->getParam("nombre");
+    $respuesta["mensaje"]="El id= ".$id." ha sido actualizado a ".$nombre_nuevo.".";
     echo json_encode($respuesta);
 
 });

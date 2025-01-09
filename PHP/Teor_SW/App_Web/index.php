@@ -58,8 +58,8 @@
 
     echo "<p>El mensaje recibido tras llamar al servicio web: <strong>'".$url."'</strong> ha sido: ".$obj->mensaje."</p>";
     
-    $url=DIR_SERV."/insertar";
-    $datos_env["id"]="5";
+    $url=DIR_SERV."/actualizar_saludo/3";
+    $datos_env["nombre"]="5";
     $respuesta=consumir_servicios_REST($url,"PUT",$datos_env);
     $obj=json_decode($respuesta);
     if(!$obj)
