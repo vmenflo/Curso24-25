@@ -49,6 +49,85 @@ define("DIR_SERV", "http://localhost/Proyectos/Curso24-25/PHP/Servicios_Web/Acti
     }
     echo "</table>";
 
+    echo "<hr/>";
+
+    // Ejercicio 2
+    echo "<h3>Ejercicio 2 </h3>";
+    $url = DIR_SERV . "/producto/ACERAX3950";
+    $respuesta = consumir_servicios_REST($url, "GET");
+    $obj = json_decode($respuesta, true);
+    if (!$obj)
+        die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+
+    if (isset($obj["error"]))
+        die("<p> " . $obj["error"] . "</p></body></html>");
+    
+    if (isset($obj["mensaje"]))
+        die("<p> " . $obj["mensaje"] . "</p></body></html>");
+    
+    echo "<p> El producto con el código".$obj["productos"][0]["cod"]." es:</p>";
+    echo "<p><b>Nombre:</b> ".$obj["productos"][0]["nombre_corto"]."</p>";
+    echo "<p><b>Precio:</b> ".$obj["productos"][0]["PVP"]."</p>";
+
+    echo "<hr/>";
+
+    // Ejercicio 3
+    echo "<h3>Ejercicio 3 </h3>";
+    
+    $url = DIR_SERV . "/producto/insertar";
+    $datos_env["cod"]="prueba1";
+    $datos_env["nombre"]="ratón";
+    $datos_env["nombre_corto"]="mouse";
+    $datos_env["pvp"]="10";
+    $datos_env["familia"]="hardware";
+    $datos_env["descripcion"]="para mover el puntero";
+    $respuesta = consumir_servicios_REST($url,"PUT",$datos_env);
+    $obj = json_decode($respuesta, true);
+
+    if (!$obj)
+        die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+
+    if (isset($obj["error"]))
+        die("<p> " . $obj["error"] . "</p></body></html>");
+    
+    if (isset($obj["mensaje"]))
+        echo "<p> " . $obj["mensaje"] . "</p>";
+    
+    echo "<hr/>";
+
+    // Ejercicio 4
+    echo "<h3>Ejercicio 4 </h3>";
+    $url = DIR_SERV . "/producto/actualizar/prueba1/teclado/teclado/para_escribir/10/hardware";
+    $respuesta = consumir_servicios_REST($url,"PUT");
+    $obj = json_decode($respuesta, true);
+
+    if (!$obj)
+        die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+
+    if (isset($obj["error"]))
+        die("<p> " . $obj["error"] . "</p></body></html>");
+    
+    if (isset($obj["mensaje"]))
+        echo "<p> " . $obj["mensaje"] . "</p>";
+
+        
+    echo "<hr/>";
+
+    // Ejercicio 5
+    echo "<h3>Ejercicio 5 </h3>";
+    $url = DIR_SERV . "/producto/borrar/prueba1";
+    $respuesta = consumir_servicios_REST($url,"DELETE");
+    $obj = json_decode($respuesta, true);
+
+    if (!$obj)
+        die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+
+    if (isset($obj["error"]))
+        die("<p> " . $obj["error"] . "</p></body></html>");
+    
+    if (isset($obj["mensaje"]))
+        echo "<p> " . $obj["mensaje"] . "</p>";
+
     ?>
 </body>
 
