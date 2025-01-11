@@ -81,7 +81,7 @@ define("DIR_SERV", "http://localhost/Proyectos/Curso24-25/PHP/Servicios_Web/Acti
     $datos_env["pvp"]="10";
     $datos_env["familia"]="hardware";
     $datos_env["descripcion"]="para mover el puntero";
-    $respuesta = consumir_servicios_REST($url,"PUT",$datos_env);
+    $respuesta = consumir_servicios_REST($url,"POST",$datos_env);
     $obj = json_decode($respuesta, true);
 
     if (!$obj)
@@ -127,6 +127,89 @@ define("DIR_SERV", "http://localhost/Proyectos/Curso24-25/PHP/Servicios_Web/Acti
     
     if (isset($obj["mensaje"]))
         echo "<p> " . $obj["mensaje"] . "</p>";
+
+    echo "<hr/>";
+
+    // Ejercicio 6
+    echo "<h3>Ejercicio 6 </h3>";
+    $url= DIR_SERV . "/familias";
+    $respuesta = consumir_servicios_REST($url,"GET");
+    $obj = json_decode($respuesta, true);
+
+    if(!$obj){
+        die("<p> Error consumiendo servicio web ". $url . "</strong></p></body></html>");
+    }
+
+    if(isset($obj["error"])){
+        die("<p> " . $obj["error"] . "</p></body></html>");
+    }
+
+    echo "<table>";
+    echo "<tr>";
+        echo "<th>COD</th><th>NOMBRE</th>";
+    echo "</tr>";
+        foreach($obj["familia"] as $tupla){
+            echo "<tr>";
+                echo "<td>".$tupla["cod"]."<td>";
+                echo "<td>".$tupla["nombre"]."<td>";
+            echo "</tr>";
+        }
+    echo "</table>";
+
+    echo "<hr/>";
+    // Ejercicio 7
+    echo "<h3>Ejercicio 7 </h3>";
+    echo "<p> Probamos Consolas que existe en familias </p>";
+    $url = DIR_SERV . "/repetido/familia/nombre/Consolas";
+    $resultado = consumir_servicios_REST($url,"GET");
+    $obj = json_decode($resultado, true);
+
+    if(!$obj){
+        die("<p> Error consumiendo servicio web ". $url . "</strong></p></body></html>");
+    }
+
+    if(isset($obj["error"])){
+        die("<p> " . $obj["error"] . "</p></body></html>");
+    }
+    if(isset($obj["mensaje"])){
+        echo "<p> " . $obj["mensaje"] . "</p>";
+    }
+
+    echo "<p> Probamos bombilla que no existe..</p>";
+
+    $url = DIR_SERV . "/repetido/familia/nombre/Bombillas";
+    $resultado = consumir_servicios_REST($url,"GET");
+    $obj = json_decode($resultado, true);
+
+    if(!$obj){
+        die("<p> Error consumiendo servicio web ". $url . "</strong></p></body></html>");
+    }
+
+    if(isset($obj["error"])){
+        die("<p> " . $obj["error"] . "</p></body></html>");
+    }
+    if(isset($obj["mensaje"])){
+        echo "<p> " . $obj["mensaje"] . "</p>";
+    }
+
+
+    echo "<hr/>";
+    // Ejercicio 8
+    echo "<h3>Ejercicio 8 </h3>";
+    $url = DIR_SERV . "/repetido/familia/nombre/Consolas/cod/CONSOL";
+    $resultado = consumir_servicios_REST($url,"GET");
+    $obj = json_decode($resultado, true);
+
+    if(!$obj){
+        die("<p> Error consumiendo servicio web ". $url . "</strong></p></body></html>");
+    }
+
+    if(isset($obj["error"])){
+        die("<p> " . $obj["error"] . "</p></body></html>");
+    }
+    if(isset($obj["mensaje"])){
+        echo "<p> " . $obj["mensaje"] . "</p>";
+    }
 
     ?>
 </body>
