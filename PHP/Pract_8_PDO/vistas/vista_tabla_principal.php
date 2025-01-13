@@ -2,7 +2,7 @@
 echo "<h3>Listado de los usuarios</h3>";
 echo "<table>";
 echo "<tr>";
-echo "<th>#</th><th>Foto</th><th>Nombre</th><th><form action='index.php' method='post'><button type='submit' name='btnAgregar' class='enlace'>Usuario+</button></form></th>";
+echo "<th>#</th><th>Foto</th><th>Nombre</th><th><form action='index.php' method='post'><button type='submit' name='btnAgregar' class='enlace'>Productos+</button></form></th>";
 echo "</tr>";
 while($tupla_datos_usuario=$sentencia->fetch(PDO::FETCH_ASSOC))
 {

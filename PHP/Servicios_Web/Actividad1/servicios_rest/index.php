@@ -34,21 +34,21 @@ $app->post('/producto/insertar',function($request){
 });
 
 // Ejercicio 4
-$app->put('/producto/actualizar/{cod}/{nombre}/{nombre_corto}/{descripcion}/{pvp}/{familia}',function($request){
-    $cod=$request->getAttribute("cod");
-    $nombre=$request->getAttribute("nombre");
-    $nombre_corto=$request->getAttribute("nombre_corto");
-    $descripcion=$request->getAttribute("descripcion");
-    $pvp=$request->getAttribute("pvp");
-    $familia=$request->getAttribute("familia");
+$app->put('/producto/actualizar/{codido}',function($request){
+    $datos[]=$request->getParam("nombre");
+    $datos[]=$request->getParam("nombre_corto");
+    $datos[]=$request->getParam("descripcion");
+    $datos[]=$request->getParam("pvp");
+    $datos[]=$request->getParam("familia");
+    $datos[]=$request->getAttribute("codigo");
 
-    echo json_encode(actualizar_producto($cod,$nombre,$nombre_corto,$descripcion,$pvp,$familia));
+    echo json_encode(actualizar_producto($datos));
 });
 
 // Ejercicio 5
 
-$app->delete('/producto/borrar/{cod}',function($request){
-    $cod=$request->getAttribute("cod");
+$app->delete('/producto/borrar/{codigo}',function($request){
+    $cod=$request->getAttribute("codigo");
 
     echo json_encode(borrar_producto($cod));
 });

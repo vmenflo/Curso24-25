@@ -92,7 +92,7 @@ function insertar_producto($cod,$nombre,$nombre_corto,$descripcion,$pvp,$familia
 
 }
 
-function actualizar_producto($cod,$nombre,$nombre_corto,$descripcion,$pvp,$familia){
+function actualizar_producto($datos){
     // Conectarnos con PDO
     try {
         $conexion = new PDO("mysql:host=" . SERVIDOR_BD . ";dbname=" . NOMBRE_BD, USUARIO_BD, CLAVE_BD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
@@ -105,8 +105,8 @@ function actualizar_producto($cod,$nombre,$nombre_corto,$descripcion,$pvp,$famil
     try {
         $consulta = "update producto set nombre=?, nombre_corto=?,descripcion=?, pvp=?, familia=? where cod=?";
         $sentencia = $conexion->prepare($consulta);
-        $sentencia->execute([$nombre,$nombre_corto,$descripcion,$pvp,$familia,$cod]); // Siempre un array con tantas parametros necesite la consulta
-        $respuesta["mensaje"]="El producto ".$nombre_corto." se ha actualizado con éxito";
+        $sentencia->execute([$datos]); // Siempre un array con tantas parametros necesite la consulta
+        $respuesta["mensaje"]="El producto ".$datos[5]." se ha actualizado con éxito";
         $sentencia = null;
         $conexion = null;
         return $respuesta;
@@ -134,16 +134,17 @@ function borrar_producto($cod){
         $consulta = "delete from producto where cod=?";
         $sentencia = $conexion->prepare($consulta);
         $sentencia->execute([$cod]); // Siempre un array con tantas parametros necesite la consulta
-        $respuesta["mensaje"]="El producto ".$cod." se ha borrado con éxito";
-        $sentencia = null;
-        $conexion = null;
-        return $respuesta;
     } catch (PDOException $e) {
         $sentencia = null;
         $conexion = null;
         $respuesta["error"] = "No se ha podido realizar el borrado: " . $e->getMessage();
         return $respuesta;
     }
+
+    $respuesta["mensaje"]="El producto ".$cod." se ha borrado con éxito";
+    $sentencia = null;
+    $conexion = null;
+    return $respuesta;
 }
 
 function obtener_familias(){
@@ -195,15 +196,11 @@ function es_repetido($tabla,$columna,$valor){
         return $respuesta;
     }
     // Recogemos la respuesta de la consulta
-    if($sentencia->rowCount()<=0){
-        $respuesta["mensaje"]="El valor (".$valor.") que usted busca en la columna (".$columna.") de la tabla (".$tabla."): no se encuentra en la BD";
-        return $respuesta;
-    }else{
-        $respuesta["mensaje"]="El valor (".$valor.") que usted busca se encuentra en la columna (".$columna.") de la tabla (".$tabla.")";
-        $sentencia = null;
-        $conexion = null;
-        return $respuesta; // Una vez montado el array lo devolvemos
-    }
+    $respuesta["repetido"]=$sentencia->rowCount()>0;
+    $sentencia = null;
+    $conexion = null;
+    return $respuesta; // Una vez montado el array lo devolvemos
+    
 }
 
 function es_repetido_editar($tabla,$columna,$valor,$id_columna,$id_valor){
@@ -216,28 +213,19 @@ function es_repetido_editar($tabla,$columna,$valor,$id_columna,$id_valor){
     }
     
     try {
-        $consulta = "select ".$columna." from ".$tabla." where ".$id_columna." = ?";
+        $consulta = "select ".$columna." from ".$tabla." where ".$id_columna." = ? AND ".$id_valor."<>?";
         $sentencia = $conexion->prepare($consulta);
-        $sentencia->execute([$id_valor]);
+        $sentencia->execute([$id_valor, $valor]);
     } catch (PDOException $e) {
         $sentencia = null;
         $conexion = null;
         $respuesta["error"] = "No se ha podido realizar la consulta: " . $e->getMessage();
         return $respuesta;
     }
-    // Recogemos la respuesta de la consulta
-    if ($sentencia->rowCount() == 0) {
-        $respuesta["error"] = "El id que intentas buscar no se encuentra";
-        return $respuesta;
-    }
-
-    $valor_obtenido = $sentencia->fetch(PDO::FETCH_ASSOC);
-    if($valor_obtenido[$columna]==$valor){
-        $respuesta["mensaje"]="Esta repetido";
-        return $respuesta;
-    }else{
-        $respuesta["mensaje"]="No está repetido";
-    }
-
+    /// Recogemos la respuesta de la consulta
+    $respuesta["repetido"]=$sentencia->rowCount()>0;
+    $sentencia = null;
+    $conexion = null;
+    return $respuesta; // Una vez montado el array lo devolvemos
 }
 ?>
