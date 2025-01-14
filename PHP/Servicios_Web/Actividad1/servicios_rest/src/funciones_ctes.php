@@ -44,13 +44,13 @@ function obtener_producto($cod)
 
     // Hacemos la consulta
     try {
-        $consulta = "select * from producto where cod=?";
+        $consulta = "select producto.*, familia.nombre as nombre_familia from producto, familia where producto.familia=familia.cod and producto.cod=?";
         $sentencia = $conexion->prepare($consulta);
         $sentencia->execute([$cod]); // Siempre un array con tantas parametros necesite la consulta
     } catch (PDOException $e) {
         $sentencia = null;
         $conexion = null;
-        $respuesta["error"] = "No he podido conectar a la base de datos: " . $e->getMessage();
+        $respuesta["error"] = "No he podido realizar la consulta: " . $e->getMessage();
         return $respuesta;
     }
     // Recogemos la respuesta de la consulta
@@ -58,7 +58,7 @@ function obtener_producto($cod)
     if($sentencia->rowCount()<=0){
         return $respuesta["mensaje"]="El producto con el código: ".$cod." no se encuentra en la BD";
     }else{
-        $respuesta["productos"]=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+        $respuesta["producto"]=$sentencia->fetch(PDO::FETCH_ASSOC);
         $sentencia = null;
         $conexion = null;
         return $respuesta; // Una vez montado el array lo devolvemos
