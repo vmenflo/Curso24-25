@@ -3,6 +3,71 @@ session_name("Actividad2");
 session_start();
 require "src/funciones_ctes.php";
 
+// Errores del formulario
+if(isset($_POST["btnContAgregar"])){
+    // Codigo
+    $error_cod = $_POST["cod"]=="";
+    if(!$error_cod){
+        $url = DIR_SERV . "/repetido/producto/cod/".urlencode($_POST["cod"]);
+        $respuesta = consumir_servicios_REST($url, "GET");
+        $json_repetido = json_decode($respuesta, true);
+        if (!$json_repetido)
+            die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+
+        if (isset($json_repetido["error"]))
+            die(error_page("Actividad2", "<p>Error consumiendo el servicio rest: " . $url . "</p>"));
+
+        if (isset($json_repetido["mensaje"]))
+            die(error_page("Actividad 2", "<p>" . $json_repetido["mensaje"] . "</p>"));
+
+        $error_cod = $json_repetido["repetido"];
+    }
+    // Nombre corto
+    $error_nombre_corto = $_POST["nombre_corto"]=="";
+    if(!$error_nombre_corto){
+        $url = DIR_SERV . "/repetido/producto/nombre_corto/".urlencode($_POST["nombre_corto"]);
+        $respuesta = consumir_servicios_REST($url, "GET");
+        $json_repetido = json_decode($respuesta, true);
+        if (!$json_repetido)
+            die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+
+        if (isset($json_repetido["error"]))
+            die(error_page("Actividad2", "<p>Error consumiendo el servicio rest: " . $url . "</p>"));
+
+        if (isset($json_repetido["mensaje"]))
+            die(error_page("Actividad 2", "<p>" . $json_repetido["mensaje"] . "</p>"));
+
+        $error_nombre_corto = $json_repetido["repetido"];
+    }
+    // Nombre no controla errores
+
+    // Error descripcion
+    $error_descripcion = $_POST["descripcion"]=="";
+    // PVP
+    $error_pvp = $_POST["pvp"]=="" || !is_numeric($_POST["pvp"]) || $_POST["pvp"]<=0;
+
+    $error_form=$error_cod || $error_descripcion || $error_nombre_corto || $error_pvp;
+
+    if(!$error_form){
+        // Inserto y salgo con mensaje
+        $url = DIR_SERV . "/producto/insertar";
+        $respuesta = consumir_servicios_REST($url, "POST",$_POST);
+        $json_insertar = json_decode($respuesta, true);
+        if (!$json_insertar)
+            die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+
+        if (isset($json_insertar["error"]))
+            die(error_page("Actividad2", "<p>Error consumiendo el servicio rest: " . $url . "</p>"));
+
+        $_SESSION["mensaje"]="Producto insertado con éxito";
+        header("location:index.php");
+        exit;
+    }else{
+
+    }
+
+}
+
 // un producto en concreto
 if (isset($_POST["btnDetalles"])) {
     $url = DIR_SERV . "/producto/" . $_POST["btnDetalles"] . "";
@@ -15,7 +80,7 @@ if (isset($_POST["btnDetalles"])) {
         die(error_page("Actividad2", "<p>Error consumiendo el servicio rest: " . $url . "</p>"));
 
     if (isset($json_detalles["mensaje"]))
-        die(error_page("Actividad 2", "<p>" . $json_detalles["error"] . "</p>"));
+        die(error_page("Actividad 2", "<p>" . $json_detalles["mensaje"] . "</p>"));
 }
 
 // Si pulsamos continuar borrado
@@ -32,6 +97,21 @@ if (isset($_POST["btnContBorrar"])) {
     $_SESSION["mensaje"] = "Se ha eliminado el producto: " . $_POST["btnContBorrar"];
     header("Location:index.php");
     exit;
+}
+
+// Pulsamos boton agregar
+if (isset($_POST["btnAgregar"]) || (isset($_POST["btnContAgregar"]) && $error_form)) {
+    $url = DIR_SERV . "/familias";
+    $respuesta = consumir_servicios_REST($url, "GET");
+    $json_familias = json_decode($respuesta, true);
+    if (!$json_familias)
+        die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+
+    if (isset($json_familias["error"]))
+        die(error_page("Actividad2", "<p>Error consumiendo el servicio rest: " . $url . "</p>"));
+
+    if (isset($json_familias["mensaje"]))
+        die(error_page("Actividad 2", "<p>" . $json_familias["mensaje"] . "</p>"));
 }
 
 
@@ -95,7 +175,7 @@ if (isset($json_productos["error"]))
     <?php
 
     // Si existe el botón agregar
-    if(isset($_POST["btnAgregar"])){
+    if(isset($_POST["btnAgregar"]) || (isset($_POST["btnContAgregar"]) && $error_form)){
         require "vistas/vista_agregar.php";
     }
 

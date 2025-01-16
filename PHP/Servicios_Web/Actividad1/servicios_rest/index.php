@@ -23,14 +23,14 @@ $app->get('/producto/{codigo}', function($request){
 
 // Ejercicio 3
 $app->post('/producto/insertar',function($request){
-    $cod=$request->getParam("cod");
-    $nombre=$request->getParam("nombre");
-    $nombre_corto=$request->getParam("nombre_corto");
-    $descripcion=$request->getParam("descripcion");
-    $pvp=$request->getParam("pvp");
-    $familia=$request->getParam("familia");
+    $datos[]=$request->getParam("cod");
+    $datos[]=$request->getParam("nombre");
+    $datos[]=$request->getParam("nombre_corto");
+    $datos[]=$request->getParam("descripcion");
+    $datos[]=$request->getParam("pvp");
+    $datos[]=$request->getParam("familia");
 
-    echo json_encode(insertar_producto($cod,$nombre,$nombre_corto,$descripcion,$pvp,$familia));
+    echo json_encode(insertar_producto($datos));
 });
 
 // Ejercicio 4
@@ -60,22 +60,22 @@ $app->get('/familias',function($request){
 });
 
 // Ejercicio 7
-$app->get('/repetido/{tabla}/{columna}/{valor}', function($request){
-    $tabla=$request->getAttribute("tabla");
-    $columna = $request->getAttribute("columna");
-    $valor=$request->getAttribute("valor");
+$app->get('/repetido/{tabla}/{columna}/{valor}',function($request){
 
-    echo json_encode(es_repetido($tabla,$columna,$valor));
+    $tabla=$request->getAttribute("tabla");
+    $columna=$request->getAttribute("columna");
+    $valor=$request->getAttribute("valor");
+    echo json_encode(es_repetido($tabla, $columna,$valor));
 });
 
 $app->get('/repetido/{tabla}/{columna}/{valor}/{id_columna}/{id_valor}',function($request){
     $tabla=$request->getAttribute("tabla");
     $columna=$request->getAttribute("columna");
     $valor=$request->getAttribute("valor");
-    $id_columna=$request->getAttribute("id_columna");
-    $id_valor=$request->getAttribute("id_valor");
+    $columna_id=$request->getAttribute("id_columna");
+    $valor_id=$request->getAttribute("id_valor");
 
-    echo json_encode(es_repetido_editar($tabla,$columna,$valor,$id_columna,$id_valor));
+    echo json_encode(es_repetido_editar($tabla,$columna,$valor,$columna_id,$valor_id));
 });
 
 $app->run();

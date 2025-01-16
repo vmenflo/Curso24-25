@@ -66,29 +66,35 @@ function obtener_producto($cod)
    
 }
 
-function insertar_producto($cod,$nombre,$nombre_corto,$descripcion,$pvp,$familia){
-    // Conectarnos con PDO
-    try {
-        $conexion = new PDO("mysql:host=" . SERVIDOR_BD . ";dbname=" . NOMBRE_BD, USUARIO_BD, CLAVE_BD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-    } catch (PDOException $e) {
-        $respuesta["error"] = "No he podido conectar a la base de datos: " . $e->getMessage();
-        return $respuesta; // Siempre usaremos un return porque un servicio no puede morir siempre devolverá algo
+function insertar_producto($datos){
+    try{
+        $conexion=new PDO("mysql:host=".SERVIDOR_BD.";dbname=".NOMBRE_BD,USUARIO_BD,CLAVE_BD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
     }
-    // Hacemos la insercción
-    try {
-        $consulta = "insert into producto (cod,nombre, nombre_corto,descripcion, pvp, familia) values (?,?,?,?,?,?)";
-        $sentencia = $conexion->prepare($consulta);
-        $sentencia->execute([$cod,$nombre,$nombre_corto,$descripcion,$pvp,$familia]); // Siempre un array con tantas parametros necesite la consulta
-        $respuesta["mensaje"]="El producto ".$nombre_corto." se ha insertado con éxito";
-        $sentencia = null;
-        $conexion = null;
-        return $respuesta;
-    } catch (PDOException $e) {
-        $sentencia = null;
-        $conexion = null;
-        $respuesta["error"] = "No se ha podido realizar la insercción: " . $e->getMessage();
+    catch(PDOException $e)
+    {
+        $respuesta["error"]="No he podido conectarse a la base de batos: ".$e->getMessage();
         return $respuesta;
     }
+    try{
+        $consulta="insert into producto (cod, nombre, nombre_corto,descripcion,PVP, familia) values (?,?,?,?,?,?)";
+        $sentencia=$conexion->prepare($consulta);
+        $sentencia->execute($datos);
+
+    }
+    catch(PDOException $e)
+    {
+        $sentencia=null;
+        $conexion=null;
+        $respuesta["error"]="No he podido realizarse la consulta: ".$e->getMessage();
+        return $respuesta;
+    }
+   
+    $respuesta["mensaje"]="El producto con cod: ".$datos[0]." se ha insertado correctamente";
+   
+
+    $sentencia=null;
+    $conexion=null;
+    return $respuesta;
 
 }
 
@@ -176,56 +182,67 @@ function obtener_familias(){
 }
 
 function es_repetido($tabla,$columna,$valor){
-    // Conectarnos con PDO
-    try {
-        $conexion = new PDO("mysql:host=" . SERVIDOR_BD . ";dbname=" . NOMBRE_BD, USUARIO_BD, CLAVE_BD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-    } catch (PDOException $e) {
-        $respuesta["error"] = "No he podido conectar a la base de datos: " . $e->getMessage();
-        return $respuesta; // Siempre usaremos un return porque un servicio no puede morir siempre devolverá algo
+    try{
+        $conexion=new PDO("mysql:host=".SERVIDOR_BD.";dbname=".NOMBRE_BD,USUARIO_BD,CLAVE_BD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
     }
-
-    // Hacemos la actualización del producto enconcreto
-    try {
-        $consulta = "select * from ".$tabla." where ".$columna."=?";
-        $sentencia = $conexion->prepare($consulta);
-        $sentencia->execute([$valor]); // Siempre un array con tantas parametros necesite la consulta
-    } catch (PDOException $e) {
-        $sentencia = null;
-        $conexion = null;
-        $respuesta["error"] = "No se ha podido realizar la consulta: " . $e->getMessage();
+    catch(PDOException $e)
+    {
+        $respuesta["error"]="No he podido conectarse a la base de batos: ".$e->getMessage();
         return $respuesta;
     }
-    // Recogemos la respuesta de la consulta
+
+    try{
+        $consulta="select ".$columna." from ".$tabla." where ".$columna."=?" ;
+        $sentencia=$conexion->prepare($consulta);
+        $sentencia->execute([$valor]);
+
+    }
+    catch(PDOException $e)
+    {
+        $sentencia=null;
+        $conexion=null;
+        $respuesta["error"]="No he podido realizarse la consulta: ".$e->getMessage();
+        return $respuesta;
+    }
+
     $respuesta["repetido"]=$sentencia->rowCount()>0;
-    $sentencia = null;
-    $conexion = null;
-    return $respuesta; // Una vez montado el array lo devolvemos
+        
+    
+    $sentencia=null;
+    $conexion=null;
+    return $respuesta;
     
 }
 
-function es_repetido_editar($tabla,$columna,$valor,$id_columna,$id_valor){
-    // Conectarnos con PDO
-    try {
-        $conexion = new PDO("mysql:host=" . SERVIDOR_BD . ";dbname=" . NOMBRE_BD, USUARIO_BD, CLAVE_BD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-    } catch (PDOException $e) {
-        $respuesta["error"] = "No he podido conectar a la base de datos: " . $e->getMessage();
-        return $respuesta; // Siempre usaremos un return porque un servicio no puede morir siempre devolverá algo
+function es_repetido_editar($tabla,$columna,$valor,$columna_id,$valor_id){
+    try{
+        $conexion=new PDO("mysql:host=".SERVIDOR_BD.";dbname=".NOMBRE_BD,USUARIO_BD,CLAVE_BD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
     }
-    
-    try {
-        $consulta = "select ".$columna." from ".$tabla." where ".$id_columna." = ? AND ".$id_valor."<>?";
-        $sentencia = $conexion->prepare($consulta);
-        $sentencia->execute([$id_valor, $valor]);
-    } catch (PDOException $e) {
-        $sentencia = null;
-        $conexion = null;
-        $respuesta["error"] = "No se ha podido realizar la consulta: " . $e->getMessage();
+    catch(PDOException $e)
+    {
+        $respuesta["error"]="No he podido conectarse a la base de batos: ".$e->getMessage();
         return $respuesta;
     }
-    /// Recogemos la respuesta de la consulta
+
+    try{
+        $consulta="select ".$columna." from ".$tabla." where ".$columna."=? and ".$columna_id."<>?" ;
+        $sentencia=$conexion->prepare($consulta);
+        $sentencia->execute([$valor,$valor_id]);
+
+    }
+    catch(PDOException $e)
+    {
+        $sentencia=null;
+        $conexion=null;
+        $respuesta["error"]="No he podido realizarse la consulta: ".$e->getMessage();
+        return $respuesta;
+    }
+
     $respuesta["repetido"]=$sentencia->rowCount()>0;
-    $sentencia = null;
-    $conexion = null;
-    return $respuesta; // Una vez montado el array lo devolvemos
+        
+    
+    $sentencia=null;
+    $conexion=null;
+    return $respuesta;
 }
 ?>
