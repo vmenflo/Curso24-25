@@ -7,7 +7,7 @@ $app = new \Slim\App;
 // usuario, clave (ya viene en md5)
 // error, mensaje, usuario
 $app->post("/login", function ($request) {
-    
+
     $usuario = $request->getParam("usuario");
     $clave = $request->getParam("clave");
 
