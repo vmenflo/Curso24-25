@@ -12,7 +12,7 @@ function consumir_servicios_REST($url, $metodo, $datos = null)
     return $respuesta;
 }
 
-define("DIR_SERV", "http://localhost/Proyectos/Curso24-25/PHP/Servicios_Web/Actividad3/API_login");
+define("DIR_SERV", "http://localhost/Proyectos/Curso24-25/PHP/Servicios_Web/Actividad1/servicios_rest");
 
 function error_page($title,$body)
 {

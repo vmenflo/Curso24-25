@@ -86,95 +86,70 @@ if(isset($_POST["btnContAgregar"])){
 }
 
 // Editar
+if(isset($_POST["btnContEditar"]))
+{
+   
 
-if(isset($_POST["btnContEditar"])){
-    // Codigo
-    $error_cod = $_POST["cod"]=="";
-    if(!$error_cod){
-        $url = DIR_SERV . "/repetido/producto/cod/".urlencode($_POST["cod"]);
-        $respuesta = consumir_servicios_REST($url, "GET");
-        $json_repetido = json_decode($respuesta, true);
-        if (!$json_repetido){
+    $error_nombre_corto=$_POST["nombre_corto"]=="";
+    if(!$error_nombre_corto)
+    {
+        $url=DIR_SERV."/repetido/producto/nombre_corto/".urlencode($_POST["nombre_corto"])."/cod/".urlencode($_POST["cod"]);
+        $respuesta=consumir_servicios_REST($url,"GET");
+        $json_repetido=json_decode($respuesta,true);
+        if(!$json_repetido)
+        {
             session_destroy();
-            die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
-        }  
-
-        if (isset($json_repetido["error"])){
-            session_destroy();
-            die(error_page("Actividad2", "<p>Error consumiendo el servicio rest: " . $url . "</p>"));
+            die(error_page("Actividad 2","<p>Error consumiendo el servico rest: <strong>".$url."</strong></p>"));
         }
-           
 
-        if (isset($json_repetido["mensaje"])){
+        if(isset($json_repetido["error"]))
+        {
             session_destroy();
-            die(error_page("Actividad 2", "<p>" . $json_repetido["mensaje"] . "</p>"));
+            die(error_page("Actividad 2","<p>".$json_repetido["error"]."</p>"));
         }
-            
 
-        $error_cod = $json_repetido["repetido"];
+        $error_nombre_corto=$json_repetido["repetido"];
     }
-    // Nombre corto
-    $error_nombre_corto = $_POST["nombre_corto"]=="";
-    if(!$error_nombre_corto){
-        $url = DIR_SERV . "/repetido/producto/nombre_corto/".urlencode($_POST["nombre_corto"])."/cod/".urlencode($_POST["cod"]);
-        $respuesta = consumir_servicios_REST($url, "GET");
-        $json_repetido = json_decode($respuesta, true);
-        if (!$json_repetido){
-            session_destroy();
-            die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
-        }
-            
+    $error_descripcion=$_POST["descripcion"]=="";
+    $error_PVP=$_POST["PVP"]=="" || !is_numeric($_POST["PVP"]) || $_POST["PVP"]<=0;
 
-        if (isset($json_repetido["error"])){
-            session_destroy();
-            die(error_page("Actividad2", "<p>Error consumiendo el servicio rest: " . $url . "</p>"));
-        }
+    $error_form=$error_nombre_corto || $error_descripcion || $error_PVP;
 
-        if (isset($json_repetido["mensaje"])){
-            session_destroy();
-            die(error_page("Actividad 2", "<p>" . $json_repetido["mensaje"] . "</p>"));
-        }
+    if(!$error_form)
+    {
+        //edito y salto con mensaje
 
-        $error_nombre_corto = $json_repetido["repetido"];
-    }
-    // Nombre no controla errores
-
-    // Error descripcion
-    $error_descripcion = $_POST["descripcion"]=="";
-    // PVP
-    $error_pvp = $_POST["pvp"]=="" || !is_numeric($_POST["pvp"]) || $_POST["pvp"]<=0;
-
-    $error_form=$error_cod || $error_descripcion || $error_nombre_corto || $error_pvp;
-
-    if(!$error_form){
-        // Inserto y salgo con mensaje
-        $url = DIR_SERV . "/producto/actualizar/".urlencode($_POST["cod"]);
-        $respuesta = consumir_servicios_REST($url, "POST",$_POST);
+        $url=DIR_SERV."/producto/actualizar/".urlencode($_POST["cod"]);
         unset($_POST["btnContEditar"]);
         unset($_POST["cod"]);
-        $json_editar = json_decode($respuesta, true);
-        if (!$json_editar){
+        $respuesta=consumir_servicios_REST($url,"PUT",$_POST);
+        $json_actualizar=json_decode($respuesta,true);
+        if(!$json_actualizar)
+        {
             session_destroy();
-            die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+            die(error_page("Actividad 2","<p>Error consumiendo el servico rest: <strong>".$url."</strong></p>"));
         }
 
-        if (isset($json_editar["error"])){
+        if(isset($json_actualizar["error"]))
+        {
             session_destroy();
-            die(error_page("Actividad2", "<p>Error consumiendo el servicio rest: " . $url . "</p>"));
+            die(error_page("Actividad 2","<p>".$json_actualizar["error"]."</p>"));
         }
 
-        $_SESSION["mensaje"]="Producto insertado con éxito";
-        header("location:index.php");
+        $_SESSION["mensaje"]="¡¡ Producto actualizado con éxito !!";
+        header("Location:index.php");
         exit;
-    }else{
 
     }
 
 }
 
 // un producto en concreto
-if (isset($_POST["btnDetalles"])) {
-    $url = DIR_SERV . "/producto/" . $_POST["btnDetalles"] . "";
+if(isset($_POST["btnDetalles"]) || isset($_POST["btnEditar"])){
+    
+    $cod = $_POST["id_usuario"];
+
+    $url = DIR_SERV . "/producto/".urlencode($cod);
     $respuesta = consumir_servicios_REST($url, "GET");
     $json_detalles = json_decode($respuesta, true);
     if (!$json_detalles){
@@ -214,7 +189,8 @@ if (isset($_POST["btnContBorrar"])) {
 }
 
 // Pulsamos boton agregar
-if (isset($_POST["btnAgregar"]) || (isset($_POST["btnContAgregar"]) && $error_form)) {
+if(isset($_POST["btnNuevo"])||isset($_POST["btnContNuevo"])||isset($_POST["btnEditar"])||isset($_POST["btnContEditar"]))
+{
     $url = DIR_SERV . "/familias";
     $respuesta = consumir_servicios_REST($url, "GET");
     $json_familias = json_decode($respuesta, true);
@@ -295,14 +271,14 @@ if (isset($json_productos["error"]))
     <?php
 
     // Si existe botón editar
-    if(isset($_POST["btnEditar"])|| (isset($_POST["btnContEditar"])) && $error_form){
+    if(isset($_POST["btnEditar"]) || (isset($_POST["btnContEditar"]) && $error_form)){
         if(isset($json_detalles)){
             if(isset($json_detalles["producto"])){
                 $cod=$json_detalles["producto"]["cod"];
                 $nombre=$json_detalles["producto"]["nombre"];
-                $conombre_corto=$json_detalles["producto"]["nombre_corto"];
+                $nombre_corto=$json_detalles["producto"]["nombre_corto"];
                 $descripcion=$json_detalles["producto"]["descripcion"];
-                $pvp=$json_detalles["producto"]["pvp"];
+                $pvp=$json_detalles["producto"]["PVP"];
                 $familia=$json_detalles["producto"]["familia"];
 
             }else{
@@ -312,7 +288,7 @@ if (isset($json_productos["error"]))
         }else{
                 $cod=$_POST["cod"];
                 $nombre=$_POST["nombre"];
-                $conombre_corto=$_POST["nombre_corto"];
+                $nombre_corto=$_POST["nombre_corto"];
                 $descripcion=$_POST["descripcion"];
                 $pvp=$_POST["pvp"];
                 $familia=$_POST["familia"];

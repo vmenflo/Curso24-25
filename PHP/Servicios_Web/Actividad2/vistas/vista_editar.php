@@ -20,7 +20,7 @@
         </p>
         <p>
             <label for='nombre_corto'>Nombre corto:</label>
-            <input type='text' id='nombre_corto' name='nombre_corto' value="<?php  $nombre_corto; ?>"/>
+            <input type='text' id='nombre_corto' name='nombre_corto' value="<?php echo $nombre_corto; ?>"/>
             <?php
                 if(isset($_POST["btnContEditar"]) && $error_nombre_corto){
                     if($_POST["nombre_corto"]==""){
@@ -55,7 +55,7 @@
             </select>
         </p>
         <button type='submit'>Volver</button>
-        <button name='btnContAgregar' value='btnContAgregar' type='submit'>Continuar</button>
+        <button name='btnContEditar' value='btnContEditar' type='submit'>Continuar</button>
         <input type="hidden" name="cod" value="<?php echo $cod; ?>">
         </br>
         </br>

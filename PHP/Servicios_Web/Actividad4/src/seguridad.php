@@ -31,10 +31,7 @@ exit;
 // He pasado el control de baneo
 // Dejo la conexión abierta y aprovecho para coger datos del usuario logueado
 
-$datos_usuario_log=mysqli_fetch_assoc($result_select);
-mysqli_free_result($result_select);
-
-
+$datos_usuario_log=$json_login["usuario"];
 
 // Ahora controlo el tiempo de inactividad
 

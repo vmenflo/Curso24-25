@@ -26,3 +26,5 @@ function error_page($title,$body)
     <body>'.$body.'</body></html>';
 
 }
+
+?>
