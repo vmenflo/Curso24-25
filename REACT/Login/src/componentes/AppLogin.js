@@ -16,16 +16,8 @@ export default function AppLogin(props) {
         }
     }
     const clicar = () => {
-        if (password == '' || telefono == '') {
-            setInfo('Cumplimente todos los campos');
-        } else {
-
-            if (telefono == "myfpschool@gmail.com" && password == "2025") {
-                props.userLogin(telefono, password)
-            } else {
-                setInfo('DATOS INCORRECTOS')
-            }
-        }
+        const result = props.userLogin(telefono, password);
+        setInfo(result);
     }
 
     return (

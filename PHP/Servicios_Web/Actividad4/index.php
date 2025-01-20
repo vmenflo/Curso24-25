@@ -1,5 +1,5 @@
 <?php
-session_name("Primer_login_24_25");
+session_name("Primer_login_24_25_SW");
 session_start();
 require "src/funciones_ctes.php";
 

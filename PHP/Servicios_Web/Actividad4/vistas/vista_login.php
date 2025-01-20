@@ -13,24 +13,23 @@ if (isset($_POST["btnLogin"])) {
         $json_login = json_decode($respuesta, true);
         if (!$json_login) {
             session_destroy();
-            die("<p> Error consumiendo servicio web <strong>" . $url . "</strong></p></body></html>");
+            die(error_page("Login","<p> Error consumiendo servicio web <strong>" . $url . "</strong></p>"));
         }
 
         if (isset($json_login["error"])) {
             session_destroy();
-            die(error_page("Actividad4", "<p>Error consumiendo el servicio rest: " . $url . "</p>"));
+            die(error_page("Login","<p>".$json_login["error"]."</p>"));
         }
 
-        if (isset($json_login["mensaje"])) {
-            session_destroy();
-            die(error_page("Actividad4", "<p>" . $json_login["mensaje"] . "</p>"));
-        }
-
-        $_SESSION["usuario"] = $json_login["usuario"];
-        $_SESSION["clave"] = $json_login["clave"];
-        $_SESSION["ultm_accion"] = time();
-        header("Location:index.php");
+        if (isset($json_login["usuario"])) {
+            $_SESSION["usuario"] = $datos["usuario"];
+            $_SESSION["clave"] = $datos["clave"];
+            $_SESSION["ultm_accion"] = time();
+            header("Location:index.php");
         exit;
+        }else{
+            $error_usuario=true;
+        }
     }
 }
 
