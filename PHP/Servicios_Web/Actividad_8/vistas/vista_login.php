@@ -1,4 +1,6 @@
 <?php
+    ob_clean();
+
     if(isset($_POST["btnLogin"])){
 
         $error_usuario = $_POST["usuario"]==="";
@@ -14,12 +16,12 @@
 
             if(!$json_login){
                 session_destroy();
-                die(error_page("Actividad_4", "<p> Error Consumiendo el servicio: ".$url." </p>"));
+                die(error_page("Actividad_8", "<p> Error Consumiendo el servicio: ".$url." </p>"));
             }
             
             if(isset($json_login["error"])){
                 session_destroy();
-                die(error_page("Actividad_4", "<p> Error: ".$json_login["error"]." </p>"));
+                die(error_page("Actividad_8", "<p> Error: ".$json_login["error"]." </p>"));
             }
             if(isset($json_login["usuario"])){
                 $_SESSION["ultm_accion"]=time();
@@ -38,10 +40,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login_Actividad_4</title>
+    <title>Login_Actividad_8</title>
 </head>
 <body>
-    <h2>Login - Actividad 4</h2>
+    <h2>Login - Actividad 8</h2>
     <form action="index.php" method="post">
         <p>
             <label for="usuario">Nombre:</label>

@@ -88,6 +88,21 @@ $app->get('/logueado',function(){
         echo json_encode(array("no_auth"=>"No tienes permisos para usar este servicio"));
 });
 
+$app->get('/usuario/{id_usuario}', function($request){
+    $test=validateToken();
+    if(is_array($test))
+        if(isset($test["usuario"]))
+            if($test["usuario"]["tipo"]=="admin"){
+                $id_usuario = $request->getAttribute("id_usuario");
+                echo json_encode(obtener_usuario($id_usuario));
+            }else
+                echo json_encode(array("no_auth"=>"No tienes permisos para usar este servicio"));
+        else
+            echo json_encode($test);
+    else
+        echo json_encode(array("no_auth"=>"No tienes permisos para usar este servicio"));
+});
+
 $app->run();
 
 ?>

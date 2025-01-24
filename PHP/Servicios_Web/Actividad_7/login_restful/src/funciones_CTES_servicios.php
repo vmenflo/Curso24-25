@@ -205,9 +205,9 @@ function borrar_usuario($id_usuario){
     }
 
     try{
-        $consulta = "delete * from usuarios where id_usuario=?";
+        $consulta = "delete from usuarios where id_usuario=?";
         $sentencia = $conexion->prepare($consulta);
-        $sentencia-> execute($id_usuario);
+        $sentencia-> execute([$id_usuario]);
 
     }catch(PDOException $e){
         $sentencia=null;
@@ -217,6 +217,34 @@ function borrar_usuario($id_usuario){
     }
     
     $respuesta["mensaje"]="El usuario".$id_usuario." ha sido eliminado con éxito";
+    $sentencia=null;
+    $conexion=null;
+    return $respuesta;
+}
+
+function obtener_usuario($id_usuario){
+    try{
+        $conexion= new PDO("mysql:host=".SERVIDOR_BD.";dbname=".NOMBRE_BD,USUARIO_BD,CLAVE_BD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES 'utf8'"));
+    }
+    catch(PDOException $e){
+        
+        $respuesta["error"]="Imposible conectar:".$e->getMessage();
+        return $respuesta;
+    }
+
+    try{
+        $consulta = "select * from usuarios where id_usuario=?";
+        $sentencia = $conexion->prepare($consulta);
+        $sentencia-> execute([$id_usuario]);
+
+    }catch(PDOException $e){
+        $sentencia=null;
+        $conexion=null;
+        $respuesta["error"]="Error al hacer la consulta: ".$e->getMessage();
+        return $respuesta;
+    } 
+
+    $respuesta["usuario"] = $sentencia->fetch(PDO::FETCH_ASSOC);
     $sentencia=null;
     $conexion=null;
     return $respuesta;

@@ -1,6 +1,6 @@
 <?php
 define("INACTIVIDAD",3);
-define("DIR_SERV","http://localhost/Proyectos/Curso24-25/PHP/Servicios_Web/Actividad_3/login_restful");
+define("DIR_SERV","http://localhost/Proyectos/Curso24-25/PHP/Servicios_Web/Actividad_7/login_restful");
  function consumir_servicios_REST($url,$metodo,$datos=null)
  {
      $llamada=curl_init();
