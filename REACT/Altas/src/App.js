@@ -21,8 +21,10 @@ const VentanaModalListin = (props) => {
   const {
     className
   } = props;
+
   const [nombre, setNombre] = useState(undefined);
   const [telefono, setTelefono] = useState(undefined);
+  const [info, setInfo] = useState(undefined);
  
   const handleChange = (event) => {
     if (event.target.name === "nombre") {
@@ -34,10 +36,16 @@ const VentanaModalListin = (props) => {
  
   }
   const click = () => {
-    props.insertaPersona(nombre,telefono)
-    setNombre(undefined)
-    setTelefono(undefined)
-    props.toggle();
+    if(!nombre|| !telefono){
+      setInfo("Por favor, rellene los datos")
+      return
+    }else{
+      props.insertaPersona(nombre,telefono)
+      setNombre(undefined)
+      setTelefono(undefined)
+      setInfo("")
+      props.toggle();
+    }
   }
 
   return (
@@ -67,8 +75,7 @@ const VentanaModalListin = (props) => {
                 type="Text" />
             </Col>
           </FormGroup>
-
-
+          {info}
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={() => click()}>{props.aceptar}</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -98,8 +105,7 @@ class App extends Component {
   }
 
   borrarUsuario(telefono){
-    let copia = this.state.listaUsuarios
-    copia.filter(u=> u.telefono!==telefono)
+    let copia = this.state.listaUsuarios.filter(u=> u.telefono!==telefono)
 
     this.setState({listaUsuarios:copia})
   }
@@ -111,8 +117,13 @@ class App extends Component {
   insertaPersona(n, t) {
     let p = this.state.listaUsuarios;
     let newp = { nombre: n, telefono: t };
-    p.push(newp);
-    this.setState({ listaUsuarios: p });
+    let existe = p.filter(u=>u.telefono===t)
+
+    if(existe.length===0){
+      p.push(newp);
+      this.setState({ listaUsuarios: p });
+    }
+    
   }
 
   render() {
