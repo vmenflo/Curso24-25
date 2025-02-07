@@ -55,6 +55,8 @@ function ShowProductos(props) {
 const VentanaModal = (props) => {
   const { className } = props;
   const [total, setTotal] = useState(0)
+  const [nombre, setNombre] = useState(0)
+  const [direccion, setDireccion] = useState(0)
 
   useEffect(() => {
     const totalCalculado = props.carrito
@@ -62,16 +64,34 @@ const VentanaModal = (props) => {
       .reduce((acc, e) => acc + e.cantidad * e.precio, 0);
       setTotal(totalCalculado);
   }, [props.carrito]);
-
   let lista = props.carrito.filter(e => e.cantidad > 0).map(e =>
     <div key={e.id}>
-      <p> {e.nombre} - {e.cantidad} x {e.precio} €
+      <p> {e.nombre} - {e.cantidad} x {e.precio} €  
         <Button onClick={() => props.modificar(e.id, 1)}>+</Button>
         <Button onClick={() => props.modificar(e.id, -1)}>-</Button>
         <br />Importe: {e.cantidad * e.precio} €
       </p>
     </div>
+    
   )
+
+  const handleChange = (event) => {
+
+    const target = event.target;
+    if (target.name == "nombre") {
+        setNombre(target.value);
+    }
+    if (target.name == "direccion") {
+        setDireccion(target.value);
+    }
+}
+const hacerPedido = () => {
+   props.comprar(nombre,direccion)
+   setNombre("")
+   setDireccion("")
+   props.toggle()
+  
+}
 
   return (
     <div>
@@ -80,12 +100,13 @@ const VentanaModal = (props) => {
         <ModalBody>
           {lista}
           {<h3>Rellene los datos para completar el pedido:</h3>}
-          {<><label>Nombre: </label><input type="text" placeholder="Inserte su nombre" name="name" /><br /><br /></>}
-          {<><label>Dirección: </label><input type="text" placeholder="Inserte su dirección" name="name" /><br /><br /></>}
+          {<><label>Nombre: </label><input type="text" onChange={handleChange} placeholder="Inserte su nombre" name="nombre" /><br /><br /></>}
+          {<><label>Dirección: </label><input type="text" onChange={handleChange} placeholder="Inserte su dirección" name="direccion" /><br /><br /></>}
           El total de su pedido es: {total} -€
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={() => props.toggle()}>CERRAR</Button>
+          <Button color="primary" onClick={()=>hacerPedido()}>COMPRAR</Button>
         </ModalFooter>
       </Modal>
     </div>
@@ -102,6 +123,7 @@ class App extends Component {
         return { id: e.id, nombre: e.nombre, cantidad: 0, precio: e.precio }
       }),
       isOpen: false,
+      pedido:[]
     };
   }
   toggleModal() { this.setState({ isOpen: !this.state.isOpen }) }
@@ -113,7 +135,18 @@ class App extends Component {
       return e;
     })
     this.setState({ carrito: c })
-    console.log(c)
+  }
+
+  crearPedido(nombre,direccion){
+    let copiaCarrito = this.state.carrito.filter(u=> u.cantidad>0)
+    
+    let pedido = {nombre:nombre, direccion:direccion, pedidos:copiaCarrito}
+    let copiaPedido = this.state.pedido
+    copiaPedido.push(pedido)
+    let copiaCarro = this.state.carrito
+    copiaCarro.map(u=> u.cantidad=0)
+    this.setState({pedido:copiaPedido,carrito:copiaCarro})
+    console.log(this.state.pedido)
   }
 
   render() {
@@ -131,6 +164,7 @@ class App extends Component {
           toggle={() => this.toggleModal()}
           modificar={(p, c) => this.modificar(p, c)}
           carrito={this.state.carrito}
+          comprar={(nombre,direccion)=>this.crearPedido(nombre,direccion)}
         />
       </>
     );
